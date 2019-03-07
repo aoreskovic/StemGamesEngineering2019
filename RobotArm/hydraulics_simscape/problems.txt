@@ -1,0 +1,2 @@
+Uglavnom se problemi ticu pokretanja modela s hidraulickim komponentama. Nemam pojma kako dimenzionirati pumpu, ventile, otpusni ventil, cilindar, koju tekucinu koristiti itd. Uglavnom, nisam nikad bas radio s hidraulikom pa mi redovi velicina nisu bas poznati. Mislio sam pogledat na netu tipicne dimenzije tih sustava, al nisam bas stigao.
+Ovako kako je simulacija trenutno postavljena, nije moguce uopce pokrenuti jedan jedini cilindar jer ocito nemam dovoljnu snagu da se ista pomakne. 

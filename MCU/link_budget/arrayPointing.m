@@ -1,52 +1,56 @@
-function [pointingLoss] = arrayPointing(bfMatrix, dx, dy)
+function [F] = arrayPointing(bfMatrix, dx, dy)
 %ARRAYPOINTING Analyses the given antenna array
+% bfMatrix
+% dx in units of lambda
+% dy in units of lambda
 %   Will calculate array factor of a given array
 %   Will find the main lobe direction
 %   Will find the pointing loss at the target direction
 
 [M N] = size(bfMatrix);
 
-numAnglePrec = 0.1;
-phi = [0:numAnglePrec:360] ./ 180 .* pi;
-theta = [0:numAnglePrec:180] ./ 180 .* pi;
-
-u = sin(theta) .* cos(phi);
-v = sin(theta) .* sin(phi);
-deltau = 1/(length(u)-1);
-deltav = 1/(length(v)-1);
-
-% Get antenna element coordinates from distances
 xcoord = cumsum(dx);
 ycoord = cumsum(dy);
 
-% Numerically sweep array factor
-for uidx = 1:length(u)
-for vidx = 1:length(v)
+numAnglePrec = 5;
 
-F(uidx, vidx) = 0;
+phi = [0:numAnglePrec:360] ./ 180 .* pi;
+theta = [0:numAnglePrec:180] ./ 180 .* pi;
 
-% Calculate array factor according to doi:10.1109/TAP.2004.841324, eq 27
-for n = 1:N
-    for m = 1:M
-        if n == 0 && m == 0
+idx = 1;
+for phiIdx = 1:length(phi)
+    for thetaIdx = 1:length(theta)
+        u(idx) = sin(theta(thetaIdx)) * cos(phi(phiIdx));
+        v(idx) = sin(theta(thetaIdx)) * sin(phi(phiIdx));
+        idx = idx + 1;
+    end
+end
+delta = 1./(idx-2);
+
+for uIdx = 1:length(u)
+for vIdx = 1:length(v)
+
+F(uIdx, vIdx) = 0;
+
+for m = 1:M
+    for n = 1:N
+        if m == 0 && n == 0
             eps = 1;
-        elseif n == 0 && m > 0
+        elseif m == 0 && n > 0
             eps = 2;
-        elseif n > 0 && m == 0
+        elseif m > 0 && n == 0
             eps = 2;
         else
             eps = 4;
         end
 
-        F(uidx,vidx) = F(uidx,vidx) + eps*bfMatrix(n,m)*cos(uidx*k*xcoord(n)*deltau)*cos(vidx*k*ycoord(m)*deltav);
+        F(uIdx, vIdx) = F(uIdx, vIdx) + ...
+            eps * bfMatrix(m,n) * cos((vIdx-1) * 2*pi * ycoord(m) * delta) * cos((uIdx-1) * 2*pi * xcoord(n) * delta);
     end
 end
 
 end
 end
-
-%TODO
-pointingLoss = 0;
 
 end
 

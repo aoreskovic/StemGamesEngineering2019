@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SimscapeMultibodyImportXML version="2.0" xmlns="urn:mathworks:SimscapeMultibody:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Created by="" on="03/25/19||20:16:23" using="Simscape Multibody Link Version 6.0" from="SolidWorks 26.3.0"/>
+<ModelUnits mass="kilogram" length="millimeter"/>
+<DataUnits mass="kilogram" length="meter"/>
+<RootAssembly name="kran" uid="kran" version="929">
+<AssemblyFile name="kran.SLDASM" type="SolidWorks Assembly"/>
+<InstanceTree>
+<Instance name="drugi_clanak-1" uid="drugi_clanak-1" entityUid="drugi_clanak*:*Default">
+<Transform>
+<Rotation>-0.67545448804523744 -0.23786494130757393 0.69798388539871781 0 0.94654501923587386 0.3225717386253158 -0.73740167790665223 0.21788252857102491 -0.63934808137973664</Rotation>
+<Translation>-1.3038259986619967 1.9475292717875732 0.997658595671716</Translation>
+</Transform>
+</Instance>
+<Instance name="treci_clanak-1" uid="treci_clanak-1" entityUid="treci_clanak*:*Default">
+<Transform>
+<Rotation>0.69798388539871703 -0.67545448804523844 -0.23786494130757352 0.32257173862531552 -1.0163893911574025e-16 0.94654501923587397 -0.63934808137973764 -0.73740167790665134 0.21788252857102491</Rotation>
+<Translation>0.12657445825598862 2.6818128273680042 0.080695116219465166</Translation>
+</Transform>
+</Instance>
+<Instance name="hidraulicki_trans1-1" uid="hidraulicki_trans1-1" entityUid="hidraulicki_trans1">
+<Transform>
+<Rotation>0.69830377265639854 0.67545448804523811 0.2369241981592137 0.32129598461424419 4.4410445616020411e-16 -0.94697882250384224 -0.63964109574401529 0.73740167790665179 -0.21702081479860469</Rotation>
+<Translation>-1.9788834552012566 1.2433786276767562 0.55795454394944277</Translation>
+</Transform>
+<Instance name="klip_trans1-1" uid="klip_trans1-1" entityUid="klip_trans1*:*Default">
+<Transform>
+<Rotation>-1.27675647831893e-15 -1.0000000000000002 7.7715611723760958e-16 -1 1.3877787807814457e-15 1.9428902930940239e-16 -1.9428902930940239e-16 -8.6042284408449632e-16 -1</Rotation>
+<Translation>1.9541370211098192 0.93520909422577214 -1.004505067032377</Translation>
+</Transform>
+</Instance>
+<Instance name="cilindar_trans1-1" uid="cilindar_trans1-1" grounded="true" entityUid="cilindar_trans1*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0.084137021109647048 0.93520909423020693 -1.0045050670222055</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="postolje-1" uid="postolje-1" grounded="true" entityUid="postolje*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0.85999999999999999 0</Translation>
+</Transform>
+</Instance>
+<Instance name="cetvrti_clanak-1" uid="cetvrti_clanak-1" entityUid="cetvrti_clanak*:*Default">
+<Transform>
+<Rotation>0.67545448804523811 -0.23786494130757335 -0.6979838853987177 -2.1060464950441235e-16 0.94654501923587409 -0.32257173862531541 0.73740167790665179 0.21788252857102494 0.63934808137973731</Rotation>
+<Translation>-0.098491706906849649 2.4984460785334299 0.10377880571512103</Translation>
+</Transform>
+</Instance>
+<Instance name="hidraulicki_trans2-2" uid="hidraulicki_trans2-2" entityUid="hidraulicki_trans2">
+<Transform>
+<Rotation>0.69798388539872924 -0.675454488045239 -0.23786494130753602 0.3225717386252635 -1.7619855147454473e-15 0.94654501923589163 -0.63934808137975052 -0.73740167790665079 0.21788252857098875</Rotation>
+<Translation>-1.8850794582756438 6.0093908939360938 5.0111064654519515</Translation>
+</Transform>
+<Instance name="cilindar_trans2-1" uid="cilindar_trans2-1" grounded="true" entityUid="cilindar_trans2*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>1.3669684109390356 2.4119129353789632 -4.7024548774814203</Translation>
+</Transform>
+</Instance>
+<Instance name="klip_trans2-1" uid="klip_trans2-1" entityUid="klip_trans2*:*Default">
+<Transform>
+<Rotation>-3.3306690738754696e-16 -1 3.8302694349567901e-15 -1 2.7755575615628914e-16 2.1926904736346842e-15 -2.248201624865942e-15 -3.8857805861880479e-15 -0.99999999999999989</Rotation>
+<Translation>3.2369684109390331 2.411912935378957 -4.7024548774814097</Translation>
+</Transform>
+</Instance>
+</Instance>
+<Instance name="prvi_clanak-2" uid="prvi_clanak-2" entityUid="prvi_clanak*:*Default">
+<Transform>
+<Rotation>-0.67545448804523744 -1.0798038730308534e-16 0.73740167790665234 -1.4853768031197843e-16 1 0 -0.73740167790665234 -1.0252464206735495e-16 -0.67545448804523744</Rotation>
+<Translation>0.086269604746141745 2.1899999999999999 -0.30278096510642105</Translation>
+</Transform>
+</Instance>
+<Instance name="hidraulicki_rot-1" uid="hidraulicki_rot-1" entityUid="hidraulicki_rot">
+<Transform>
+<Rotation>-0.050228213323700366 -0.67545448804523811 0.73568903836189814 -0.99767746725283346 -7.7636384969243334e-16 -0.068115132943946624 0.046008672250787357 -0.73740167790665179 -0.67388572287753234</Rotation>
+<Translation>0.26972083332592028 0.73793043809771586 -0.30866872861763822</Translation>
+</Transform>
+<Instance name="klip_rot-2" uid="klip_rot-2" entityUid="klip_rot*:*Default">
+<Transform>
+<Rotation>2.9143354396410354e-16 -1 0 -1 -2.9143354396410354e-16 1.1102230246251563e-16 -1.1102230246251563e-16 0 -1</Rotation>
+<Translation>-0.2427172107782618 -0.05542869101061304 -0.81763191589675421</Translation>
+</Transform>
+</Instance>
+<Instance name="cilindar_rot-2" uid="cilindar_rot-2" grounded="true" entityUid="cilindar_rot*:*Default">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-0.81271721077834913 -0.055428691010664582 -0.81763191589668271</Translation>
+</Transform>
+</Instance>
+</Instance>
+</InstanceTree>
+<Constraints>
+<Concentric name="Concentric1">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>postolje-1</Uid>
+</InstancePath>
+<Position>0 -0.099999999999999978 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>prvi_clanak-2</Uid>
+</InstancePath>
+<Position>-0.16500000000000001 -1.3300000000000001 -0.26813011306794926</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>postolje-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>prvi_clanak-2</Uid>
+</InstancePath>
+<Position>-0.16500000000000001 -1.3300000000000001 -0.26813011306794926</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident7">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>prvi_clanak-2</Uid>
+</InstancePath>
+<Position>-0.33000000000000007 -1.2500000000000004 -0.66648511662252907</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>hidraulicki_rot-1</Uid>
+<Uid>cilindar_rot-2</Uid>
+</InstancePath>
+<Position>0.66599999999999981 -0.15500000000000005 0</Position>
+<Axis>0 -1 1.1102230246251565e-16</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident8">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>prvi_clanak-2</Uid>
+</InstancePath>
+<Position>-0.32999999999999996 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>drugi_clanak-1</Uid>
+</InstancePath>
+<Position>-0.30999999999999978 0.049999999999999378 2</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric7">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>hidraulicki_rot-1</Uid>
+<Uid>klip_rot-2</Uid>
+</InstancePath>
+<Position>-0.155 1.2350000000000012 1.1102230246251565e-16</Position>
+<Axis>1.0000000000000002 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>drugi_clanak-1</Uid>
+</InstancePath>
+<Position>-0.019999999999999907 -0.125 1.3599999999999999</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident17">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>drugi_clanak-1</Uid>
+</InstancePath>
+<Position>-0.2899999999999997 0.40000000000000036 1.634294339612155</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>hidraulicki_trans1-1</Uid>
+<Uid>cilindar_trans1-1</Uid>
+</InstancePath>
+<Position>1.9660000000000006 0.13500000000000026 4.4408920985006262e-16</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Parallel name="Parallel4">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>drugi_clanak-1</Uid>
+</InstancePath>
+<Position>2.4980018054066022e-16 0.049999999999999822 1.9999999999999996</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>hidraulicki_trans1-1</Uid>
+<Uid>klip_trans1-1</Uid>
+</InstancePath>
+<Position>0.11499999999999935 3.8350000000000009 0</Position>
+<Axis>1 -1.1102230246251565e-16 0</Axis>
+</ConstraintGeometry>
+</Parallel>
+<Concentric name="Concentric15">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>treci_clanak-1</Uid>
+</InstancePath>
+<Position>-4.1182165246098696 0.25000000000000078 0.25029698821908131</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>hidraulicki_trans1-1</Uid>
+<Uid>klip_trans1-1</Uid>
+</InstancePath>
+<Position>-0.11499999999999996 3.8350000000000009 0</Position>
+<Axis>1 -1.1102230246251565e-16 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident27">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>treci_clanak-1</Uid>
+</InstancePath>
+<Position>-4.1999999999999993 0.25000000000000056 0.11499999999999977</Position>
+<Axis>0 3.6082248300317588e-16 -1.0000000000000002</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>cetvrti_clanak-1</Uid>
+</InstancePath>
+<Position>-0.11500000000000103 0.22999999999999998 4.0000000000000009</Position>
+<Axis>2.7755575615628914e-16 1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident28">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>treci_clanak-1</Uid>
+</InstancePath>
+<Position>-4.1999999999999993 0.25000000000000056 0.11499999999999977</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>cetvrti_clanak-1</Uid>
+</InstancePath>
+<Position>-0.11500000000000103 0.22999999999999998 4.0000000000000009</Position>
+<Axis>-1 1.1102230246251565e-16 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric23">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>treci_clanak-1</Uid>
+</InstancePath>
+<Position>-0.15000000000000013 0.27000000000000002 -4.4408920985006262e-16</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>hidraulicki_trans2-2</Uid>
+<Uid>cilindar_trans2-1</Uid>
+</InstancePath>
+<Position>1.9659999999999997 -0.11500000000000007 4.4408920985006262e-16</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric24">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>cetvrti_clanak-1</Uid>
+</InstancePath>
+<Position>-0.11500000000000059 0.11500000000000021 3.8500000000000014</Position>
+<Axis>1 1.3877787807814457e-16 -1.6653345369377348e-16</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>hidraulicki_trans2-2</Uid>
+<Uid>klip_trans2-1</Uid>
+</InstancePath>
+<Position>-0.09500000000000007 3.8350000000000009 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident30">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>treci_clanak-1</Uid>
+</InstancePath>
+<Position>-4.1999999999999993 0.019999999999999907 0.11499999999999977</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>hidraulicki_trans2-2</Uid>
+<Uid>cilindar_trans2-1</Uid>
+</InstancePath>
+<Position>1.9659999999999997 -0.11500000000000007 4.4408920985006262e-16</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident31">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>drugi_clanak-1</Uid>
+</InstancePath>
+<Position>-0.019999999999999934 0.049999999999999822 2</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>treci_clanak-1</Uid>
+</InstancePath>
+<Position>-4.1999999999999993 0.27000000000000013 0.13499999999999979</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Coincident name="Coincident32">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>drugi_clanak-1</Uid>
+</InstancePath>
+<Position>-0.31000000000000028 0.020000000000000462 -2</Position>
+<Axis>0 1 1.9428902930940239e-16</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>treci_clanak-1</Uid>
+</InstancePath>
+<Position>-4.2000000000000002 0.27000000000000013 -0.13499999999999979</Position>
+<Axis>0 6.106226635438361e-16 -1.0000000000000002</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric25">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>prvi_clanak-2</Uid>
+</InstancePath>
+<Position>0 -1.2500000000000004 -0.66648511662252907</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>hidraulicki_rot-1</Uid>
+<Uid>cilindar_rot-2</Uid>
+</InstancePath>
+<Position>0.66599999999999981 0.155 0</Position>
+<Axis>0 1 -1.1102230246251565e-16</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric26">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>prvi_clanak-2</Uid>
+</InstancePath>
+<Position>0 0.45000000000000018 -0.026485116622528976</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>drugi_clanak-1</Uid>
+</InstancePath>
+<Position>2.4980018054066022e-16 0.049999999999999822 1.9999999999999996</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric27">
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>drugi_clanak-1</Uid>
+</InstancePath>
+<Position>1.6653345369377348e-16 0.40000000000000036 1.6342943396121552</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="circle">
+<InstancePath>
+<Uid>hidraulicki_trans1-1</Uid>
+<Uid>cilindar_trans1-1</Uid>
+</InstancePath>
+<Position>1.9660000000000006 -0.13500000000000001 4.4408920985006262e-16</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+</Constraints>
+</RootAssembly>
+<Assemblies>
+<Assembly name="hidraulicki_trans1" uid="hidraulicki_trans1" version="197">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="hidraulicki_trans1.SLDASM" type="SolidWorks Assembly"/>
+<Constraints>
+<Concentric name="Concentric1">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>cilindar_trans1-1</Uid>
+</InstancePath>
+<Position>-1.9299999999999999 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>klip_trans1-1</Uid>
+</InstancePath>
+<Position>0 -0.020000000000000018 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Distance name="LimitDistance1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>klip_trans1-1</Uid>
+</InstancePath>
+<Position>0 -0.020000000000000018 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>cilindar_trans1-1</Uid>
+</InstancePath>
+<Position>1.8899999999999999 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Distance>
+</Constraints>
+</Assembly>
+<Assembly name="hidraulicki_trans2" uid="hidraulicki_trans2" version="221">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="hidraulicki_trans2.SLDASM" type="SolidWorks Assembly"/>
+<Constraints>
+<Concentric name="Concentric2">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>klip_trans2-1</Uid>
+</InstancePath>
+<Position>0 -0.020000000000000018 0</Position>
+<Axis>0 1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>cilindar_trans2-1</Uid>
+</InstancePath>
+<Position>-1.9299999999999999 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Distance name="LimitDistance1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>klip_trans2-1</Uid>
+</InstancePath>
+<Position>0 -0.020000000000000018 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>cilindar_trans2-1</Uid>
+</InstancePath>
+<Position>1.8900000000000001 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Distance>
+</Constraints>
+</Assembly>
+<Assembly name="hidraulicki_rot" uid="hidraulicki_rot" version="161">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<AssemblyFile name="hidraulicki_rot.SLDASM" type="SolidWorks Assembly"/>
+<Constraints>
+<Concentric name="Concentric3">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>cilindar_rot-2</Uid>
+</InstancePath>
+<Position>-0.61999999999999988 0 0</Position>
+<Axis>1 0 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>klip_rot-2</Uid>
+</InstancePath>
+<Position>0 1.2700009999999999 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Distance name="LimitDistance1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>klip_rot-2</Uid>
+</InstancePath>
+<Position>0 -0.01999999999999999 0</Position>
+<Axis>0 -1 0</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>cilindar_rot-2</Uid>
+</InstancePath>
+<Position>0.58999999999999997 0 0</Position>
+<Axis>-1 0 0</Axis>
+</ConstraintGeometry>
+</Distance>
+</Constraints>
+</Assembly>
+</Assemblies>
+<Parts>
+<Part name="cetvrti_clanak" uid="cetvrti_clanak*:*Default" version="123">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="cetvrti_clanak.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>525.8720018414441</Mass>
+<CenterOfMass>0 0.11499999999999998 2.0311435191291594</CenterOfMass>
+<Inertia>725.11267767576135 725.12087055273776 7.7178997373489127 -1.438942216149303e-15 3.9253144695537271e-15 6.0079540504807955e-16</Inertia>
+</MassProperties>
+<GeometryFile name="cetvrti_clanak_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.65098039215686276" g="0.61960784313725492" b="0.58823529411764708" a="1"/>
+<Diffuse r="0.65098039215686276" g="0.61960784313725492" b="0.58823529411764708" a="1"/>
+<Specular r="0.52078432148578124" g="0.49568628189610503" b="0.47058824230642882" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.10000000149011612</Shininess>
+</VisualProperties>
+</Part>
+<Part name="cilindar_rot" uid="cilindar_rot*:*Default" version="1045">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="cilindar_rot.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>9.9263718565745176</Mass>
+<CenterOfMass>0.044461435154599327 0 0</CenterOfMass>
+<Inertia>0.10328492394480121 1.7833707580667142 1.7877913663933545 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="cilindar_rot_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="cilindar_trans1" uid="cilindar_trans1*:*Default" version="1420">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="cilindar_trans1.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>20.580248855675535</Mass>
+<CenterOfMass>0.055541470325801888 0 0</CenterOfMass>
+<Inertia>0.13038348974009001 28.519756573543166 28.522624292621135 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="cilindar_trans1_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="cilindar_trans2" uid="cilindar_trans2*:*Default" version="1512">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="cilindar_trans2.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>20.504850631989296</Mass>
+<CenterOfMass>0.048516538413403587 0 0</CenterOfMass>
+<Inertia>0.12916800754241611 28.243482580651808 28.245204560889015 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="cilindar_trans2_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="drugi_clanak" uid="drugi_clanak*:*Default" version="243">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="drugi_clanak.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>797.52457143588708</Mass>
+<CenterOfMass>-0.155 0.14989213197364856 0.18833834768462721</CenterOfMass>
+<Inertia>1211.1595444311042 1210.7628072150726 22.036204751611542 6.4077087890201145 1.4754320977983074e-14 -3.6209196821667332e-15</Inertia>
+</MassProperties>
+<GeometryFile name="drugi_clanak_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.65098039215686276" g="0.61960784313725492" b="0.58823529411764708" a="1"/>
+<Diffuse r="0.65098039215686276" g="0.61960784313725492" b="0.58823529411764708" a="1"/>
+<Specular r="0.52078432148578124" g="0.49568628189610503" b="0.47058824230642882" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.10000000149011612</Shininess>
+</VisualProperties>
+</Part>
+<Part name="klip_rot" uid="klip_rot*:*Default" version="384">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="klip_rot.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>3.5735663521082079</Mass>
+<CenterOfMass>-4.3531490693328958e-10 0.59737564357477513 4.4504336852408398e-08</CenterOfMass>
+<Inertia>0.75634971256987749 0.0088296987087271017 0.76075800431182616 -7.3200179247607935e-08 -2.7113814803143822e-09 1.3740261485867599e-09</Inertia>
+</MassProperties>
+<GeometryFile name="klip_rot_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="klip_trans1" uid="klip_trans1*:*Default" version="596">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="klip_trans1.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>4.9853592061137988</Mass>
+<CenterOfMass>2.6623000027062265e-10 1.9334094787412628 6.5188904502426404e-09</CenterOfMass>
+<Inertia>7.9638475132798998 0.0038438046478917165 7.9655580188724429 -4.611304894472354e-08 -3.253735145953945e-09 -1.9926255579905695e-09</Inertia>
+</MassProperties>
+<GeometryFile name="klip_trans1_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="klip_trans2" uid="klip_trans2*:*Default" version="562">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="klip_trans2.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>4.9099609824276458</Mass>
+<CenterOfMass>2.7031826726926447e-10 1.9042083205254507 6.6189956886152343e-09</CenterOfMass>
+<Inertia>7.6869475250142312 0.0029751542791741363 7.6878591235949667 -4.7062057773597622e-08 -3.2537351455794269e-09 -2.0313827991573434e-09</Inertia>
+</MassProperties>
+<GeometryFile name="klip_trans2_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Diffuse r="0.792156862745098" g="0.81960784313725488" b="0.93333333333333335" a="1"/>
+<Specular r="0.396078431372549" g="0.40980392156862744" b="0.46666666666666667" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.40000000596046448</Shininess>
+</VisualProperties>
+</Part>
+<Part name="postolje" uid="postolje*:*Default" version="598">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="postolje.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>3745.7857064260215</Mass>
+<CenterOfMass>0 -0.49955452009626689 0</CenterOfMass>
+<Inertia>423.10594451717179 388.92796175224805 423.10594451717196 1.0225152993822382e-14 3.063455636951616e-14 -8.7584734544238834e-14</Inertia>
+</MassProperties>
+<GeometryFile name="postolje_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.65098039215686276" g="0.61960784313725492" b="0.58823529411764708" a="1"/>
+<Diffuse r="0.65098039215686276" g="0.61960784313725492" b="0.58823529411764708" a="1"/>
+<Specular r="0.52078432148578124" g="0.49568628189610503" b="0.47058824230642882" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.10000000149011612</Shininess>
+</VisualProperties>
+</Part>
+<Part name="prvi_clanak" uid="prvi_clanak*:*Default" version="732">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="prvi_clanak.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>529.48362962135195</Mass>
+<CenterOfMass>-0.17183620857252971 -0.81806553074266375 -0.23688005820093863</CenterOfMass>
+<Inertia>170.0922253360755 30.383515722013023 167.17153097290043 -14.414371663266039 0.052349334673821461 0.88355451365822668</Inertia>
+</MassProperties>
+<GeometryFile name="prvi_clanak_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.65098039215686276" g="0.61960784313725492" b="0.58823529411764708" a="1"/>
+<Diffuse r="0.65098039215686276" g="0.61960784313725492" b="0.58823529411764708" a="1"/>
+<Specular r="0.52078432148578124" g="0.49568628189610503" b="0.47058824230642882" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.10000000149011612</Shininess>
+</VisualProperties>
+</Part>
+<Part name="treci_clanak" uid="treci_clanak*:*Default" version="276">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="treci_clanak.SLDPRT" type="SolidWorks Part"/>
+<MassProperties>
+<Mass>655.66610541435546</Mass>
+<CenterOfMass>-2.1061850086130582 0.13500000000000015 0.0016133857039162122</CenterOfMass>
+<Inertia>13.877020558947157 992.79005720818111 992.67369303004887 -4.9376385086266655e-15 2.1204386747028399 -3.1498320684792656e-14</Inertia>
+</MassProperties>
+<GeometryFile name="treci_clanak_Default_sldprt.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.65098039215686276" g="0.61960784313725492" b="0.58823529411764708" a="1"/>
+<Diffuse r="0.65098039215686276" g="0.61960784313725492" b="0.58823529411764708" a="1"/>
+<Specular r="0.52078432148578124" g="0.49568628189610503" b="0.47058824230642882" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.10000000149011612</Shininess>
+</VisualProperties>
+</Part>
+</Parts>
+</SimscapeMultibodyImportXML>

@@ -1,0 +1,21 @@
+\section{Beamforming system}
+
+You are given a choice to use a transceiver with a single channel, or to create a beamforming array system. The beamforming system can be linear or planar, with elements spaced uniformly, or non-uniformly. Digital baseband pre-processing will be used for beam shaping. The system schematic is given in Figure \ref{fig:antarray_scheme}.
+%TODO fig:antarray_scheme
+
+Your task is to choose if you wish to use a single transceiver element, or to design an antenna array system to meet your link budget.
+
+An beamforming array is defined by the number of elements along the x-axis (N), and the number of elements along the y-axis (M). Vectors $dx$ and $dy$ define the spacing between each element, and their length is N-1 and M-1, respectively.
+
+The beamforming matrix, $bfMatrix$, represents the weight and phase factors that are applied to each array element. Each element of $bfMatrix$ is a single complex number.
+
+%TODO Define the radiation pattern of all available elements 
+
+The position of the ship relative to the submarine is given in Figures \ref{fig:array_task1} to \ref{fig:array_task3}. You job is to define a transceiving system to create a beam that will direct the signal between two communication channel ends. Your beamforming precision will be evaluated, as well as the end contribution to the link budget.
+
+%TODO fig:array_task1
+% Brod se nalazi iznad podmornice
+%TODO fig:array_task2
+% Problem koji se rješava u jednoj osi
+%TODO fig:array_task3
+% Problem u sfernoj domeni, u dvije osi

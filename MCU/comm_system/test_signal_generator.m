@@ -2,6 +2,7 @@ clear all;
 
 dataset_string = '000,000;001,000;001,001;302,154;952,832;903,832';
 dataset_tmp = double(dataset_string);
+%%
 dataset_tmp = de2bi(dataset_tmp);
 dataset = reshape(dataset_tmp,[],1);
 dataset = dataset';
@@ -61,3 +62,16 @@ for ii=1:length(qpsk_modulated)
     carrier = abs(qpsk_modulated(ii)).*sin(f/fs .* [1:Ts*fs] + angle(qpsk_modulated(ii)));
     modulated_output = [modulated_output carrier];
 end
+
+%% Demodulate
+
+qpskdmod = comm.QPSKDemodulator('BitOutput',true);
+frames_demod = [];
+
+for i=1:10:length(modulated_output)
+   sig = modulated_output(i:i + 9);
+   spk = (fft(sig - mean(sig)));
+   frames_demod = [frames_demod step(qpskdmod, spk(2))'];
+end
+
+frames_demod = ~frames_demod';

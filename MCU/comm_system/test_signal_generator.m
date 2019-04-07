@@ -2,7 +2,7 @@ clear all;
 
 dataset_string = '000,000;001,000;001,001;302,154;952,832;903,832';
 dataset_tmp = double(dataset_string);
-%%
+
 dataset_tmp = de2bi(dataset_tmp);
 dataset = reshape(dataset_tmp,[],1);
 dataset = dataset';
@@ -49,29 +49,52 @@ frames_reshape = reshape(frames',[],1);
 qpskmod = comm.QPSKModulator('BitInput',true);
 qpsk_modulated = step(qpskmod,frames_reshape);
 
+%qpsk_modulated = qpsk_modulate_signal(frames_reshape');
+
 %% Modulate to carrier
 
-fs = 96e3;
-Ts = 1/9.6e3; % kbaud
+close all;
 
-f = 30e3;
+% fs is high because we are in continuous domain
+fs = 1.2e6;
+% number of samples per symbol
+N = 100; 
+% time for symbol generating, Ts = (N - 1) * 1/fs;
+t = 0:1/fs:(N - 1) * 1/fs;
+% carrier frequency
+fc = 32e3;
 
 modulated_output = [];
 
 for ii=1:length(qpsk_modulated)
-    carrier = abs(qpsk_modulated(ii)).*sin(f/fs .* [1:Ts*fs] + angle(qpsk_modulated(ii)));
+    carrier = abs(qpsk_modulated(ii)) .* cos(2 * pi * fc .* t + angle(qpsk_modulated(ii)));
     modulated_output = [modulated_output carrier];
 end
 
 %% Demodulate
 
+close all;
+
+qpsk_demodulated = [];
 qpskdmod = comm.QPSKDemodulator('BitOutput',true);
-frames_demod = [];
 
-for i=1:10:length(modulated_output)
-   sig = modulated_output(i:i + 9);
-   spk = (fft(sig - mean(sig)));
-   frames_demod = [frames_demod step(qpskdmod, spk(2))'];
+
+% iterate over output, every N samples is 1 symbol
+for i=1:N:length(modulated_output)
+   sig = modulated_output(i:i + N - 1);
+   % transpose to baseband
+   sigbb = sig .* exp(1j * 2 * pi * fc .* t);
+   % calculate spectrum
+   spk = FFT(sigbb, blackman(N)', 2 * N, fs);
+   % take conjugate of DC component
+   spk = fftshift(spk);
+   qpsk_demodulated = [qpsk_demodulated; spk(1)'];
 end
+%frames_demod = qpsk_demodulate_signal(qpsk_demodulated);
+frames_demod = step(qpskdmod, qpsk_demodulated);
+spektar(sigbb, fs, 2 * N, 'Spektar u baseband-u');
 
-frames_demod = ~frames_demod';
+%% Check validity
+
+eq_vec = frames_demod == frames_reshape;
+

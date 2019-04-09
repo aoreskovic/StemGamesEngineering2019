@@ -4,11 +4,13 @@ INC= -I .
 
 CFLAGS += $(INC)
 
-all: solution.elf
+all: solution.elf Makefile ../signal.txt
 
 %.elf: $(OBJS)
-	echo $(OBJS)
 	gcc $^ -lm -lfftw3 -o $@
 
 %.o: %.c
-	gcc -c $(CFLAGS) $<
+	gcc -c -g $(CFLAGS) $<
+
+clean:
+	rm solution.elf

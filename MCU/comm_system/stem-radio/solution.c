@@ -1,14 +1,19 @@
 #include <stdio.h>
 #include <fftw3.h>
+#include <math.h>
 
 #include "api.h"
 
-static char data[100];
+static char data[1024];
 
 #define NUM_OF_SYM_SAMPLES 100
-#define CHANNEL_NUMBER 10
+#define CHANNEL_NUMBER 0
 #define REAL 0
 #define IMAG 1
+
+
+#define Fs 96000.0
+#define Fc 30000.0
 
 
 static fftw_complex inp[NUM_OF_SYM_SAMPLES];
@@ -33,14 +38,34 @@ static char decode_qpsk(double real, double imag) {
 
 }
 
-void sym_irq(void) {
+static volatile int lock = 0; 
+
+double mean(fftw_complex *sig, int comp) {
+	double m = 0;
+
+	for (int i = 0; i < NUM_OF_SYM_SAMPLES; i++) {
+		m += sig[i][comp];
+	}	
+
+	return m / NUM_OF_SYM_SAMPLES;
+}
+
+void sym_irq(int param) {
 	double channel_real, channel_imag;
 
 	// acquisition I i Q
 	for (int i = 0; i < NUM_OF_SYM_SAMPLES; i++) {
-		inp[i][REAL] = adc_read_data();
-		inp[i][IMAG] = adc_read_data();
-	}
+		double sig_val = (double) adc_read_data();
+		inp[i][REAL] = sig_val;
+		inp[i][IMAG] = sig_val;
+    }
+
+    // transpose
+    for (int i = 0; i < NUM_OF_SYM_SAMPLES; i++) {
+    	inp[i][REAL] *= cos((2 * M_PI * Fc * i * 1.0) / Fs);
+    	inp[i][IMAG] *= sin((2 * M_PI * Fc * i * 1.0) / Fs);
+    }
+
 	// demodulation
 	fftw_execute(plan);
 
@@ -48,7 +73,11 @@ void sym_irq(void) {
 	channel_imag = out[CHANNEL_NUMBER][IMAG];
 
 	// decoding and sending to fifo
-	send_to_fifo(decode_qpsk(channel_real, channel_imag));
+	char qpsk = decode_qpsk(channel_real, -channel_imag);
+	// alternative:
+	// char qpsk = decode_qpsk(mean(inp, REAL), -mean(inp, IMAG));
+
+	send_to_fifo(qpsk);
 }
 
 
@@ -64,10 +93,11 @@ int main() {
 	register_irq(&sym_irq);
 	start_receiver();
 
-	while (byte_cnt < 100) {
 
-		while (bits = recv_from_fifo() < 0) {
-			byte |= bits << (2 * (3 - bits_cnt));
+	while (byte_cnt < 240) {
+
+		if ((bits = recv_from_fifo()) >= 0) {
+			byte |= (bits << (2 * (bits_cnt))); // big endian
 			bits_cnt++;
 			if (bits_cnt == 4) {
 				data[byte_cnt++] = byte;
@@ -77,8 +107,11 @@ int main() {
 		}
 	}	
 
-
-	printf("%s\r\n", data);
+	for (int i = 0; i < 240; i++) {
+		if ((unsigned char)data[i] != 0xaa && (unsigned char)data[i] != 0x55)
+			printf("%c", data[i]);
+	}
+	printf("\n");
 
 	return 0;
 }

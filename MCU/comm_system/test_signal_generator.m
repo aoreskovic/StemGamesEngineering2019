@@ -3,9 +3,11 @@ clear all;
 dataset_string = '000,000;001,000;001,001;302,154;952,832;903,832';
 dataset_tmp = double(dataset_string);
 
-dataset_tmp = de2bi(dataset_tmp);
-dataset = reshape(dataset_tmp,[],1);
-dataset = dataset';
+%%
+
+dataset_tmp = de2bi(dataset_tmp, 8);
+dataset = reshape(dataset_tmp', [1, numel(dataset_tmp)]);
+dataset = dataset;
 
 %% Frame builder
 
@@ -56,7 +58,7 @@ qpsk_modulated = step(qpskmod,frames_reshape);
 close all;
 
 % fs is high because we are in continuous domain
-fs = 1.2e6;
+fs = 96e3;
 % number of samples per symbol
 N = 100; 
 % time for symbol generating, Ts = (N - 1) * 1/fs;
@@ -78,12 +80,14 @@ close all;
 qpsk_demodulated = [];
 qpskdmod = comm.QPSKDemodulator('BitOutput',true);
 
+sigs = [];
 
 % iterate over output, every N samples is 1 symbol
 for i=1:N:length(modulated_output)
    sig = modulated_output(i:i + N - 1);
    % transpose to baseband
    sigbb = sig .* exp(1j * 2 * pi * fc .* t);
+   sigs = [sigs sigbb];
    % calculate spectrum
    spk = FFT(sigbb, blackman(N)', 2 * N, fs);
    % take conjugate of DC component
@@ -92,9 +96,13 @@ for i=1:N:length(modulated_output)
 end
 %frames_demod = qpsk_demodulate_signal(qpsk_demodulated);
 frames_demod = step(qpskdmod, qpsk_demodulated);
-spektar(sigbb, fs, 2 * N, 'Spektar u baseband-u');
+spektar(imag(sigbb), fs, 2 * N, 'Spektar u baseband-u');
 
 %% Check validity
 
 eq_vec = frames_demod == frames_reshape;
 
+%% Discrete sample steps (16 bit)
+
+input_sig = int16(modulated_output * 2^15);
+csvwrite('signal.txt', input_sig);

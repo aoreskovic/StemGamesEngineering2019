@@ -6,14 +6,14 @@
 
 static char data[1024];
 
-#define NUM_OF_SYM_SAMPLES 100
+#define NUM_OF_SYM_SAMPLES 20
 #define CHANNEL_NUMBER 0
 #define REAL 0
 #define IMAG 1
 
 
-#define Fs 96000.0
-#define Fc 30000.0
+#define Fs 192000
+#define Fc 12800
 
 
 static fftw_complex inp[NUM_OF_SYM_SAMPLES];

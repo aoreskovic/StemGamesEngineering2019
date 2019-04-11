@@ -58,13 +58,13 @@ qpsk_modulated = step(qpskmod,frames_reshape);
 close all;
 
 % fs is high because we are in continuous domain
-fs = 96e3;
+fs = 192e3;
 % number of samples per symbol
-N = 100; 
+N = 20; 
 % time for symbol generating, Ts = (N - 1) * 1/fs;
 t = 0:1/fs:(N - 1) * 1/fs;
 % carrier frequency
-fc = 32e3;
+fc = 12.8e3;
 
 modulated_output = [];
 
@@ -86,17 +86,19 @@ sigs = [];
 for i=1:N:length(modulated_output)
    sig = modulated_output(i:i + N - 1);
    % transpose to baseband
-   sigbb = sig .* exp(1j * 2 * pi * fc .* t);
+   sigbb = sig .* exp(-1j * 2 * pi * fc .* t);
    sigs = [sigs sigbb];
    % calculate spectrum
    spk = FFT(sigbb, blackman(N)', 2 * N, fs);
-   % take conjugate of DC component
+   % take the DC component
    spk = fftshift(spk);
-   qpsk_demodulated = [qpsk_demodulated; spk(1)'];
+   qpsk_demodulated = [qpsk_demodulated; spk(1)];
 end
 %frames_demod = qpsk_demodulate_signal(qpsk_demodulated);
 frames_demod = step(qpskdmod, qpsk_demodulated);
-spektar(imag(sigbb), fs, 2 * N, 'Spektar u baseband-u');
+spektar(sigbb, fs, 2 * N, 'Spektar u baseband-u');
+spektar(sig, fs, 2 * N, 'Spektar nije u baseband-u');
+plot(real(sigbb));
 
 %% Check validity
 

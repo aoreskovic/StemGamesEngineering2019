@@ -1,14 +1,10 @@
 Podmornica s broda prima koordinate koje definiraju njezinu putanju.
 Koordinate su reprezentirane nizom ASCII znakova koji se šalju u paketima. Podaci se zatim moduliraju na QPSK nosioc središnje frekvencije 30 kHz i odašilju hidrofonom.
 
-Na podmornici se prijemnik sastoji od prijemnog hidrofona, I/Q demodulatora i idealnog niskopropusnog filtera granične frekvencije fg=10kHz. Izlazi demodulatora dovode se na ADC-ove mikrokontrolera. Na mikrokontroler je spojena i vanjska jedinica koja generira impulse sinkronizirane s početkom svakog QPSK simbola. Ti impulsi su spojeni na IRQ pin mikrokontolera. Blok shema cijelog sustava zadana je slikom:
+Na podmornici se prijemnik sastoji od prijemnog hidrofona, čiji je izlaz doveden na ADC mikrokontrolera. ADC započinje konverziju sinkrono s početkom nekog QPSK simbola. Blok shema cijelog sustava zadana je slikom:
 %TODO slika
 
 Potrebno je implementirati sustav za demodulaciju i dekodiranje informacije iz ultrazvučnog signala. Prekidna rutina mora dohvatiti potreban broj uzoraka i spremiti ga u globalni FIFO buffer. Glavni program iz FIFO buffera dohvaća uzorke, obavlja demodulaciju i dekodiranje informacije. Primljene koordinate se trebaju ispisati na stdout u formatu:
-
-
-
-## Dodatni zadatak
 
 Uz informacije o koordinatama, brod odašilje i informacije o stanju mreže. Podaci su kodirani, a sastoje se od trenutne pozicije broda, točnog vremena i rutina koje podmornici omogućuju da predvidi rutu kojom će se kretati. Te dodatne informacije su slijedno raspodjeljene na 23 QPSK modulatora i multipleksirane, zajedno s osnovnim podacima iz prethodnog zadatka, u OFDM multipleks koji se sastoji od ukupno 34 podnosioca. Podnosioci su raspodjeljeni kao na slici
 %TODO slika
@@ -16,3 +12,26 @@ P D D D P D D D P D D O P D D D P D D D P D D D P D D D P D D D P
 Neoznačeni podnosioci sadrže konstantan podatak.
 
 Potrebno je modificirati kod iz glavnog dijela zadatka tako da se dekodira i dodatni set informacija sadržan u ostalim podnosiocima. Pretpostavite da je signal selektivno zagušen prolaskom kroz kanal nepoznate prijenosne funkcije.
+
+## Implementacija
+
+Vaše rješenje treba implementirati sljedeći minimalni set funkcija:
+\item complex_double* frequency_shift(double* input)
+\item[] Funkcija prenosi signal s moduliranog nosioca u osnovni pojas, bez filtriranja
+\item double qpsk_demodulator(complex_double symbol, float constellation_offset, char* decoded_symbol)
+\item[] Funkcija vraća bitove dekodirane iz simbola koji je prikazan fazorom symbol, u konstelaciji koja ima symbol "00" na kutu constellation_offset. Zadana vrijednost parametra constellation_offset je pi/4. Funkcija vraća iznos EVM-a.
+\item void frame_sync(char** bitstream)
+\item[] Funkcija sinkronizira ulazni bitstream na početak prvog sljedećeg primljenog paketa, odbacujući prethodne bitove.
+\item void frame_step(char** bitstream, int frame_size)
+\item[] Funkcija preskače bitove duljine frame_size.
+\item char* frame_decoder(char** bitstream, int frame_length)
+\item[] Funkcija iz zadanog niza bitova vraća jedan oblikovani paket, bez headera.
+\item complex_double* channel_correction(complex_double* input, int first_carrier_bin, int ofdm_size, char* pilot_map)
+\item[] Funkcira vrši estimaciju kanala koristeći pilotske signale. first_carrier_bin označava bin na kojem će se u funkciji nalaziti prvi nosioc OFDM multipleksa. ofdm_size naznačuje koliko binova je širok OFDM nosioc. pilot_map označava koji nosioci su piloti. Izlaz je ispravljeni signal.
+
+## Dokumentacija
+
+Za izrađeno rješenje potrebno je generirati dokumentaciju u kojoj su opisani:
+\item Struktura prijemnika s blok shemom
+\item Spektar signala na ulazu i izlazu svakog bloka prije QPSK demodulatora
+\item Signal u vremenski diskretnoj domeni na ulazu i izlazu svakog bloka, u trajanju od minimalno jednog simbola

@@ -229,13 +229,6 @@ smiData.RigidTransform(30).ID = 'AssemblyGround[hidraulicki_rot-1:cilindar_rot-2
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(31).translation = [19.408278789624415 876.55553936783701 -16.81161564072497];  % mm
-smiData.RigidTransform(31).angle = 0.049153520318291802;  % rad
-smiData.RigidTransform(31).axis = [0.76998554412369269 4.911969949131267e-15 0.638061330782975];
-smiData.RigidTransform(31).ID = 'RootGround[postolje-1]';
-
-%Translation Method - Cartesian
-%Rotation Method - Arbitrary Axis
 smiData.RigidTransform(32).translation = [84.137021109647264 935.20909423020669 -1004.5050670222054];  % mm
 smiData.RigidTransform(32).angle = 0;  % rad
 smiData.RigidTransform(32).axis = [0 0 0];

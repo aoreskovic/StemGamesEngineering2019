@@ -2,7 +2,7 @@
 rotRadiusOut = 110;
 rotRadiusIn = 100;
 rotRadiusShaft = 25;
-rotStroke = 700;
+rotStroke = 800;
 rotRadiusDeadVol = 90;
 rotHeightDeadVol = 30;
 

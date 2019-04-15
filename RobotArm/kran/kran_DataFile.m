@@ -421,6 +421,6 @@ smiData.RevoluteJoint(6).ID = '[treci_clanak-1:-:hidraulicki_trans2-2:cilindar_t
 smiData.RevoluteJoint(7).Rz.Pos = 93.905733838681613;  % deg
 smiData.RevoluteJoint(7).ID = '[prvi_clanak-2:-:hidraulicki_rot-1:cilindar_rot-2]';
 
-smiData.RevoluteJoint(8).Rz.Pos = -43.916427658392386;  % deg
+smiData.RevoluteJoint(8).Rz.Pos = 0;  % deg
 smiData.RevoluteJoint(8).ID = '[postolje-1:-:prvi_clanak-2]';
 

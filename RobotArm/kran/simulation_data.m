@@ -1,3 +1,8 @@
+%% SIMULATION DATA
+Tsim = 100;
+Ts = 50e-3;
+
+%% HYDRAULIC DATA
 % Hydraulic rot
 rotRadiusOut = 110;
 rotRadiusIn = 100;
@@ -28,3 +33,10 @@ transDeadVolB = transDeadVolA - transRadiusShaft^2*pi*transHeightDeadVol;
 
 transOneDamping = 5e4;
 transTwoDamping = 5e4;
+
+sim('testSignalGenerator');
+rotValve = [valve1.time, valve1.signals.values];
+transValve1 = [valve2.time, valve2.signals.values];
+transValve2 = [valve3.time, valve3.signals.values];
+baseVoltage = [voltage1.time, voltage1.signals.values];
+pulleyVoltage = [voltage2.time, voltage2.signals.values];

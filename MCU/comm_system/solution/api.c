@@ -1,4 +1,9 @@
+#include <math.h>
+
 #include "api.h"
+
+#define REAL 0
+#define IMAG 1
 
 void dft(complex *input, complex *output, int N) {
 	for (int i = 0; i < N; i++) {

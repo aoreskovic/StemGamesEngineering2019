@@ -1,5 +1,5 @@
 clear;
-teamFolder = "/home/mandicluka/FER/StemGamesEngineering2019/RobotArm/Results";
+teamFolder = "/home/mandicluka/FER/StemGamesEngineering2019/RobotArm/InputFiles";
 run('simulation_params.m')
 
 %% DRIVING

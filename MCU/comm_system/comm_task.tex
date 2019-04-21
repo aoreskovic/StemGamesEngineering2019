@@ -3,6 +3,10 @@
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{amsmath}
+
+\usepackage{enumitem}
+\setlist[description]{style=unboxed}
+
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{circuitikz}
@@ -67,9 +71,9 @@ Tako pripremljeni binarni slijed dovodi se na QPSK modulator konstelacije kao na
 table[meta=label]{
 	x	y	label
 	1	1	00
-	-1	1	10
+	-1	1	01
 	-1	-1	11
-	1	-1	01
+	1	-1	10
 };
 \end{axis}
 \end{tikzpicture}
@@ -92,7 +96,7 @@ Potrebno je implementirati sustav za demodulaciju i dekodiranje informacije iz u
 
 \subsection{Drugi zadatak}
 
-Uz informacije o koordinatama, habitat i podmornica razmjenjuju i kodirane telemetrijske podatke. Ovi su podaci slijedno raspodijeljeni u 24 QPSK nosioca i multipleksirani u OFDM  multipleks koji se sastoji od ukupno 9 podnosioca. Podnosioci su raspodjeljeni kako je prikazano DFT spektrom:
+Uz informacije o koordinatama, habitat i podmornica razmjenjuju i kodirane telemetrijske podatke. Ovi su podaci slijedno raspodijeljeni u 10 QPSK nosioca i multipleksirani u OFDM  multipleks koji se sastoji od ukupno 17 podnosioca. Podnosioci su raspodjeljeni kako je prikazano DFT spektrom:
 \begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}
@@ -103,7 +107,8 @@ Uz informacije o koordinatama, habitat i podmornica razmjenjuju i kodirane telem
 		axis y line=none,
 		xlabel=$f_c - \varDelta f$,
 		ymin=0,ymax=1,
-		xmin=-6,xmax=6
+		xmin=-9,xmax=9,
+		xtick={-8, -5, 0, 5, 8}
 	]
 	% Osnovni podatak
 	\addplot+ [ycomb, style={densely dashed}] plot coordinates {
@@ -111,17 +116,19 @@ Uz informacije o koordinatama, habitat i podmornica razmjenjuju i kodirane telem
 	};
 	% Piloti
 	\addplot+ [ycomb, style={solid}] plot coordinates {
-		(-5,1) (-1,1) (1,1) (5,1)
+		(-8,1) (-5,1) (-1,1) (1,1) (5,1) (8,1)
 	};
 	% Ostali nosioci
 	\addplot+ [ycomb, style={dotted}] plot coordinates {
+		(-7,1) (-6,1)
 		(-4,1) (-3,1) (-2,1)
-		(2,1) (3,1) (4,1)		
+		(2,1) (3,1) (4,1)
+		(6,1) (7,1)
 	};
 	\end{axis}
 	\end{tikzpicture}
 \end{figure}
-Razmak između podnosioca odgovara 4.8 kHz, a graf je centriran na frekvenciju $f_c$ središnjeg podnosioca u OFDM multipleksu, koja je u ovom slučaju 48 kHz. Podnosioc na binu 0, označen crtkano sadrži slijed koordinata iz prvog podzadatka. Podnosioci označeni točkastim linijama sadrže dodatne informacije. Podatak koji se odašilje u jednom OFDM simbolu dobiva se tako da se svaki od podnosioca demodulira te se dobiveni simboli dodaju jedan za drugim. Dobiveni niz bitova sadrži informacije pakirane po istom principu kao i u prethodnom zadatku. Podnosioci označeni punom linijom su pilotski.
+Razmak između podnosioca $\varDelta f$ je 960 Hz, a graf je centriran na frekvenciju $f_c$ središnjeg podnosioca u OFDM multipleksu, koja je u ovom slučaju 48 kHz. Podnosioc na binu 0, označen crtkano sadrži slijed koordinata iz prvog podzadatka. Podnosioci označeni točkastim linijama sadrže dodatne informacije. Podatak koji se odašilje u jednom OFDM simbolu dobiva se tako da se svaki od podnosioca demodulira te se dobiveni simboli dodaju jedan za drugim. Dobiveni niz bitova sadrži informacije pakirane po istom principu kao i u prethodnom zadatku. Podnosioci označeni punom linijom su pilotski.
 
 Potrebno je modificirati kod iz glavnog dijela zadatka tako da se dekodira i dodatni set informacija sadržan u ostalim podnosiocima. Pretpostavite da je signal selektivno zagušen prolaskom kroz kanal nepoznate prijenosne funkcije.
 
@@ -136,20 +143,36 @@ Zadane su dvije datoteke:
 
 \section{Implementacija}
 
-Vaše rješenje treba implementirati sljedeći minimalni set funkcija:
+Vaše rješenje je C ili C++ kod koji implementira prijemnik zadanog signala. Kod se izvodi kao samostalna aplikacija, a izvorni kod se sastoji od minimalno dvije datoteke:
+\begin{description}
+	\item[radio.c / cpp] Implementira sve rutine navedene u nastavku zadatka.
+	\item[main.c / cpp] Učitava zadane datoteke i poziva rutine iz radio.c /cpp
+\end{description}
+Zadan je API koji standardizira rad s kompleksnim brojevima.
+
+Datoteka radio.c / cpp mora implementirati sljedeći set funkcija:
 \begin{itemize}
-\item complex\_double* frequency\_shift(double* input)
-\item[] Funkcija prenosi signal s moduliranog nosioca u osnovni pojas, bez filtriranja
-\item double qpsk\_demodulator(complex\_double symbol, float constellation\_offset, char* decoded\_symbol)
-\item[] Funkcija vraća bitove dekodirane iz simbola koji je prikazan fazorom symbol, u konstelaciji koja ima symbol "00" na kutu constellation\_offset. Zadana vrijednost parametra constellation\_offset je pi/4. Funkcija vraća iznos EVM-a.
-\item void frame\_sync(char** bitstream)
-\item[] Funkcija sinkronizira ulazni bitstream na početak prvog sljedećeg primljenog paketa, odbacujući prethodne bitove.
-\item void frame\_step(char** bitstream, int frame\_size)
-\item[] Funkcija preskače bitove duljine frame\_size.
-\item char* frame\_decoder(char** bitstream, int frame\_length)
-\item[] Funkcija iz zadanog niza bitova vraća jedan oblikovani paket, bez headera.
-\item complex\_double* channel\_correction(complex\_double* input, int first\_carrier\_bin, int ofdm\_size, char* pilot\_map)
-\item[] Funkcira vrši estimaciju kanala koristeći pilotske signale. first\_carrier\_bin označava bin na kojem će se u funkciji nalaziti prvi nosioc OFDM multipleksa. ofdm\_size naznačuje koliko binova je širok OFDM nosioc. pilot\_map označava koji nosioci su piloti. Izlaz je ispravljeni signal.
+\item Prvi zadatak
+	\begin{description}
+	\item[complex* frequency\_shift(double* input, long length)]
+	\,\\ Funkcija prenosi signal s moduliranog nosioca u osnovni pojas, bez filtriranja
+	\item[double qpsk\_demodulator(complex symbol, float constellation\_offset, char* decoded\_symbol)]
+	\,\\ Funkcija vraća bitove dekodirane iz simbola koji je prikazan fazorom symbol, u konstelaciji koja ima symbol "00" na kutu constellation\_offset. Zadana vrijednost parametra constellation\_offset je pi/4 i takva konstelacija odgovara onoj koja je opisana u zadatku. Funkcija vraća iznos EVM-a.
+	\item[void frame\_sync(char** bitstream)]
+	\,\\ Funkcija sinkronizira ulazni bitstream na početak prvog sljedećeg primljenog paketa, odbacujući prethodne bitove.
+	\item[void frame\_step(char** bitstream, int frame\_length)]
+	\,\\ Funkcija preskače bitove duljine frame\_length, odbacujući preskočene bitove.
+	\item[bool frame\_decoder(char** bitstream, char** data)]
+	\,\\ Funkcija iz zadanog niza bitova vraća podatke iz jednog (prvog) paketa i sprema ih u data. Funkcija vraća informaciju je li integritet podataka očuvan.
+	\end{description}
+\item Drugi zadatak
+	\begin{description}
+	\item[complex* channel\_correction(complex* input, int first\_carrier\_bin, int ofdm\_size, char* pilot\_map)]
+	\,\\ Funkcira vrši estimaciju kanala koristeći pilotske signale. first\_carrier\_bin označava bin na kojem će se u DFT spektru nalaziti prvi OFDM podnosioc. ofdm\_size naznačuje koliko binova je širok OFDM nosioc. pilot\_map bitom 1 označava binove na kojima se nalaze pilotski nosioci. Izlaz je ispravljeni signal.
+	\\ \textit{Napomena: Ulazni signal može biti filtriran i decimiran.}
+	\item[double* ofdm\_demodulator(complex* input, char* carrier\_map, char** data)]
+	\,\\ Funkcija demodulira simbole koje se prenose u dodatnim podnosiocima OFDM multipleksa. carrier\_map označava binove na kojima se nalaze podatkovni podnosioci koji se promatraju. Simboli iz podnosioca se slijedno nadodaju i spremaju u data. Funkcija vraća EVM za sve promatrane podnosioce.
+	\end{description}
 \end{itemize}
 
 \section{Dokumentacija}

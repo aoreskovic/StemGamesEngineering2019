@@ -13,11 +13,11 @@ for ii=1:Ncoords
     );
 end
 
-dataset_tmp = double(dataset_string);
-dataset_tmp = de2bi(dataset_tmp, 8);
-dataset_tmp = fliplr(dataset_tmp);
-dataset_tmp = reshape(dataset_tmp', [], 1);
-dataset = dataset_tmp';
+hash_tmp2 = double(dataset_string);
+hash_tmp2 = de2bi(hash_tmp2, 8);
+hash_tmp2 = fliplr(hash_tmp2);
+hash_tmp2 = reshape(hash_tmp2', [], 1);
+dataset = hash_tmp2';
 
 %% Frame builder
 
@@ -36,7 +36,7 @@ postamble_tmp = reshape(postamble_tmp,[],1);
 postamble = postamble_tmp';
 
 data_length_min = 64;
-data_length_max = 255;
+data_length_max = 248;
 
 frame_size_min = 32+8+data_length_min+32;
 
@@ -44,7 +44,8 @@ frames = [];
 noOfFrames = 0;
 while 1
     % Random frame size
-    data_length = round(data_length_min + (data_length_max-data_length_min).*rand);
+    data_length = round(data_length_min/8 + (data_length_max/8-data_length_min/8).*rand);
+    data_length = data_length*8;
 
     % Zero padding
     if length(dataset) < data_length_min
@@ -57,8 +58,19 @@ while 1
     % Header
     header = de2bi(data_length, 8);
 
+    % CRC hash
+    hash_tmp = reshape(dataset(1,1:data_length),8,[]);
+    hash_tmp = fliplr(hash_tmp');
+    hash_tmp = bi2de(hash_tmp);
+    hash_string = CRC_16_CCITT(hash_tmp);
+    hash_tmp2 = double(dataset_string);
+    hash_tmp2 = de2bi(hash_tmp2, 8);
+    hash_tmp2 = fliplr(hash_tmp2);
+    hash_tmp2 = reshape(hash_tmp2', [], 1);
+    hash = hash_tmp2';
+
     % Create frame
-    frame = [preamble header dataset(1,1:data_length) postamble];
+    frame = [preamble header dataset(1,1:data_length) hash postamble];
     frames = [frames frame];
     noOfFrames = noOfFrames + 1;
     

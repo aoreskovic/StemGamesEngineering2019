@@ -51,7 +51,7 @@ Ulazni niz je organiziran u pakete. Svaki paket se sastoji od preambule, zaglavl
 \end{tikzpicture}
 \end{figure}
 
-Preambula se sastoji od preddefiniranog niza podataka oblika 0xa5a5a5a5. Zaglavlje sadrži 8-bitni podatak koji definira duljinu podatkovnog dijela paketa. Najmanja duljina podatkovnog dijela paketa je 64 bita, a najveća 256 bita. Duljina paketa je paran broj. Paket završava postambulom oblika 0x5a5a5a5a. Paketi se šalju slijedno, bez zaštitnog intervala.
+Preambula se sastoji od preddefiniranog niza podataka oblika 0xa5a5a5a5. Zaglavlje sadrži 8-bitni podatak koji definira duljinu podatkovnog dijela paketa. Najmanja duljina podatkovnog dijela paketa je 64 bita, a najveća 248 bita. Duljina podatkovnog dijela paketa je višekratnik broja 8. (Drugim riječima, kraj paketa nikad neće prekidati 8-bitne riječi.) Duljina paketa je paran broj. Paket završava postambulom oblika 0x5a5a5a5a. Paketi se šalju slijedno, bez zaštitnog intervala. Sve riječi u paketu zapisane su u big endian notaciji.
 
 Tako pripremljeni binarni slijed dovodi se na QPSK modulator konstelacije kao na slici:
 
@@ -132,6 +132,9 @@ Razmak između podnosioca $\varDelta f$ je 960 Hz, a graf je centriran na frekve
 
 Potrebno je modificirati kod iz glavnog dijela zadatka tako da se dekodira i dodatni set informacija sadržan u ostalim podnosiocima. Pretpostavite da je signal selektivno zagušen prolaskom kroz kanal nepoznate prijenosne funkcije.
 
+\subsection{Treći zadatak}
+Potrebno je implementirati algoritam za izračun CRC-16 koda zadanog ulaznog niza. CRC-16 kod je izračunat CRC-CCITT algoritmom s inicijalnim stanjem registra 0xFFFF.
+
 \section{Ulazni podaci}
 Zadane su dvije datoteke:
 \begin{itemize}
@@ -162,8 +165,8 @@ Datoteka radio.c / cpp mora implementirati sljedeći set funkcija:
 	\,\\ Funkcija sinkronizira ulazni bitstream na početak prvog sljedećeg primljenog paketa, odbacujući prethodne bitove.
 	\item[void frame\_step(char** bitstream, int frame\_length)]
 	\,\\ Funkcija preskače bitove duljine frame\_length, odbacujući preskočene bitove.
-	\item[bool frame\_decoder(char** bitstream, char** data)]
-	\,\\ Funkcija iz zadanog niza bitova vraća podatke iz jednog (prvog) paketa i sprema ih u data. Funkcija vraća informaciju je li integritet podataka očuvan.
+	\item[void frame\_decoder(char** bitstream, char** data)]
+	\,\\ Funkcija iz zadanog niza bitova vraća podatke iz jednog (prvog) paketa i sprema ih u data.
 	\end{description}
 \item Drugi zadatak
 	\begin{description}
@@ -172,6 +175,13 @@ Datoteka radio.c / cpp mora implementirati sljedeći set funkcija:
 	\\ \textit{Napomena: Ulazni signal može biti filtriran i decimiran.}
 	\item[double* ofdm\_demodulator(complex* input, char* carrier\_map, char** data)]
 	\,\\ Funkcija demodulira simbole koje se prenose u dodatnim podnosiocima OFDM multipleksa. carrier\_map označava binove na kojima se nalaze podatkovni podnosioci koji se promatraju. Simboli iz podnosioca se slijedno nadodaju i spremaju u data. Funkcija vraća EVM za sve promatrane podnosioce.
+	\end{description}
+\item Treći zadatak
+	\begin{description}
+		\item[char crc16\_check(char* bitstream, int length)
+		\,\\ Funkcija vraća CRC-16 hash zadanog niza bitova duljine length prema parametrima zadanim u zadatku.
+		\item[bool frame\_decoder(char** bitstream, char** data)]
+		\,\\ Funkcija iz zadanog niza bitova vraća podatke iz jednog (prvog) paketa i sprema ih u data. Funkcija vraća informaciju je li integritet podataka očuvan.
 	\end{description}
 \end{itemize}
 

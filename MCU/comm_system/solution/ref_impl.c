@@ -53,12 +53,32 @@ double qpsk_demodulator(complex symbol, double constellation_offset, char
 	return min_offset;
 }
 
-void frame_sync(char **bitstream) {
+#define PREAMBLE_LENGTH 4 
+#define PREAMBLE_BYTE 0xa5
+
+void frame_sync(char **bitstream, int len) {
+	char *bits = *bitstream;
+
+	int cnt = 0;
+
+	for (int i = 0; i < len; i++) {
+		if (cnt == PREAMBLE_LENGTH) {
+			// preamble detected
+			*bitstream = &bits[i - cnt];
+			break;
+		}
+		if (bits[i] == PREAMBLE_BYTE && cnt < PREAMBLE_LENGTH) {
+			cnt++;
+		} else if (bits[i] != PREAMBLE_BYTE && cnt < PREAMBLE_LENGTH) {
+			cnt = 0;
+		}
+	}
+
 
 }
 
 void frame_step(char **bitstream, int frame_size) {
-	
+	*bitstream += frame_size;
 }
 
 

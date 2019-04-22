@@ -38,7 +38,7 @@ for I=1:length(data)
     ui16RetCRC16 = bitxor(Crc_ui16LookupTable(double(ui8LookupTableIndex)+1),mod(bitshift(ui16RetCRC16,8),65536));
 end
 
-crc=dec2hex(ui16RetCRC16)
+crc=dec2hex(ui16RetCRC16);
 
 end
 

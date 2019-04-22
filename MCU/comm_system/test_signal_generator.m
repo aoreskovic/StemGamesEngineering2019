@@ -1,6 +1,7 @@
 clear all;
 
 %% Task 1
+fprintf('Building test files for Task 1 and 3...\n');
 
 % Data generator
 Ncoords = 100;
@@ -13,11 +14,11 @@ for ii=1:Ncoords
     );
 end
 
-hash_tmp2 = double(dataset_string);
-hash_tmp2 = de2bi(hash_tmp2, 8);
-hash_tmp2 = fliplr(hash_tmp2);
-hash_tmp2 = reshape(hash_tmp2', [], 1);
-dataset = hash_tmp2';
+dataset_tmp = double(dataset_string);
+dataset_tmp = de2bi(dataset_tmp, 8);
+dataset_tmp = fliplr(dataset_tmp);
+dataset_tmp = reshape(dataset_tmp', [], 1);
+dataset = dataset_tmp';
 
 %% Frame builder
 
@@ -43,16 +44,21 @@ frame_size_min = 32+8+data_length_min+32;
 frames = [];
 noOfFrames = 0;
 while 1
-    % Random frame size
-    data_length = round(data_length_min/8 + (data_length_max/8-data_length_min/8).*rand);
-    data_length = data_length*8;
-
     % Zero padding
     if length(dataset) < data_length_min
         tmp = zeros(1,data_length_min);
         tmp(1,1:length(dataset)) = dataset;
         dataset = tmp;
         data_length = data_length_min;
+    else
+        % Random frame size
+        data_length = round(data_length_min/8 + (data_length_max/8-data_length_min/8).*rand);
+        data_length = data_length*8;
+
+        % Floor if too large
+        if length(dataset) < data_length
+            data_length = length(dataset);
+        end
     end
 
     % Header
@@ -63,7 +69,7 @@ while 1
     hash_tmp = fliplr(hash_tmp');
     hash_tmp = bi2de(hash_tmp);
     hash_string = CRC_16_CCITT(hash_tmp);
-    hash_tmp2 = double(dataset_string);
+    hash_tmp2 = double(hash_string);
     hash_tmp2 = de2bi(hash_tmp2, 8);
     hash_tmp2 = fliplr(hash_tmp2);
     hash_tmp2 = reshape(hash_tmp2', [], 1);

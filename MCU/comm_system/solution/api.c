@@ -33,3 +33,10 @@ void idft(complex *input, complex *output, int N) {
 	}
 }
 
+double abs(complex c1, complex c2) {
+   return sqrt( pow(c1[REAL], 2) + pow(c2[IMAG], 2) );
+}
+
+double angle(complex c) {
+   return atan2( c[IMAG],c[REAL] );
+}

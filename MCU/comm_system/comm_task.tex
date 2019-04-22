@@ -85,10 +85,10 @@ Na prijemnoj strani nalazi se podmornica, čiji je prijemnik prikazan blok shemo
 
 \begin{figure}[h!]
 \centering
-\begin{tikzpicture}
-%TODO
-\end{tikzpicture}
+\includegraphics[width=0.9\textwidth]{Task1.png}
 \end{figure}
+
+CRC verification blok je dio trećeg zadatka.
 
 ADC sustav prijemnog hidrofona ima frekvenciju uzorkovanja 192 kSps. Granična frekvencija idealnog niskopropusnog filtra je 96 kHz.
 
@@ -130,7 +130,14 @@ Uz informacije o koordinatama, habitat i podmornica razmjenjuju i kodirane telem
 \end{figure}
 Razmak između podnosioca $\varDelta f$ je 960 Hz, a graf je centriran na frekvenciju $f_c$ središnjeg podnosioca u OFDM multipleksu, koja je u ovom slučaju 48 kHz. Podnosioc na binu 0, označen crtkano sadrži slijed koordinata iz prvog podzadatka. Podnosioci označeni točkastim linijama sadrže dodatne informacije. Podatak koji se odašilje u jednom OFDM simbolu dobiva se tako da se svaki od podnosioca demodulira te se dobiveni simboli dodaju jedan za drugim. Dobiveni niz bitova sadrži informacije pakirane po istom principu kao i u prethodnom zadatku. Podnosioci označeni punom linijom su pilotski.
 
-Potrebno je modificirati kod iz glavnog dijela zadatka tako da se dekodira i dodatni set informacija sadržan u ostalim podnosiocima. Pretpostavite da je signal selektivno zagušen prolaskom kroz kanal nepoznate prijenosne funkcije.
+Potrebno je modificirati kod iz glavnog dijela zadatka tako da se dekodira i dodatni set informacija sadržan u ostalim podnosiocima. Pretpostavite da je signal selektivno zagušen prolaskom kroz kanal nepoznate prijenosne funkcije. Blok shema prijemnika u ovom zadatku izgleda kao na slici:
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.9\textwidth]{Task2.png}
+\end{figure}
+
+CRC verification blok je dio trećeg zadatka.
 
 \subsection{Treći zadatak}
 Potrebno je implementirati algoritam za izračun CRC-16 koda zadanog ulaznog niza. CRC-16 kod je izračunat CRC-CCITT algoritmom s inicijalnim stanjem registra 0xFFFF.
@@ -178,7 +185,7 @@ Datoteka radio.c / cpp mora implementirati sljedeći set funkcija:
 	\end{description}
 \item Treći zadatak
 	\begin{description}
-		\item[char crc16\_check(char* bitstream, int length)
+		\item[char crc16\_check(char* bitstream, int length)]
 		\,\\ Funkcija vraća CRC-16 hash zadanog niza bitova duljine length prema parametrima zadanim u zadatku.
 		\item[bool frame\_decoder(char** bitstream, char** data)]
 		\,\\ Funkcija iz zadanog niza bitova vraća podatke iz jednog (prvog) paketa i sprema ih u data. Funkcija vraća informaciju je li integritet podataka očuvan.

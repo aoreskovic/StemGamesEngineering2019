@@ -104,8 +104,6 @@ qpsk_modulated = step(qpskmod,frames_reshape);
 
 %% Modulate to carrier
 
-close all;
-
 % fs is high because we are in continuous domain
 fs = 192e3;
 % number of samples per symbol

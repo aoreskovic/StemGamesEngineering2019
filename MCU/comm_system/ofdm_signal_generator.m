@@ -185,30 +185,32 @@ frames_additional_reshape = reshape(frames_additional',[],1);
 
 %% Frame distribution
 
-noSubcarriers = 10;
+noDataSubcarriers = 4;
 
 % Zero pad for OFDM multiplexing
-if (mod(length(frames_additional_reshape),2*noSubcarriers) ~= 0)
-    frames_additional_reshape_tmp = zeros(length(frames_additional_reshape)+2*noSubcarriers-mod(length(frames_additional_reshape),2*noSubcarriers),1);
+if (mod(length(frames_additional_reshape),2*noDataSubcarriers) ~= 0)
+    frames_additional_reshape_tmp = zeros(length(frames_additional_reshape)+2*noDataSubcarriers-mod(length(frames_additional_reshape),2*noDataSubcarriers),1);
     frames_additional_reshape_tmp(1:length(frames_additional_reshape)) = frames_additional_reshape;
     frames_additional_reshape = frames_additional_reshape_tmp;
 end
 
-subcarrierStreamLength = length(frames_additional_reshape)/noSubcarriers;
-subcarrierStream = zeros(noSubcarriers,subcarrierStreamLength);
+subcarrierStreamLength = length(frames_additional_reshape)/noDataSubcarriers;
+subcarrierStream = zeros(noDataSubcarriers,subcarrierStreamLength);
 for pos=1:2:subcarrierStreamLength-1
-    for ii=1:noSubcarriers
-        originalPos = (pos-1)*noSubcarriers+(ii-1)*2+1;
+    for ii=1:noDataSubcarriers
+        originalPos = (pos-1)*noDataSubcarriers+(ii-1)*2+1;
         subcarrierStream(ii,pos:pos+1) = frames_additional_reshape(originalPos:originalPos+1,1)';
     end
 end
 
+subcarrierStream = subcarrierStream';
+
 %% Snip stream lengths
 % so that the signal ends simultaneously for both streams
-if (size(subcarrierStream,2) < length(frames_reshape))
-    frames_reshape = frames_reshape(1:size(subcarrierStream,2));
+if (size(subcarrierStream,1) < length(frames_reshape))
+    frames_reshape = frames_reshape(1:size(subcarrierStream,1));
 else
-    subcarrierStream = subcarrierStream(:,length(frames_reshape));
+    subcarrierStream = subcarrierStream(1:length(frames_reshape),:);
 end
 
 %% QPSK modulator
@@ -220,15 +222,11 @@ qpsk_modulated = step(qpskmod,frames_reshape);
 
 % Additional streams
 qpsk_additional_modulated = [];
-for ii=1:noSubcarriers
-    qpsk_additional_modulated(:,ii) = step(qpskmod,subcarrierStream(ii,:)');
+for ii=1:noDataSubcarriers
+    qpsk_additional_modulated(:,ii) = step(qpskmod,subcarrierStream(:,ii));
 end
 
-return;
-
 %% Modulate to carrier
-
-close all;
 
 % fs is high because we are in continuous domain
 fs = 192e3;
@@ -238,11 +236,43 @@ fprintf('Rs = %2.00f baud\n', fs/N);
 % Time scale
 t = 0:1/fs:(N - 1) * 1/fs;
 % carrier frequency
-fc = 12.8e3;
+fc = 36e3;
 fprintf('fc = %2.00f Hz\n', fc);
 
-modulated_output = [];
+dataSubcarrierMap = [-3 -2 2 3];
+pilotSubcarrierMap = [-4 -1 1 4];
+baseSubcarrierMap = [0];
+deltaF = fs/N;
+
+
+% Base carrier
+base_modulated = [];
 for ii=1:length(qpsk_modulated)
-    carrier = abs(qpsk_modulated(ii)) .* cos(2 * pi * fc .* t + angle(qpsk_modulated(ii)));
-    modulated_output = [modulated_output carrier];
+    carrier = abs(qpsk_modulated(ii)) .* cos(2 * pi * (fc+baseSubcarrierMap*deltaF) .* t + angle(qpsk_modulated(ii)));
+    base_modulated = [base_modulated carrier];
 end
+
+% Additional carriers
+additional_modulated = zeros(1, length(t)*size(qpsk_additional_modulated,1));
+for sc=1:size(qpsk_additional_modulated,2)
+    subcarrier_modulated = [];
+    for ii=1:size(qpsk_additional_modulated,1)
+        carrier = abs(qpsk_additional_modulated(ii,sc)) .* cos(2 * pi * (fc+dataSubcarrierMap(sc)*deltaF) .* t + angle(qpsk_additional_modulated(ii,sc)));
+        subcarrier_modulated = [subcarrier_modulated carrier];
+    end
+    additional_modulated = [additional_modulated + subcarrier_modulated];
+end
+
+% Pilot carrier
+pilot_modulated = zeros(1, length(t)*length(qpsk_modulated));
+for sc=1:length(pilotSubcarrierMap)
+    subcarrier_modulated = [];
+    for ii=1:length(qpsk_modulated)
+        carrier = 1 .* cos(2 * pi * (fc+pilotSubcarrierMap(sc)*deltaF) .* t);
+        subcarrier_modulated = [subcarrier_modulated carrier];
+    end
+    pilot_modulated = pilot_modulated + subcarrier_modulated;
+end
+
+% OFDM output
+modulated_output = base_modulated + additional_modulated + pilot_modulated;

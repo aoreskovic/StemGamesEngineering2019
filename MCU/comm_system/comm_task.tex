@@ -1,37 +1,204 @@
-Podmornica s broda prima koordinate koje definiraju njezinu putanju.
-Koordinate su reprezentirane nizom ASCII znakova koji se šalju u paketima. Podaci se zatim moduliraju na QPSK nosioc središnje frekvencije 30 kHz i odašilju hidrofonom.
+\documentclass[a4paper]{article}
 
-Na podmornici se prijemnik sastoji od prijemnog hidrofona, čiji je izlaz doveden na ADC mikrokontrolera. ADC započinje konverziju sinkrono s početkom nekog QPSK simbola. Blok shema cijelog sustava zadana je slikom:
-%TODO slika
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlist[description]{style=unboxed}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{circuitikz}
+
+\usetikzlibrary{calc,positioning,shapes,decorations.pathreplacing}
+
+\tikzset{
+	short/.style={draw,rectangle,text height=3pt,text depth=13pt,
+		text width=7pt,align=center,fill=gray!30},
+	long/.style={short,text width=1.5cm},
+	verylong/.style={short,text width=4.5cm}
+}
+
+\begin{document}
+\subsection{Prvi zadatak}
+Pomorski habitat upravlja udaljenom podmornicom šaljući joj informacije o koordinatama kojima se podmornica mora kretati. Koordinate se kodiraju na tri decimale i šalju u tripletima xxx.xxx,yyy.yyy,zzz.zzz;. Svaka znamenka je 8-bitna riječ. Tripleti se šalju slijedno i odvajaju znakom ; i na taj način stvaraju ulazni podatkovni niz u komunikacijski sustav.
+
+Ulazni niz je organiziran u pakete. Svaki paket se sastoji od preambule, zaglavlja, podatka, CRC-16 koda i postambulom, kako je ilustrirano slikom:
+
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[node distance=-\pgflinewidth]
+
+\node[short,fill=black] (preamb) {};
+\node[long,right=of preamb,label=center:length](header){};
+\node[verylong,draw=none,fill=none,right=of header,label=center:data] (data) {};
+\node[long,right=of data,label=center:CRC hash] (hash) {};
+\node[short,fill=black,right=of hash] (postamb) {};
+
+\node[above right=0.5cm of preamb] (ppre) {Preamble};
+\node[above left=0.5cm of postamb] (ppos) {Postamble};
+
+\draw (ppre.west) -- +(-10pt,0pt) -- (preamb.north);
+\draw (ppos.east) -- +(10pt,0pt) -- (postamb.north);
+\draw[dotted] (header.north east) -- (hash.north west);
+\draw[dotted] (header.south east) -- (hash.south west);
+\draw[<->] ( $ (preamb.south west) +(0,-0.6cm) $ ) -- node[fill=white] {length + 88 bits} ( $ (postamb.south east) +(0,-0.6cm) $ );
+\draw (preamb.south west) -- +(0,-1cm);
+\draw (postamb.south east) -- +(0,-1cm);
+
+\end{tikzpicture}
+\end{figure}
+
+Preambula se sastoji od preddefiniranog niza podataka oblika 0xa5a5a5a5. Zaglavlje sadrži 8-bitni podatak koji definira duljinu podatkovnog dijela paketa. Najmanja duljina podatkovnog dijela paketa je 64 bita, a najveća 248 bita. Duljina podatkovnog dijela paketa je višekratnik broja 8. (Drugim riječima, kraj paketa nikad neće prekidati 8-bitne riječi.) Duljina paketa je paran broj. Paket završava postambulom oblika 0x5a5a5a5a. Paketi se šalju slijedno, bez zaštitnog intervala. Sve riječi u paketu zapisane su u big endian notaciji.
+
+Tako pripremljeni binarni slijed dovodi se na QPSK modulator konstelacije kao na slici:
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+	xmin=-1.5,xmax=1.5,
+	ymin=-1.5,ymax=1.5,
+	axis lines=center,
+	xlabel=$\Re e$,
+	ylabel=$\Im m$,
+	xtick={-1,...,1},
+	ytick={-1,...,1},
+]
+\addplot+ [nodes near coords, only marks, point meta=explicit symbolic]
+table[meta=label]{
+	x	y	label
+	1	1	00
+	-1	1	01
+	-1	-1	11
+	1	-1	10
+};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+QPSK modulirani signal se transponira na frekvenciju nosioca $f_c = 12.8 \,\textrm{kHz}$ i odašilje hidrofonom. Brzina prijenosa u sustavu je 19.2 kbit/s.
+
+Na prijemnoj strani nalazi se podmornica, čiji je prijemnik prikazan blok shemom kao na slici:
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.9\textwidth]{Task1.png}
+\end{figure}
+
+CRC verification blok je dio trećeg zadatka.
+
+ADC sustav prijemnog hidrofona ima frekvenciju uzorkovanja 192 kSps. Granična frekvencija idealnog niskopropusnog filtra je 96 kHz.
 
 Potrebno je implementirati sustav za demodulaciju i dekodiranje informacije iz ultrazvučnog signala. Prekidna rutina mora dohvatiti potreban broj uzoraka i spremiti ga u globalni FIFO buffer. Glavni program iz FIFO buffera dohvaća uzorke, obavlja demodulaciju i dekodiranje informacije. Primljene koordinate se trebaju ispisati na stdout u formatu:
 
-Uz informacije o koordinatama, brod odašilje i informacije o stanju mreže. Podaci su kodirani, a sastoje se od trenutne pozicije broda, točnog vremena i rutina koje podmornici omogućuju da predvidi rutu kojom će se kretati. Te dodatne informacije su slijedno raspodjeljene na 23 QPSK modulatora i multipleksirane, zajedno s osnovnim podacima iz prethodnog zadatka, u OFDM multipleks koji se sastoji od ukupno 34 podnosioca. Podnosioci su raspodjeljeni kao na slici
-%TODO slika
-P D D D P D D D P D D O P D D D P D D D P D D D P D D D P D D D P 
-Neoznačeni podnosioci sadrže konstantan podatak.
+\subsection{Drugi zadatak}
 
-Potrebno je modificirati kod iz glavnog dijela zadatka tako da se dekodira i dodatni set informacija sadržan u ostalim podnosiocima. Pretpostavite da je signal selektivno zagušen prolaskom kroz kanal nepoznate prijenosne funkcije.
+Uz informacije o koordinatama, habitat i podmornica razmjenjuju i kodirane telemetrijske podatke. Ovi su podaci slijedno raspodijeljeni u 10 QPSK nosioca i multipleksirani u OFDM  multipleks koji se sastoji od ukupno 17 podnosioca. Podnosioci su raspodjeljeni kako je prikazano DFT spektrom:
+\begin{figure}[h!]
+	\centering
+	\begin{tikzpicture}
+	\begin{axis}[
+		width=\textwidth,
+		height=3cm,
+		axis x line=bottom,
+		axis y line=none,
+		xlabel=$f_c - \varDelta f$,
+		ymin=0,ymax=1,
+		xmin=-9,xmax=9,
+		xtick={-8, -5, 0, 5, 8}
+	]
+	% Osnovni podatak
+	\addplot+ [ycomb, style={densely dashed}] plot coordinates {
+		(0,1)
+	};
+	% Piloti
+	\addplot+ [ycomb, style={solid}] plot coordinates {
+		(-8,1) (-5,1) (-1,1) (1,1) (5,1) (8,1)
+	};
+	% Ostali nosioci
+	\addplot+ [ycomb, style={dotted}] plot coordinates {
+		(-7,1) (-6,1)
+		(-4,1) (-3,1) (-2,1)
+		(2,1) (3,1) (4,1)
+		(6,1) (7,1)
+	};
+	\end{axis}
+	\end{tikzpicture}
+\end{figure}
+Razmak između podnosioca $\varDelta f$ je 960 Hz, a graf je centriran na frekvenciju $f_c$ središnjeg podnosioca u OFDM multipleksu, koja je u ovom slučaju 48 kHz. Podnosioc na binu 0, označen crtkano sadrži slijed koordinata iz prvog podzadatka. Podnosioci označeni točkastim linijama sadrže dodatne informacije. Podatak koji se odašilje u jednom OFDM simbolu dobiva se tako da se svaki od podnosioca demodulira te se dobiveni simboli dodaju jedan za drugim. Dobiveni niz bitova sadrži informacije pakirane po istom principu kao i u prethodnom zadatku. Podnosioci označeni punom linijom su pilotski.
 
-## Implementacija
+Potrebno je modificirati kod iz glavnog dijela zadatka tako da se dekodira i dodatni set informacija sadržan u ostalim podnosiocima. Pretpostavite da je signal selektivno zagušen prolaskom kroz kanal nepoznate prijenosne funkcije. Blok shema prijemnika u ovom zadatku izgleda kao na slici:
 
-Vaše rješenje treba implementirati sljedeći minimalni set funkcija:
-\item complex_double* frequency_shift(double* input)
-\item[] Funkcija prenosi signal s moduliranog nosioca u osnovni pojas, bez filtriranja
-\item double qpsk_demodulator(complex_double symbol, float constellation_offset, char* decoded_symbol)
-\item[] Funkcija vraća bitove dekodirane iz simbola koji je prikazan fazorom symbol, u konstelaciji koja ima symbol "00" na kutu constellation_offset. Zadana vrijednost parametra constellation_offset je pi/4. Funkcija vraća iznos EVM-a.
-\item void frame_sync(char** bitstream)
-\item[] Funkcija sinkronizira ulazni bitstream na početak prvog sljedećeg primljenog paketa, odbacujući prethodne bitove.
-\item void frame_step(char** bitstream, int frame_size)
-\item[] Funkcija preskače bitove duljine frame_size.
-\item char* frame_decoder(char** bitstream, int frame_length)
-\item[] Funkcija iz zadanog niza bitova vraća jedan oblikovani paket, bez headera.
-\item complex_double* channel_correction(complex_double* input, int first_carrier_bin, int ofdm_size, char* pilot_map)
-\item[] Funkcira vrši estimaciju kanala koristeći pilotske signale. first_carrier_bin označava bin na kojem će se u funkciji nalaziti prvi nosioc OFDM multipleksa. ofdm_size naznačuje koliko binova je širok OFDM nosioc. pilot_map označava koji nosioci su piloti. Izlaz je ispravljeni signal.
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.9\textwidth]{Task2.png}
+\end{figure}
 
-## Dokumentacija
+CRC verification blok je dio trećeg zadatka.
+
+\subsection{Treći zadatak}
+Potrebno je implementirati algoritam za izračun CRC-16 koda zadanog ulaznog niza. CRC-16 kod je izračunat CRC-CCITT algoritmom s inicijalnim stanjem registra 0xFFFF.
+
+\section{Ulazni podaci}
+Zadane su dvije datoteke:
+\begin{itemize}
+\item single\_carrier.raw
+\item[] Sadrži digitalizirani signal s D/A pretvornika, zapisan kao 32-bitni float. Primljeni signal je jedan QPSK nosioc na prijenosnoj frekvenciji 12.8 kHz. Signal sadrži niz koordinata kako je opisano u zadatku.
+\item ofdm\_carrier.raw
+\item[] Sadrži digitalizirani signal s D/A pretvornika, zapisan kao 32-bitni float. Primljeni signal je OFDM multipleks, središnje frekvencije 48 kHz. Struktura signala je opisana u zadatku.
+\end{itemize}
+
+\section{Implementacija}
+
+Vaše rješenje je C ili C++ kod koji implementira prijemnik zadanog signala. Kod se izvodi kao samostalna aplikacija, a izvorni kod se sastoji od minimalno dvije datoteke:
+\begin{description}
+	\item[radio.c / cpp] Implementira sve rutine navedene u nastavku zadatka.
+	\item[main.c / cpp] Učitava zadane datoteke i poziva rutine iz radio.c /cpp
+\end{description}
+Zadan je API koji standardizira rad s kompleksnim brojevima.
+
+Datoteka radio.c / cpp mora implementirati sljedeći set funkcija:
+\begin{itemize}
+\item Prvi zadatak
+	\begin{description}
+	\item[complex* frequency\_shift(double* input, long length)]
+	\,\\ Funkcija prenosi signal s moduliranog nosioca u osnovni pojas, bez filtriranja
+	\item[double qpsk\_demodulator(complex symbol, float constellation\_offset, char* decoded\_symbol)]
+	\,\\ Funkcija vraća bitove dekodirane iz simbola koji je prikazan fazorom symbol, u konstelaciji koja ima symbol "00" na kutu constellation\_offset. Zadana vrijednost parametra constellation\_offset je pi/4 i takva konstelacija odgovara onoj koja je opisana u zadatku. Funkcija vraća iznos EVM-a.
+	\item[void frame\_sync(char** bitstream)]
+	\,\\ Funkcija sinkronizira ulazni bitstream na početak prvog sljedećeg primljenog paketa, odbacujući prethodne bitove.
+	\item[void frame\_step(char** bitstream, int frame\_length)]
+	\,\\ Funkcija preskače bitove duljine frame\_length, odbacujući preskočene bitove.
+	\item[void frame\_decoder(char** bitstream, char** data)]
+	\,\\ Funkcija iz zadanog niza bitova vraća podatke iz jednog (prvog) paketa i sprema ih u data.
+	\end{description}
+\item Drugi zadatak
+	\begin{description}
+	\item[complex* channel\_correction(complex* input, int first\_carrier\_bin, int ofdm\_size, char* pilot\_map)]
+	\,\\ Funkcira vrši estimaciju kanala koristeći pilotske signale. first\_carrier\_bin označava bin na kojem će se u DFT spektru nalaziti prvi OFDM podnosioc. ofdm\_size naznačuje koliko binova je širok OFDM nosioc. pilot\_map bitom 1 označava binove na kojima se nalaze pilotski nosioci. Izlaz je ispravljeni signal.
+	\\ \textit{Napomena: Ulazni signal može biti filtriran i decimiran.}
+	\item[double* ofdm\_demodulator(complex* input, char* carrier\_map, char** data)]
+	\,\\ Funkcija demodulira simbole koje se prenose u dodatnim podnosiocima OFDM multipleksa. carrier\_map označava binove na kojima se nalaze podatkovni podnosioci koji se promatraju. Simboli iz podnosioca se slijedno nadodaju i spremaju u data. Funkcija vraća EVM za sve promatrane podnosioce.
+	\end{description}
+\item Treći zadatak
+	\begin{description}
+		\item[char crc16\_check(char* bitstream, int length)]
+		\,\\ Funkcija vraća CRC-16 hash zadanog niza bitova duljine length prema parametrima zadanim u zadatku.
+		\item[bool frame\_decoder(char** bitstream, char** data)]
+		\,\\ Funkcija iz zadanog niza bitova vraća podatke iz jednog (prvog) paketa i sprema ih u data. Funkcija vraća informaciju je li integritet podataka očuvan.
+	\end{description}
+\end{itemize}
+
+\section{Dokumentacija}
 
 Za izrađeno rješenje potrebno je generirati dokumentaciju u kojoj su opisani:
+\begin{itemize}
 \item Struktura prijemnika s blok shemom
 \item Spektar signala na ulazu i izlazu svakog bloka prije QPSK demodulatora
 \item Signal u vremenski diskretnoj domeni na ulazu i izlazu svakog bloka, u trajanju od minimalno jednog simbola
+\end{itemize}
+
+\end{document}

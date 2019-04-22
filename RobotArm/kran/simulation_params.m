@@ -1,8 +1,13 @@
+%% SIMULATION DATA
+Tsim = 100;
+Ts = 50e-3;
+
+%% HYDRAULIC DATA
 % Hydraulic rot
 rotRadiusOut = 110;
 rotRadiusIn = 100;
 rotRadiusShaft = 25;
-rotStroke = 700;
+rotStroke = 800;
 rotRadiusDeadVol = 90;
 rotHeightDeadVol = 30;
 

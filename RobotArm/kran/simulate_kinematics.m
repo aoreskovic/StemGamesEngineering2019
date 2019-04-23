@@ -1,5 +1,5 @@
 clear;
-teamFolder = "/home/mandicluka/FER/StemGamesEngineering2019/RobotArm/InputFiles";
+teamFolder = "../InputFiles";
 run('simulation_params.m')
 
 %% KINEMATICS

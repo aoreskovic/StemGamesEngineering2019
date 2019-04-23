@@ -58,16 +58,39 @@ function y = setCraneInPosition(table)
     set_param("kinematics_crane/Crane/Crane Mechanics" + ... 
               "/BeltAndPulley/Revolute Joint", 'MaskValueString', str);
     
+    % Calculate top of the crane position and set load position
+    L = 4.85949 + table.q3 + table.q4;
+    a = 1.81648;
+    b = 0.6634945;
+    c0 = 1.331 + 0.194;
+    c = 1.331 - table.q2;
+    R = 0.135;
+
+    gamma = acos((c^2 - a^2 - b^2)/(-2*a*b));
+    gamma0 = acos((c0^2 - a^2 - b^2)/(-2*a*b));
+    theta = gamma - gamma0;
+
+    x0 = -0.24164;
+    y0 = 2.640 - 0.01;
+    deltaY = R*deg2rad(table.q5);
+
+    xp = (x0+ L*cos(theta))*cos(deg2rad(table.q1));
+    yp = y0 + L*sin(theta) - deltaY;
+    zp = -(x0+ L*cos(theta))*sin(deg2rad(table.q1));
+    position_str = "[" + num2str([xp yp zp]) + "]";
+    angle_str =  num2str(table.q1 + 180);
+    
     str = "RigidTransform|Cartesian|0|m|compiletime|+Z|" + ...
-          "[8 7 0]" + ...
+          position_str + ...
           "|compiletime|0|m|compiletime|0|m|compiletime|0|deg|" + ...
-          "compiletime|None|deg|+Z|0.0|compiletime|[0 0 1]|compiletime" + ...
+          "compiletime|StandardAxis|deg|+Y|" + angle_str + ...
+          "|compiletime|[0 0 1]|compiletime" + ...
           "|+X|+Y|+Y|+Z|FollowerAxes|XYX|[0 0 0]|deg|" + ...
-          "compiletime|[1 0 0; 0 1 0; 0 0 1]|compiletime|" + ...
+          "compiletime|[1 0 0; 0 0 -1; 0 1 0]|compiletime|" + ...
           "simmechanics.library.frames_transforms.rigid_transform"
       
     set_param("kinematics_crane/Crane/Crane Mechanics" + ...
-              "/BeltAndPulley/Rigid Transform2", 'MaskValueString', str)
+              "/BeltAndPulley/Rigid Transform2", 'MaskValueString', str);
 end
 
 

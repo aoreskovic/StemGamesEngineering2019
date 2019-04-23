@@ -276,3 +276,9 @@ end
 
 % OFDM output
 modulated_output = base_modulated + additional_modulated + pilot_modulated;
+
+%% Write to file
+
+input_sig = int16(modulated_output * 2^15);
+csvwrite('ofdm_carrier.raw', input_sig);
+

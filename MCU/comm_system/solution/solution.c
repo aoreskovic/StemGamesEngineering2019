@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 static const short adc_data[] = {
-#include "../signal.txt"
+#include "../single_carrier.raw"
 };
 
 #define N 20

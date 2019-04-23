@@ -1,4 +1,5 @@
-clear all;
+clear;
+close all;
 
 %% Task 1
 fprintf('Building test files for Task 1 and 3...\n');
@@ -147,7 +148,7 @@ end
 frames_demod = step(qpskdmod, qpsk_demodulated);
 spektar(sigbb, fs, N, 'Spektar u baseband-u');
 spektar(sig, fs, N, 'Spektar nije u baseband-u');
-plot(real(sigbb));
+
 
 %% Check validity
 
@@ -156,4 +157,4 @@ eq_vec = frames_demod == frames_reshape;
 %% Discrete sample steps (16 bit)
 
 input_sig = int16(modulated_output * 2^15);
-csvwrite('signal.txt', input_sig);
+csvwrite('single_carrier.raw', input_sig);

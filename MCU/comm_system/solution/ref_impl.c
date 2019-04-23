@@ -118,7 +118,8 @@ int frame_decoder(char *bytestream, char **data) {
 
 	int len = *(bytestream++); // get packet length and move to data
 
-	*data = (char *) malloc(len);
+	*data = (char *) malloc(len + 1);
+	(*data)[len] = 0;
 
 	for (int i = 0; i < len; i++) {
 		(*data)[i] = bytestream[i];

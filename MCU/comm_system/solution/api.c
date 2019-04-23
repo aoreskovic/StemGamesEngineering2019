@@ -33,10 +33,20 @@ void idft(complex *input, complex *output, int N) {
 	}
 }
 
-double abs(complex c1, complex c2) {
-   return sqrt( pow(c1[REAL], 2) + pow(c2[IMAG], 2) );
+double complex_abs(complex c) {
+   return sqrt(pow(c[REAL], 2) + pow(c[IMAG], 2));
 }
 
-double angle(complex c) {
-   return atan2( c[IMAG],c[REAL] );
+double complex_angle(complex c) {
+   return atan2(c[IMAG], c[REAL]);
+}
+
+void complex_add_angle(complex *c, double delta) {
+	double r = complex_abs(*c);
+	double phi = complex_angle(*c);
+
+	phi += delta;
+
+	*c[REAL] = r * cos(phi);
+	*c[IMAG] = r * sin(phi);
 }

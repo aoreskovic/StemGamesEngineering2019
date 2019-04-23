@@ -55,60 +55,131 @@ double qpsk_demodulator(complex symbol, double constellation_offset, char
 
 #define PREAMBLE_LENGTH 4 
 #define PREAMBLE_BYTE 0xa5
-#define BITS_IN_STREAM 1
+#define BITS_IN_STREAM 2
 
-void frame_sync(char **bitstream, int len) {
-	char *bits = *bitstream;
-	int bytelen = len / (9 - BITS_IN_STREAM);
-
-	char bytestream[bytelen];
-
-	int bytecnt = 0;
-
+char *bitstream_to_bytestream(char *bitstream, int length) {
+	int bytelen = length / 4;
+	char *bytestream = (char *) malloc(bytelen);
+	int byte_cnt = 0;
 	char curr_byte = 0;
-
 	int bits_cnt = 0;
 
-	for (int i = 0; i < len; i++) {
-		curr_byte |= (bits[i] << (BITS_IN_STREAM * (bits_cnt))); 
+	for (int i = 0; i < length; i++) {
+		curr_byte |= (bitstream[i] << (BITS_IN_STREAM * (bits_cnt))); 
 		bits_cnt++;
 		if (bits_cnt == 8 / BITS_IN_STREAM) {
 			bits_cnt = 0;
-			bytestra
+			bytestream[byte_cnt++] = curr_byte;
 		}
 	}
 
+	return bytestream;
+}
+
+
+void frame_sync(char **bytestream, int length) {
 	int cnt = 0;
 
-	for (int i = 0; i < len; i++) {
+	for (int i = 0; i < length; i++) {
 		if (cnt == PREAMBLE_LENGTH) {
 			// preamble detected
-			*bitstream = &bits[i - cnt];
+			*bytestream = &(*bytestream[i - cnt]);
 			break;
 		}
-		if (bits[i] == PREAMBLE_BYTE && cnt < PREAMBLE_LENGTH) {
+		if (*bytestream[i] == PREAMBLE_BYTE && cnt < PREAMBLE_LENGTH) {
 			cnt++;
-		} else if (bits[i] != PREAMBLE_BYTE && cnt < PREAMBLE_LENGTH) {
+		} else if (*bytestream[i] != PREAMBLE_BYTE && cnt < PREAMBLE_LENGTH) {
 			cnt = 0;
 		}
 	}
-
-
 }
 
-void frame_step(char **bitstream, int frame_size) {
-	*bitstream += frame_size;
+void frame_step(char **bytestream, int frame_length) {
+	*bytestream += frame_length;
 }
 
 
-char *frame_decoder(char **bitstream, int frame_length) {
-	return NULL;
+void frame_decoder(char *bytestream, char **data) {
+	bytestream += PREAMBLE_LENGTH; // skip preamble
+
+	int len = *(bytestream++); // get packet length and move to data
+
+	*data = (char *) malloc(len);
+
+	for (int i = 0; i < len; i++) {
+		*data[i] = bytestream[i];
+	}
 }
 
+#define REF_PILOT_PHASE 0
 
 complex *channel_correction(complex *input, int first_carrier, int ofdm_size, 
 	char *pilot_map) {
 
+	complex *output = (complex *) malloc(sizeof(complex) * ofdm_size);
+	dft(input, output, ofdm_size);
 
-	return NULL;
+	double delta = 0.0;
+
+	for (int i = first_carrier; i < ofdm_size; i++) {
+		if (pilot_map[i]) {
+			delta = complex_angle(input[i]) - REF_PILOT_PHASE;
+		} else {
+			complex_add_angle(&input[i], delta);
+		}
+	}
+
+}
+
+double *ofdm_demodulator(complex *input, char *carrier_map, int carrier_no, 
+	int ofdm_size, char **data) {
+
+	complex spectrum[ofdm_size];
+
+	dft(input, spectrum, ofdm_size);
+
+	*data = (char *) malloc(2 * carrier_no); // 2 bits per carrier  
+	double *evm = (double *) malloc(sizeof(double) * carrier_no);
+
+	int cnt = 0;
+	for (int i = 0; i < ofdm_size; i++) {
+		if (carrier_map[i]) {
+			char tmp;
+			evm[cnt] = qpsk_demodulator(spectrum[i], M_PI / 4, &tmp);
+			*data[cnt] = tmp;
+			cnt++;
+		}
+	}
+
+	return evm;
+}
+
+unsigned short crc16_check(char *msg, int length) {
+	int counter;
+    unsigned short crc = CRC16_START_VAL;
+ 
+    for (counter = 0; counter < length; counter++) {
+        crc = (crc<<8) ^ crc16tab[((crc>>8) ^ *(char *)msg++)&0x00FF];
+    }
+
+    return crc;
+}
+
+bool frame_decoder_valid(char *bytestream, char **data) {
+	bytestream += PREAMBLE_LENGTH; // skip preamble
+
+	int len = *(bytestream++); // get packet length and move to data
+
+	*data = (char *) malloc(len);
+
+	for (int i = 0; i < len; i++) {
+		*data[i] = bytestream[i];
+	}
+
+	// message length without 2 bytes for CRC hash
+	unsigned short crc = crc16_check(*data, len - 2);
+	// crc from message
+	unsigned short msg_crc = *data[len - 1] << 8 | *data[len - 2]; 
+
+	return crc == msg_crc;  
 }

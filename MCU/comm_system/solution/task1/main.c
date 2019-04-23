@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <math.h>
-#include <api.h>
-#include <solution.h>
 #include <stdlib.h>
 
+#include <api.h>
+#include <radio.h>
+
 static const short adc_data[] = {
-#include "../single_carrier.raw"
+#include "../../single_carrier.raw"
 };
 
 #define N 20

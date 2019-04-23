@@ -1,3 +1,6 @@
+#ifndef _RADIO_H
+#define _RADIO_H
+
 complex *frequency_shift(double *input, double fc, double fs, int N);
 double qpsk_demodulator(complex symbol, double constellation_offset, char 
 	*decoded_symbol);
@@ -12,3 +15,5 @@ double *ofdm_demodulator(complex *input, char *carrier_map, int carrier_no,
 	int ofdm_size, char **data);
 unsigned short crc16_check(char *msg, int length);
 bool frame_decoder_valid(char *bytestream, char **data);
+
+#endif

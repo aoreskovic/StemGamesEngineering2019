@@ -231,10 +231,9 @@ end
 % fs is high because we are in continuous domain
 fs = 192e3;
 % number of samples per symbol
-N = 20;
-fprintf('Rs = %2.00f baud\n', fs/N);
-% Time scale
-t = 0:1/fs:(N - 1) * 1/fs;
+N = 128;
+Rs = fs/N;
+fprintf('Rs = %2.00f baud\n', Rs);
 % carrier frequency
 fc = 36e3;
 fprintf('fc = %2.00f Hz\n', fc);
@@ -242,40 +241,24 @@ fprintf('fc = %2.00f Hz\n', fc);
 dataSubcarrierMap = [-3 -2 2 3];
 pilotSubcarrierMap = [-4 -1 1 4];
 baseSubcarrierMap = [0];
-deltaF = fs/N;
 
+fsLow = 16*Rs;
 
-% Base carrier
-base_modulated = [];
+ofdmLow = [];
 for ii=1:length(qpsk_modulated)
-    carrier = abs(qpsk_modulated(ii)) .* cos(2 * pi * (fc+baseSubcarrierMap*deltaF) .* t + angle(qpsk_modulated(ii)));
-    base_modulated = [base_modulated carrier];
+    pilot = 1;
+    spectrumVec = [0 0 0 0 pilot qpsk_additional_modulated(ii,1) qpsk_additional_modulated(ii,2) pilot qpsk_modulated(ii) pilot qpsk_additional_modulated(ii,3) qpsk_additional_modulated(ii,4) pilot 0 0 0];
+    ofdmSymbol = ifft(ifftshift(spectrumVec),16);
+    ofdmLow = [ofdmLow ofdmSymbol];
 end
 
-% Additional carriers
-additional_modulated = zeros(1, length(t)*size(qpsk_additional_modulated,1));
-for sc=1:size(qpsk_additional_modulated,2)
-    subcarrier_modulated = [];
-    for ii=1:size(qpsk_additional_modulated,1)
-        carrier = abs(qpsk_additional_modulated(ii,sc)) .* cos(2 * pi * (fc+dataSubcarrierMap(sc)*deltaF) .* t + angle(qpsk_additional_modulated(ii,sc)));
-        subcarrier_modulated = [subcarrier_modulated carrier];
-    end
-    additional_modulated = [additional_modulated + subcarrier_modulated];
-end
+ofdmHigh = interp(ofdmLow,fs/fsLow);
 
-% Pilot carrier
-pilot_modulated = zeros(1, length(t)*length(qpsk_modulated));
-for sc=1:length(pilotSubcarrierMap)
-    subcarrier_modulated = [];
-    for ii=1:length(qpsk_modulated)
-        carrier = 1 .* cos(2 * pi * (fc+pilotSubcarrierMap(sc)*deltaF) .* t);
-        subcarrier_modulated = [subcarrier_modulated carrier];
-    end
-    pilot_modulated = pilot_modulated + subcarrier_modulated;
-end
+%% Transpose to carrier
 
-% OFDM output
-modulated_output = base_modulated + additional_modulated + pilot_modulated;
+% Time scale
+t = 0:1/fs:(N/fs*length(qpsk_modulated)-1/fs);
+modulated_output = ofdmHigh .* cos(2 * pi * fc * t);
 
 %% Write to file
 

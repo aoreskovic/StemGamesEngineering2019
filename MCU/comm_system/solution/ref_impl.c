@@ -55,9 +55,28 @@ double qpsk_demodulator(complex symbol, double constellation_offset, char
 
 #define PREAMBLE_LENGTH 4 
 #define PREAMBLE_BYTE 0xa5
+#define BITS_IN_STREAM 1
 
 void frame_sync(char **bitstream, int len) {
 	char *bits = *bitstream;
+	int bytelen = len / (9 - BITS_IN_STREAM);
+
+	char bytestream[bytelen];
+
+	int bytecnt = 0;
+
+	char curr_byte = 0;
+
+	int bits_cnt = 0;
+
+	for (int i = 0; i < len; i++) {
+		curr_byte |= (bits[i] << (BITS_IN_STREAM * (bits_cnt))); 
+		bits_cnt++;
+		if (bits_cnt == 8 / BITS_IN_STREAM) {
+			bits_cnt = 0;
+			bytestra
+		}
+	}
 
 	int cnt = 0;
 

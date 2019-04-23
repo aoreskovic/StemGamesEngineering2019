@@ -13,9 +13,13 @@ void dft(complex *input, complex *output, int N) {
 
 	for (int k = 0; k < N; k++) {
 		for (int i = 0; i < N; i++) {
-			output[k][REAL] += input[i][REAL] * cos(2 * (M_PI * k * i) / N);
-			output[k][IMAG] -= input[i][IMAG] * sin(2 * (M_PI * k * i) / N);
+			output[k][REAL] += input[i][REAL] * cos(2 * (M_PI * k * i) / N)
+			+ input[i][IMAG] * sin(2 * (M_PI * k * i) / N);
+			output[k][IMAG] += input[i][IMAG] * cos(2 * (M_PI * k * i) / N)
+			- input[i][REAL] * sin(2 * (M_PI * k * i) / N);
 		}
+		output[k][REAL] /= N;
+		output[k][IMAG] /= N;
 	}
 }
 

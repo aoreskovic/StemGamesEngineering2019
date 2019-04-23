@@ -62,7 +62,8 @@ while 1
     end
 
     % Header
-    header = de2bi(data_length, 8);
+    header = de2bi(data_length / 8, 8);
+    header = fliplr(header);
 
     % CRC hash
     hash_tmp = reshape(dataset(1,1:data_length),8,[]);
@@ -74,7 +75,7 @@ while 1
     hash_tmp2 = fliplr(hash_tmp2);
     hash_tmp2 = reshape(hash_tmp2', [], 1);
     hash = hash_tmp2';
-
+    hash = de2bi(0, 16);
     % Create frame
     frame = [preamble header dataset(1,1:data_length) hash postamble];
     frames = [frames frame];
@@ -120,7 +121,7 @@ for ii=1:length(qpsk_modulated)
     carrier = abs(qpsk_modulated(ii)) .* cos(2 * pi * fc .* t + angle(qpsk_modulated(ii)));
     modulated_output = [modulated_output carrier];
 end
-return;
+
 %% Demodulate
 
 close all;
@@ -137,15 +138,15 @@ for i=1:N:length(modulated_output)
    sigbb = sig .* exp(-1j * 2 * pi * fc .* t);
    sigs = [sigs sigbb];
    % calculate spectrum
-   spk = FFT(sigbb, blackman(N)', 2 * N, fs);
+   spk = FFT(sigbb, blackman(N)', N, fs);
    % take the DC component
    spk = fftshift(spk);
    qpsk_demodulated = [qpsk_demodulated; spk(1)];
 end
 %frames_demod = qpsk_demodulate_signal(qpsk_demodulated);
 frames_demod = step(qpskdmod, qpsk_demodulated);
-spektar(sigbb, fs, 2 * N, 'Spektar u baseband-u');
-spektar(sig, fs, 2 * N, 'Spektar nije u baseband-u');
+spektar(sigbb, fs, N, 'Spektar u baseband-u');
+spektar(sig, fs, N, 'Spektar nije u baseband-u');
 plot(real(sigbb));
 
 %% Check validity

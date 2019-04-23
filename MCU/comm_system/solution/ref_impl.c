@@ -13,19 +13,29 @@ static double evm(complex symbol, complex ref) {
 	return sqrt(real_diff + imag_diff);
 }
 
-static char gray_map[] = {0, 2, 3, 1};
+static char gray_map[] = {0, 1, 3, 2};
 
 complex *frequency_shift(double *input, double fc, double fs, int N) {
 
 	complex *output = (complex *) malloc(N * sizeof(complex));
 
 	for (int i = 0; i < N; i++) {
-		output[i][REAL] *= cos((2 * M_PI * fc * i * 1.0) / fs);
-		output[i][IMAG] *= sin((2 * M_PI * fc * i * 1.0) / fs);
+		output[i][REAL] = input[i] * cos((2 * M_PI * fc * i * 1.0) / fs);
+		output[i][IMAG] = -input[i] * sin((2 * M_PI * fc * i * 1.0) / fs);
 	}
 
 	return output;
 }
+
+complex *f2() {
+	complex *vals = (complex *) malloc(20 * sizeof(complex));
+
+	vals[2][0] = 3;
+	vals[2][1] = 2;
+
+	return vals;
+}
+
 
 double qpsk_demodulator(complex symbol, double constellation_offset, char 
 	*decoded_symbol) {
@@ -48,12 +58,15 @@ double qpsk_demodulator(complex symbol, double constellation_offset, char
 		}
 	}
 
+	//printf("%d\n", min_index);
+	//printf("%lf, %lf\n", symbol[REAL], symbol[IMAG]);
+
 	*decoded_symbol = gray_map[min_index];
 
 	return min_offset;
 }
 
-#define PREAMBLE_LENGTH 4 
+#define PREAMBLE_LENGTH 8
 #define PREAMBLE_BYTE 0xa5
 #define BITS_IN_STREAM 2
 
@@ -65,11 +78,12 @@ char *bitstream_to_bytestream(char *bitstream, int length) {
 	int bits_cnt = 0;
 
 	for (int i = 0; i < length; i++) {
-		curr_byte |= (bitstream[i] << (BITS_IN_STREAM * (bits_cnt))); 
+		curr_byte |= (bitstream[i] << (BITS_IN_STREAM * (3 - bits_cnt))); 
 		bits_cnt++;
 		if (bits_cnt == 8 / BITS_IN_STREAM) {
 			bits_cnt = 0;
 			bytestream[byte_cnt++] = curr_byte;
+			curr_byte = 0;
 		}
 	}
 
@@ -99,7 +113,7 @@ void frame_step(char **bytestream, int frame_length) {
 }
 
 
-void frame_decoder(char *bytestream, char **data) {
+int frame_decoder(char *bytestream, char **data) {
 	bytestream += PREAMBLE_LENGTH; // skip preamble
 
 	int len = *(bytestream++); // get packet length and move to data
@@ -107,8 +121,10 @@ void frame_decoder(char *bytestream, char **data) {
 	*data = (char *) malloc(len);
 
 	for (int i = 0; i < len; i++) {
-		*data[i] = bytestream[i];
+		(*data)[i] = bytestream[i];
 	}
+
+	return len + PREAMBLE_LENGTH * 2 + 2 + 1;
 }
 
 #define REF_PILOT_PHASE 0

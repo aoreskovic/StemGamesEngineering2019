@@ -51,7 +51,7 @@ int main() {
 	int cnt = 0;
 	while (cnt < (SIGNAL_SIZE / N) / 4) {
 		int len = frame_decoder(bytestream, &data);
-		printf("%s\n", data);
+		printf("%s", data);
 		bytestream += len;
 		cnt += len;
 	}

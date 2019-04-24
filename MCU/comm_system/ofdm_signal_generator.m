@@ -80,6 +80,8 @@ while 1
 
     % Header
     header = de2bi(data_length, 8);
+    header = de2bi(data_length / 8, 8);
+    header = fliplr(header);
 
     % CRC hash
     hash_tmp = reshape(dataset(1,1:data_length),8,[]);
@@ -91,7 +93,7 @@ while 1
     hash_tmp2 = fliplr(hash_tmp2);
     hash_tmp2 = reshape(hash_tmp2', [], 1);
     hash = hash_tmp2';
-
+    hash = de2bi(0, 16);
     % Create frame
     frame = [preamble header dataset(1,1:data_length) hash postamble];
     frames = [frames frame];
@@ -153,6 +155,8 @@ while 1
 
     % Header
     header = de2bi(data_length, 8);
+    header = de2bi(data_length / 8, 8);
+    header = fliplr(header);
 
     % CRC hash
     hash_tmp = reshape(dataset_additional(1,1:data_length),8,[]);
@@ -164,7 +168,8 @@ while 1
     hash_tmp2 = fliplr(hash_tmp2);
     hash_tmp2 = reshape(hash_tmp2', [], 1);
     hash = hash_tmp2';
-
+    
+    hash = de2bi(0, 16);
     % Create frame
     frame = [preamble header dataset_additional(1,1:data_length) hash postamble];
     frames_additional = [frames_additional frame];

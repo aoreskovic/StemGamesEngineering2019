@@ -260,6 +260,13 @@ ofdmHigh = interp(ofdmLow,fs/fsLow);
 t = 0:1/fs:(N/fs*length(qpsk_modulated)-1/fs);
 modulated_output = ofdmHigh .* cos(2 * pi * fc * t);
 
+%% Add noise
+snr = 30;
+modulated_output = awgn(modulated_output,snr);
+
+%% Spectrum
+spektar(modulated_output,fs,length(modulated_output),'OFDM nosioc');
+
 %% Write to file
 
 input_sig = int16(modulated_output * 2^15);

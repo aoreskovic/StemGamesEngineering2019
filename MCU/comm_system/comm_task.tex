@@ -24,7 +24,7 @@
 \subsection{Prvi zadatak}
 Pomorski habitat upravlja udaljenom podmornicom šaljući joj informacije o koordinatama kojima se podmornica mora kretati. Koordinate se kodiraju na tri decimale i šalju u tripletima xxx.xxx,yyy.yyy,zzz.zzz;. Svaka znamenka je 8-bitna riječ. Tripleti se šalju slijedno i odvajaju znakom ; i na taj način stvaraju ulazni podatkovni niz u komunikacijski sustav.
 
-Ulazni niz je organiziran u pakete. Svaki paket se sastoji od preambule, zaglavlja, podatka, CRC-16 koda i postambulom, kako je ilustrirano slikom:
+Ulazni niz je organiziran u pakete. Svaki paket se sastoji od preambule, zaglavlja, podatka, CRC-16 koda i postambulom, kako je ilustrirano slikom \ref{fig:packet}.
 
 
 \begin{figure}[h!]
@@ -49,11 +49,13 @@ Ulazni niz je organiziran u pakete. Svaki paket se sastoji od preambule, zaglavl
 \draw (postamb.south east) -- +(0,-1cm);
 
 \end{tikzpicture}
+\caption{Struktura paketa}
+\label{fig:packet}
 \end{figure}
 
 Preambula se sastoji od preddefiniranog niza podataka oblika 0xa5a5a5a5. Zaglavlje sadrži 8-bitni podatak koji definira duljinu podatkovnog dijela paketa. Najmanja duljina podatkovnog dijela paketa je 64 bita, a najveća 248 bita. Duljina podatkovnog dijela paketa je višekratnik broja 8. (Drugim riječima, kraj paketa nikad neće prekidati 8-bitne riječi.) Duljina paketa je paran broj. Paket završava postambulom oblika 0x5a5a5a5a. Paketi se šalju slijedno, bez zaštitnog intervala. Sve riječi u paketu zapisane su u big endian notaciji.
 
-Tako pripremljeni binarni slijed dovodi se na QPSK modulator konstelacije kao na slici:
+Tako pripremljeni binarni slijed dovodi se na QPSK modulator konstelacije kao na slici \ref{fig:qpsk}.
 
 \begin{figure}[h!]
 \centering
@@ -77,18 +79,20 @@ table[meta=label]{
 };
 \end{axis}
 \end{tikzpicture}
+\caption{QPSK konstelacija}
+\label{fig:qpsk}
 \end{figure}
 
 QPSK modulirani signal se transponira na frekvenciju nosioca $f_c = 12.8 \,\textrm{kHz}$ i odašilje hidrofonom. Brzina prijenosa u sustavu je 19.2 kbit/s.
 
-Na prijemnoj strani nalazi se podmornica, čiji je prijemnik prikazan blok shemom kao na slici:
+Na prijemnoj strani nalazi se podmornica, čiji je prijemnik prikazan blok shemom kao na slici \ref{fig:task1}.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.9\textwidth]{Task1.png}
+\caption{Blok shema prijemnika iz zadatka 1}
+\label{fig:task1}
 \end{figure}
-
-CRC verification blok je dio trećeg zadatka.
 
 ADC sustav prijemnog hidrofona ima frekvenciju uzorkovanja 192 kSps. Granična frekvencija idealnog niskopropusnog filtra je 96 kHz.
 
@@ -96,19 +100,19 @@ Potrebno je implementirati sustav za demodulaciju i dekodiranje informacije iz u
 
 \subsection{Drugi zadatak}
 
-Uz informacije o koordinatama, habitat i podmornica razmjenjuju i kodirane telemetrijske podatke. Ovi su podaci slijedno raspodijeljeni u 10 QPSK nosioca i multipleksirani u OFDM  multipleks koji se sastoji od ukupno 17 podnosioca. Podnosioci su raspodjeljeni kako je prikazano DFT spektrom:
+Uz informacije o koordinatama, habitat i podmornica razmjenjuju i kodirane telemetrijske podatke. Ovi su podaci slijedno raspodijeljeni u 4 QPSK podnosioca i multipleksirani u OFDM  multipleks koji se sastoji od ukupno 10 podnosioca. Podnosioci su raspodjeljeni kako je prikazano DFT spektrom na slici \ref{fig:dft}.
 \begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}
 	\begin{axis}[
-		width=\textwidth,
+		width=0.7\textwidth,
 		height=3cm,
 		axis x line=bottom,
 		axis y line=none,
-		xlabel=$f_c - \varDelta f$,
+		xlabel=DFT bin,
 		ymin=0,ymax=1,
-		xmin=-9,xmax=9,
-		xtick={-8, -5, 0, 5, 8}
+		xmin=-5,xmax=5,
+		xtick={-4,...,4}
 	]
 	% Osnovni podatak
 	\addplot+ [ycomb, style={densely dashed}] plot coordinates {
@@ -116,31 +120,40 @@ Uz informacije o koordinatama, habitat i podmornica razmjenjuju i kodirane telem
 	};
 	% Piloti
 	\addplot+ [ycomb, style={solid}] plot coordinates {
-		(-8,1) (-5,1) (-1,1) (1,1) (5,1) (8,1)
+		(-4,1) (-1,1) (1,1) (4,1)
 	};
 	% Ostali nosioci
 	\addplot+ [ycomb, style={dotted}] plot coordinates {
-		(-7,1) (-6,1)
-		(-4,1) (-3,1) (-2,1)
-		(2,1) (3,1) (4,1)
-		(6,1) (7,1)
+		(-3,1) (-2,1)
+		(2,1) (3,1)
 	};
 	\end{axis}
 	\end{tikzpicture}
+	\caption{DFT spektar OFDM nosioca}
+	\label{fig:dft}
 \end{figure}
-Razmak između podnosioca $\varDelta f$ je 960 Hz, a graf je centriran na frekvenciju $f_c$ središnjeg podnosioca u OFDM multipleksu, koja je u ovom slučaju 48 kHz. Podnosioc na binu 0, označen crtkano sadrži slijed koordinata iz prvog podzadatka. Podnosioci označeni točkastim linijama sadrže dodatne informacije. Podatak koji se odašilje u jednom OFDM simbolu dobiva se tako da se svaki od podnosioca demodulira te se dobiveni simboli dodaju jedan za drugim. Dobiveni niz bitova sadrži informacije pakirane po istom principu kao i u prethodnom zadatku. Podnosioci označeni punom linijom su pilotski.
+Razmak između podnosioca, odnosno svakog bina diskretnog spektra, $\varDelta f$ je 1500 Hz, a graf je centriran na frekvenciju $f_c$ središnjeg podnosioca u OFDM multipleksu, koja je u ovom slučaju 36 kHz. Podnosioc na binu 0, označen crtkano sadrži slijed koordinata iz prvog podzadatka. Podnosioci označeni točkastim linijama sadrže dodatne informacije. Podatak koji se odašilje u jednom OFDM simbolu dobiva se tako da se svaki od podnosioca demodulira te se dobiveni simboli dodaju jedan za drugim. Dobiveni niz bitova sadrži informacije pakirane po istom principu kao i u prethodnom zadatku. Podnosioci označeni punom linijom su pilotski. OFDM simboli nemaju ciklički prefiks.
 
-Potrebno je modificirati kod iz glavnog dijela zadatka tako da se dekodira i dodatni set informacija sadržan u ostalim podnosiocima. Pretpostavite da je signal selektivno zagušen prolaskom kroz kanal nepoznate prijenosne funkcije. Blok shema prijemnika u ovom zadatku izgleda kao na slici:
+Potrebno je modificirati kod iz glavnog dijela zadatka tako da se dekodira i dodatni set informacija sadržan u ostalim podnosiocima. Pretpostavite da je signal selektivno zagušen prolaskom kroz kanal nepoznate prijenosne funkcije. Blok shema prijemnika u ovom zadatku izgleda kao na slici \ref{fig:task2}.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.9\textwidth]{Task2.png}
+\caption{Blok shema prijemnika iz zadatka 2}
+\label{fig:task2}
 \end{figure}
 
-CRC verification blok je dio trećeg zadatka.
-
 \subsection{Treći zadatak}
-Potrebno je implementirati algoritam za izračun CRC-16 koda zadanog ulaznog niza. CRC-16 kod je izračunat CRC-CCITT algoritmom s inicijalnim stanjem registra 0xFFFF.
+U oba implementirana prijemnika potrebno je dodati algoritam za izračun CRC-16 koda zadanog ulaznog niza. CRC verifikaciju je prvo potrebno implementirati kao zasebnu funkciju, a zatim je i integrirati u prijemnički lanac. Modifikacija prijemnika izgleda kao na slici \ref{fig:task3}.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{Task3.png}
+\caption{Dodatak CRC provjere u prijemnicima}
+\label{fig:task3}
+\end{figure}
+
+Zadani CRC-16 kod je izračunat CRC-CCITT algoritmom s inicijalnim stanjem registra 0xFFFF. Zadani API sadrži preglednu tablicu za izračun verifikacijskog niza.
 
 \section{Ulazni podaci}
 Zadane su dvije datoteke:

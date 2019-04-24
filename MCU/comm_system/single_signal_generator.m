@@ -112,7 +112,7 @@ fs = 192e3;
 N = 20;
 fprintf('Rs = %2.00f baud\n', fs/N);
 % Time scale
-t = 0:1/fs:(N - 1) * 1/fs;
+t = 0:1/fs:(N/fs-1/fs);
 % carrier frequency
 fc = 12.8e3;
 fprintf('fc = %2.00f Hz\n', fc);
@@ -122,6 +122,10 @@ for ii=1:length(qpsk_modulated)
     carrier = abs(qpsk_modulated(ii)) .* cos(2 * pi * fc .* t + angle(qpsk_modulated(ii)));
     modulated_output = [modulated_output carrier];
 end
+
+%% Add noise
+snr = 30;
+modulated_output = awgn(modulated_output,snr);
 
 %% Demodulate
 

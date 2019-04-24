@@ -71,7 +71,7 @@ while 1
     hash_tmp = fliplr(hash_tmp');
     hash_tmp = bi2de(hash_tmp);
     hash_string = CRC_16_CCITT(hash_tmp);
-    hash = hexToBinaryVector(hash_string,16);
+    hash = hex2bin(hash_string);
     hash = fliplr(hash);
 
     % Create frame

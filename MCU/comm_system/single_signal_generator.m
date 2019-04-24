@@ -120,8 +120,8 @@ fprintf('fc = %2.00f Hz\n', fc);
 
 modulated_output = [];
 for ii=1:length(qpsk_modulated)
-    carrier = abs(qpsk_modulated(ii)) .* cos(2 * pi * fc .* t + angle(qpsk_modulated(ii)));
-    modulated_output = [modulated_output carrier];
+    carrier = abs(qpsk_modulated(ii)) .* exp(1i * 2 * pi * fc .* t + angle(qpsk_modulated(ii)));
+    modulated_output = [modulated_output real(carrier)];
 end
 
 %% Add noise

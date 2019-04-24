@@ -71,12 +71,9 @@ while 1
     hash_tmp = fliplr(hash_tmp');
     hash_tmp = bi2de(hash_tmp);
     hash_string = CRC_16_CCITT(hash_tmp);
-    hash_tmp2 = double(hash_string);
-    hash_tmp2 = de2bi(hash_tmp2, 8);
-    hash_tmp2 = fliplr(hash_tmp2);
-    hash_tmp2 = reshape(hash_tmp2', [], 1);
-    hash = hash_tmp2';
-    hash = de2bi(0, 16);
+    hash = hexToBinaryVector(hash_string,16);
+    hash = fliplr(hash);
+
     % Create frame
     frame = [preamble header dataset(1,1:data_length) hash postamble];
     frames = [frames frame];

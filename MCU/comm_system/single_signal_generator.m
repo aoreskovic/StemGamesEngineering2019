@@ -73,10 +73,6 @@ while 1
     hash_string = CRC_16_CCITT(hash_tmp);
     hash = hex2bin(hash_string);
     hash = fliplr(hash);
-    if (length(hash) ~= 16)
-        disp('ajme majko');
-    end
-   % hash = de2bi(0, 16);
 
     % Create frame
     frame = [preamble header dataset(1,1:data_length) hash postamble];

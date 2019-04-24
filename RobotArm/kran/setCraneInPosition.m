@@ -59,11 +59,11 @@ function y = setCraneInPosition(table)
               "/BeltAndPulley/Revolute Joint", 'MaskValueString', str);
     
     % Calculate top of the crane position and set load position
-    L = 4.85949 + table.q3 + table.q4;
+    L = 4.85949 + table.q3 + table.q4 - 0.18;
     a = 1.81648;
     b = 0.6634945;
     c0 = 1.331 + 0.194;
-    c = 1.331 - table.q2;
+    c = 1.331 + table.q2;
     R = 0.135;
 
     gamma = acos((c^2 - a^2 - b^2)/(-2*a*b));
@@ -71,9 +71,9 @@ function y = setCraneInPosition(table)
     theta = gamma - gamma0;
 
     x0 = -0.24164;
-    y0 = 2.640 - 0.01;
+    y0 = 2.640 - 0.15;
     deltaY = R*deg2rad(table.q5);
-
+    
     xp = (x0+ L*cos(theta))*cos(deg2rad(table.q1));
     yp = y0 + L*sin(theta) - deltaY;
     zp = -(x0+ L*cos(theta))*sin(deg2rad(table.q1));

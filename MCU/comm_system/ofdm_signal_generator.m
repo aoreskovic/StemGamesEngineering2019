@@ -258,11 +258,11 @@ ofdmHigh = interp(ofdmLow,fs/fsLow);
 
 % Time scale
 t = 0:1/fs:(N/fs*length(qpsk_modulated)-1/fs);
-modulated_output = ofdmHigh .* cos(2 * pi * fc * t);
+modulated_output = real(ofdmHigh .* exp(1j * 2 * pi * fc * t));
 
 %% Add noise
-snr = 30;
-modulated_output = awgn(modulated_output,snr);
+%snr = 30;
+%modulated_output = awgn(modulated_output,snr);
 
 %% Spectrum
 spektar(modulated_output,fs,length(modulated_output),'OFDM nosioc');

@@ -118,6 +118,11 @@ int frame_decoder(char *bytestream, char **data) {
 
 	int len = *(bytestream++); // get packet length and move to data
 
+	if (len <= 0) {
+		printf("Invalid length");
+		exit(1);
+	}
+
 	*data = (char *) malloc(len + 1);
 	(*data)[len] = 0;
 

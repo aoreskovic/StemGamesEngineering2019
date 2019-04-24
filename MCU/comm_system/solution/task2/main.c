@@ -6,11 +6,11 @@
 #include <radio.h>
 
 static const short adc_data[] = {
-#include "../../single_carrier.raw"
+#include "../../ofdm_carrier.raw"
 };
 
-#define N 20
-#define Fc 12800.0
+#define N 128
+#define Fc 36000.0
 #define Fs 192000.0
 
 #define SIGNAL_SIZE (sizeof(adc_data) / sizeof(short))
@@ -51,7 +51,7 @@ int main() {
 	int cnt = 0;
 	while (cnt < (SIGNAL_SIZE / N) / 4) {
 		int len = frame_decoder(bytestream, &data);
-		printf("%s", data);
+		printf("%s\n", data);
 		bytestream += len;
 		cnt += len;
 	}

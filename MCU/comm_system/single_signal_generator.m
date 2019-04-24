@@ -40,7 +40,7 @@ postamble = postamble_tmp';
 data_length_min = 64;
 data_length_max = 248;
 
-frame_size_min = 32+8+data_length_min+32;
+frame_size_min = 32+8+data_length_min+16+32;
 
 frames = [];
 noOfFrames = 0;

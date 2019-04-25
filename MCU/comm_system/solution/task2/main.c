@@ -35,18 +35,16 @@ int main() {
 
 	double signal[N];
 	char bitstream[SIGNAL_SIZE * CARRIER_NO / N];
-
+	char *p = &bitstream[0];
 	for (int i = 0; i < SIGNAL_SIZE; i += N) {
 		for (int j = 0; j < N; j++) {
 			signal[j] = (double)adc_data[i + j] / (1 << 15);
 		}
 		char *data = demod(signal);
-		strncpy(bitstream + i / N * CARRIER_NO, data, CARRIER_NO);
+	
 		for (int k = 0; k < 4; k++) {
-			printf("%d", data[k]);
+			*(p++) = data[k];
 		}
-
-		printf("\n");
 		free(data);
 	}
 

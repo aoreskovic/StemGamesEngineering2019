@@ -141,24 +141,17 @@ complex *channel_correction(complex *input, int first_carrier, int ofdm_size,
 
 }
 
-double *ofdm_demodulator(complex *input, char *carrier_map, int carrier_no, 
-	int ofdm_size, char **data) {
+double *ofdm_demodulator(complex *spectrum, int *carrier_idx, int carrier_no, 
+	char **data) {
 
-	complex spectrum[ofdm_size];
-
-	dft(input, spectrum, ofdm_size);
-
-	*data = (char *) malloc(2 * carrier_no); // 2 bits per carrier  
+	*data = (char *) malloc(carrier_no);  
 	double *evm = (double *) malloc(sizeof(double) * carrier_no);
 
 	int cnt = 0;
-	for (int i = 0; i < ofdm_size; i++) {
-		if (carrier_map[i]) {
-			char tmp;
-			evm[cnt] = qpsk_demodulator(spectrum[i], M_PI / 4, &tmp);
-			*data[cnt] = tmp;
-			cnt++;
-		}
+	for (int i = 0; i < carrier_no; i++) {
+		char tmp;
+		evm[i] = qpsk_demodulator(spectrum[carrier_idx[i]], M_PI / 4, &tmp);
+		(*data)[i] = tmp;
 	}
 
 	return evm;

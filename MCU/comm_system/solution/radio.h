@@ -11,8 +11,8 @@ int frame_decoder(char *bytestream, char **data);
 complex *channel_correction(complex *input, int first_carrier, int ofdm_size, 
 	char *pilot_map);
 
-double *ofdm_demodulator(complex *input, char *carrier_map, int carrier_no, 
-	int ofdm_size, char **data);
+double *ofdm_demodulator(complex *input, int *carrier_idx, int carrier_no, 
+	char **data);
 unsigned short crc16_check(char *msg, int length);
 int frame_decoder_valid(char *bytestream, char **data, bool *valid);
 

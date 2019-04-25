@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <api.h>
 #include <radio.h>
@@ -15,15 +16,16 @@ static const short adc_data[] = {
 
 #define SIGNAL_SIZE (sizeof(adc_data) / sizeof(short))
 
+static int carrier_idx[] = {13 * 8, 14 * 8, 2 * 8, 3 * 8};
+#define CARRIER_NO 4
 
-
-char demod(double *signal) {
+char *demod(double *signal) {
 	complex spectrum[N];
 	complex *signal_baseband = frequency_shift(signal, Fc, Fs, N);
 	dft(signal_baseband, spectrum, N);
 
-	char bits;
-	qpsk_demodulator(spectrum[0], M_PI / 4, &bits);
+	char *bits;
+	ofdm_demodulator(spectrum, carrier_idx, CARRIER_NO, &bits);
 
 	return bits;
 }
@@ -32,13 +34,16 @@ char demod(double *signal) {
 int main() {
 
 	double signal[N];
-	char bitstream[SIGNAL_SIZE / N];
+	char bitstream[SIGNAL_SIZE * CARRIER_NO / N];
 
 	for (int i = 0; i < SIGNAL_SIZE; i += N) {
 		for (int j = 0; j < N; j++) {
 			signal[j] = (double)adc_data[i + j] / (1 << 15);
 		}
-		bitstream[i / N] = demod(signal);
+		char *data = demod(signal);
+		strncpy(bitstream + i / N * CARRIER_NO, data, CARRIER_NO);
+		printf("\n");
+		free(data);
 	}
 
 	char *bytestream = bitstream_to_bytestream(bitstream, SIGNAL_SIZE / N);

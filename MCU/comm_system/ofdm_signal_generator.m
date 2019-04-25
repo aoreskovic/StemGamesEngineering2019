@@ -56,7 +56,7 @@ postamble = postamble_tmp';
 data_length_min = 64;
 data_length_max = 248;
 
-frame_size_min = 32+8+data_length_min+32;
+frame_size_min = 64+8+data_length_min+64;
 
 frames = [];
 noOfFrames = 0;
@@ -113,14 +113,14 @@ frames_reshape = reshape(frames',[],1);
 
 preamble_hex = {'a','5','a','5','a','5','a','5','a','5','a','5','a','5','a','5'};
 preamble_tmp = hex2dec(preamble_hex)';
-preamble_tmp = de2bi(preamble_tmp,32);
+preamble_tmp = de2bi(preamble_tmp);
 preamble_tmp = fliplr(preamble_tmp);
 preamble_tmp = reshape(preamble_tmp',[],1);
 preamble = preamble_tmp';
 
 postamble_hex = {'5','a','5','a','5','a','5','a','5','a','5','a','5','a','5','a'};
 postamble_tmp = hex2dec(postamble_hex)';
-postamble_tmp = de2bi(postamble_tmp,32);
+postamble_tmp = de2bi(postamble_tmp);
 postamble_tmp = fliplr(postamble_tmp);
 postamble_tmp = reshape(postamble_tmp,[],1);
 postamble = postamble_tmp';
@@ -128,7 +128,7 @@ postamble = postamble_tmp';
 data_length_min = 64;
 data_length_max = 248;
 
-frame_size_min = 32+8+data_length_min+16+32;
+frame_size_min = 64+8+data_length_min+16+64;
 
 frames_additional = [];
 noOfFrames = 0;

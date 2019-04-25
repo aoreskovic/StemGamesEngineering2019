@@ -28,16 +28,6 @@ complex *frequency_shift(double *input, double fc, double fs, int N) {
 	return output;
 }
 
-complex *f2() {
-	complex *vals = (complex *) malloc(20 * sizeof(complex));
-
-	vals[2][0] = 3;
-	vals[2][1] = 2;
-
-	return vals;
-}
-
-
 double qpsk_demodulator(complex symbol, double constellation_offset, char 
 	*decoded_symbol) {
 
@@ -58,9 +48,6 @@ double qpsk_demodulator(complex symbol, double constellation_offset, char
 			min_index = i;
 		}
 	}
-
-	//printf("%d\n", min_index);
-	//printf("%lf, %lf\n", symbol[REAL], symbol[IMAG]);
 
 	*decoded_symbol = gray_map[min_index];
 
@@ -188,21 +175,18 @@ unsigned short crc16_check(char *msg, int length) {
     return crc;
 }
 
-bool frame_decoder_valid(char *bytestream, char **data) {
-	bytestream += PREAMBLE_LENGTH; // skip preamble
-
-	int len = *(bytestream++); // get packet length and move to data
-
-	*data = (char *) malloc(len);
-
-	for (int i = 0; i < len; i++) {
-		*data[i] = bytestream[i];
-	}
-
+int frame_decoder_valid(char *bytestream, char **data, bool *valid) {
+	int len = frame_decoder(bytestream, data);
+	len -= 2 * PREAMBLE_LENGTH + 2 + 1;
 	// message length without 2 bytes for CRC hash
-	unsigned short crc = crc16_check(*data, len - 2);
+	unsigned short crc = crc16_check(*data, len);
 	// crc from message
-	unsigned short msg_crc = *data[len - 1] << 8 | *data[len - 2]; 
+	unsigned short msg_crc = 0;
+	msg_crc |= bytestream[PREAMBLE_LENGTH + 1 + len] & 0xFF;
+	msg_crc = (msg_crc << 8); 
+	msg_crc |= bytestream[PREAMBLE_LENGTH + 1 + len + 1] & 0xFF; 
 
-	return crc == msg_crc;  
+	*valid = msg_crc == crc;
+
+	return len += 2 * PREAMBLE_LENGTH + 2 + 1;  
 }

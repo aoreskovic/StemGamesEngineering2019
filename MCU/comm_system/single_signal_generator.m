@@ -65,15 +65,14 @@ while 1
     % Header
     header = de2bi(data_length / 8, 8);
     header = fliplr(header);
-
+    
     % CRC hash
     hash_tmp = reshape(dataset(1,1:data_length),8,[]);
     hash_tmp = fliplr(hash_tmp');
     hash_tmp = bi2de(hash_tmp);
     hash_string = CRC_16_CCITT(hash_tmp);
     hash = hex2bin(hash_string);
-    hash = fliplr(hash);
-
+    
     % Create frame
     frame = [preamble header dataset(1,1:data_length) hash postamble];
     frames = [frames frame];

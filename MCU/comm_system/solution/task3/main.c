@@ -50,8 +50,13 @@ int main() {
 
 	int cnt = 0;
 	while (cnt < (SIGNAL_SIZE / N) / 4) {
-		int len = frame_decoder(bytestream, &data);
-		printf("%s", data);
+		bool valid;
+		int len = frame_decoder_valid(bytestream, &data, &valid);
+		if (valid) {
+			printf("%s", data);
+		} else {
+			printf("\r\nInvalid data\r\n");
+		}
 		bytestream += len;
 		cnt += len;
 	}

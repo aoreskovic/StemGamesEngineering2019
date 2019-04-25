@@ -10,6 +10,7 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{circuitikz}
+\usepackage{tabularx}
 
 \usetikzlibrary{calc,positioning,shapes,decorations.pathreplacing}
 
@@ -38,11 +39,10 @@ In this task, your job is to:
 \begin{itemize}
 \item identify components that failed in different scenarios, 
 \item find the proper replacement parts, 
-\item ensure that the output voltage ripple is within the boundaries with proper low pass filter,
+\item ensure that the output voltage ripple is within the boundaries with 
+proper low pass filter,
 \item find the probability of future malfunction in standby redundant system.
 \end{itemize}
-
-
 
 \begin{figure}[h!]
 \centering
@@ -51,7 +51,28 @@ In this task, your job is to:
 \caption{Rectifier and linear regulator.}
 \end{figure}
 
-\subsection{Identifying failed components}
+\textbf{Regulator specifications.} Regulator specifications are provided with 
+the following table. In each task you have to ensure that the values specified
+in the table correspond to the values which will be measured in simulation. 
+
+\begin{table}[h!]
+    \hyphenpenalty 10000
+    \caption{Regulator specifications}
+    \label{tab:spec}
+    \begin{tabularx}{\linewidth}{|X|X|} \hline
+    Voltage & $12.00$ V \\ \hline
+    Current & $8.00$ A \\ \hline
+    Ripple voltage & $2$ $\mu$V \\ \hline
+    \end{tabularx}
+\end{table}
+
+\subsection{Identifying failed components and replacement}
+
+Each failure is described with set of time diagrams in specific test points 
+which can be seen on regulator schematic document. Based on the provided 
+diagrams you have to determine which component failed. In each failure scenario
+only one component is broken. There are three different failure scenarios which
+are described below.
 
 \textbf{1. failure scenario - Zener diode}
 
@@ -59,7 +80,7 @@ In this task, your job is to:
 
 \textbf{3. failure scenario - Resistor}
 
-
+\subsection{Choosing replacement components}
 
 
 \end{document}

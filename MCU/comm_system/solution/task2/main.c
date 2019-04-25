@@ -16,14 +16,14 @@ static const short adc_data[] = {
 
 #define SIGNAL_SIZE (sizeof(adc_data) / sizeof(short))
 
-static int carrier_idx[] = {13 * 8, 14 * 8, 2 * 8, 3 * 8};
+static int carrier_idx[] = {125, 126, 2, 3};
 #define CARRIER_NO 4
 
 char *demod(double *signal) {
 	complex spectrum[N];
 	complex *signal_baseband = frequency_shift(signal, Fc, Fs, N);
 	dft(signal_baseband, spectrum, N);
-
+	
 	char *bits;
 	ofdm_demodulator(spectrum, carrier_idx, CARRIER_NO, &bits);
 
@@ -42,6 +42,10 @@ int main() {
 		}
 		char *data = demod(signal);
 		strncpy(bitstream + i / N * CARRIER_NO, data, CARRIER_NO);
+		for (int k = 0; k < 4; k++) {
+			printf("%d", data[k]);
+		}
+
 		printf("\n");
 		free(data);
 	}

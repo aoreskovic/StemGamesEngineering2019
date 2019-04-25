@@ -113,14 +113,14 @@ frames_reshape = reshape(frames',[],1);
 
 preamble_hex = {'a','5','a','5','a','5','a','5','a','5','a','5','a','5','a','5'};
 preamble_tmp = hex2dec(preamble_hex)';
-preamble_tmp = de2bi(preamble_tmp);
+preamble_tmp = de2bi(preamble_tmp,32);
 preamble_tmp = fliplr(preamble_tmp);
 preamble_tmp = reshape(preamble_tmp',[],1);
 preamble = preamble_tmp';
 
 postamble_hex = {'5','a','5','a','5','a','5','a','5','a','5','a','5','a','5','a'};
 postamble_tmp = hex2dec(postamble_hex)';
-postamble_tmp = de2bi(postamble_tmp);
+postamble_tmp = de2bi(postamble_tmp,32);
 postamble_tmp = fliplr(postamble_tmp);
 postamble_tmp = reshape(postamble_tmp,[],1);
 postamble = postamble_tmp';
@@ -196,12 +196,11 @@ if (mod(length(frames_additional_reshape),2*noDataSubcarriers) ~= 0)
     frames_additional_reshape = frames_additional_reshape_tmp;
 end
 
-subcarrierStreamLength = length(frames_additional_reshape)/noDataSubcarriers;
-subcarrierStream = zeros(noDataSubcarriers,subcarrierStreamLength);
-for pos=1:2:subcarrierStreamLength-1
-    for ii=1:noDataSubcarriers
-        originalPos = (pos-1)*noDataSubcarriers+(ii-1)*2+1;
-        subcarrierStream(ii,pos:pos+1) = frames_additional_reshape(originalPos:originalPos+1,1)';
+for chunkNr = 1:length(frames_additional_reshape)/2/noDataSubcarriers
+    chunkPos = (chunkNr-1)*2*noDataSubcarriers + 1;
+    for subc = 1:noDataSubcarriers
+        symbolPos = (subc-1)*2 + chunkPos;
+        subcarrierStream(subc,(chunkNr-1)*2+1:(chunkNr-1)*2+2) = frames_additional_reshape(symbolPos:symbolPos+1,1)';
     end
 end
 

@@ -1,0 +1,9 @@
+*.aux
+*.log
+*.pdf
+*.elf
+*~
+*.o
+*.raw
+slprj/*
+*autosave

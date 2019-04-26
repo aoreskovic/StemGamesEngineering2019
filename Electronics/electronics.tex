@@ -59,28 +59,64 @@ in the table correspond to the values which will be measured in simulation.
     \hyphenpenalty 10000
     \caption{Regulator specifications}
     \label{tab:spec}
-    \begin{tabularx}{\linewidth}{|X|X|} \hline
-    Voltage & $12.00$ V \\ \hline
-    Current & $8.00$ A \\ \hline
-    Ripple voltage & $2$ $\mu$V \\ \hline
+    \begin{tabularx}{\linewidth}{|X|X|X|X|} \hline
+    PARAMETER & TEST CONDITIONS & VALUE & UNIT \\ \hline 
+    Output voltage ($V_o$)& $I_o = 1$ A & $12.00$ & V \\ \hline
+    Output current ($I_o$) & a & $1.5$ & A \\ \hline
+    Ripple rejection & (50 Hz) & $78$ & dB \\ \hline
+   	Dropout voltage & $I_o = 1.5$ A & $2$ & V \\ \hline
     \end{tabularx}
 \end{table}
 
 \subsection{Identifying failed components and replacement}
 
-Each failure is described with set of time diagrams in specific test points 
+Each failure is described with a set of time diagrams in specific test points 
 which can be seen on regulator schematic document. Based on the provided 
 diagrams you have to determine which component failed. In each failure scenario
 only one component is broken. There are three different failure scenarios which
-are described below.
+are described below. First of, figures of test points correct operation are 
+given with figures Fig. \ref{fig:correct1} - \ref{fig:correctN}. After you 
+detect failure the component will be replaced with appropriate component from
+stash. For each part of the task you need to provide designator of broken 
+component. 
 
-\textbf{1. failure scenario - Zener diode}
+\textbf{1. failure scenario} %%- Zener diode}
 
-\textbf{2. failure scenario - Diode in rectifier bridge}
-
-\textbf{3. failure scenario - Resistor}
+\textbf{2. failure scenario}  %%- Diode in rectifier bridge}
 
 \subsection{Choosing replacement components}
 
+In previous task, you had to identify malfunction in linear regulator circuit.
+Now, with given broken component you have to find appropriate component in 
+stash. As a supplier use DigiKey Electronics. Your choice is graded in 
+several ways:
+\begin{itemize}
+\item price,
+\item correct voltage, power and current ratings,
+\item correct component footprint.
+\end{itemize}
+As a result, please provide DigiKey part number for each scenario.
 
+\textbf{1. scenario - Resistor (R1)}
+
+\textbf{2. scenario - Transistor (Q1)}
+
+\subsection{LC filter design}
+
+To achieve specified ripple rejection at required frequency, design a LC low 
+pass filter which filters output of regulator. As in previous task you have 
+to provide to DigiKey part numbers for LC filter. Your choice is graded in 
+the similar fashion as before:
+\begin{itemize}
+\item price,
+\item correct inductance and capacitance,
+\item correct footprints, 
+\item correct current and voltage ratings.
+\end{itemize}
+
+\subsection{Reliability of a standby system}
+
+
+\subsection{Grading scheme}
+ 
 \end{document}

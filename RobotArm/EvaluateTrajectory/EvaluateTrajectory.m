@@ -1,4 +1,4 @@
-function output = EvaluateTrajectory(Ts, refPoints, loadPosition, loadVelocity)
+function output = EvaluateTrajectory(Ts, refPointsVector, loadPosition, loadVelocity)
 % EVALUATE TRAJECTORY
 % Functions takes referent and trajectory points and calculates control
 % cost.
@@ -9,8 +9,19 @@ persistent pointIndex costArray waitTime reset
 epsPosition = 0.1;
 epsVelocity = 0.01;
 maxWaitTime = 1;
-numOfPoints = size(refPoints,1);
 isFinished = 0;
+
+% Reshape refPointsVector into matrix. This is purely because Simulink is
+% unable to handle matrices as inputs. Input vector has to have 3*N
+% elements, where N is number of points. 
+% Vector refPointsVector has the structure [x1 y1 z1 x2 y2 z2 ... xN yN zN].
+% Matrix refPoints has the structure
+%   [[x1 y1 z1]
+%    [x2 y2 z2]
+%    ...
+%    [xN yN zN]]
+numOfPoints = length(refPointsVector)/3;
+refPoints = reshape(refPointsVector,[3, numOfPoints])';
 
 % Initialize point number and cost value
 if(isempty(pointIndex))

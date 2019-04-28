@@ -1,0 +1,58 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{gameshf}[2019/04/23 STEM Games arena header and footer]
+
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+\RequirePackage{graphicx}
+
+\newif\ifgameshf@gl
+\newcommand{\arenatext}{}
+\newcommand{\arenaimg}{}
+\newcommand{\gameslogo}{}
+\DeclareOption{s}{
+    \renewcommand{\arenatext}{Science Arena}
+    \renewcommand{\arenaimg}{logos/s}
+}
+\DeclareOption{t}{
+    \renewcommand{\arenatext}{Technology Arena}
+    \renewcommand{\arenaimg}{logos/t}
+}
+\DeclareOption{e}{
+    \renewcommand{\arenatext}{Engineering Arena}
+    \renewcommand{\arenaimg}{logos/e}
+}
+\DeclareOption{m}{
+    \renewcommand{\arenatext}{Mathematics Arena}
+    \renewcommand{\arenaimg}{logos/m}
+}
+\DeclareOption{gameslogo}{
+    \renewcommand{\gameslogo}{logos/logo}
+    \gameshf@gltrue
+}
+\DeclareOption{gameslogobw}{
+    \renewcommand{\gameslogo}{logos/bwlogo}
+    \gameshf@gltrue
+}
+\DeclareOption{arenalogo}{
+    \gameshf@glfalse
+}
+
+\ExecuteOptions{s,arenalogo}
+
+\ProcessOptions\relax
+
+\setlength{\headheight}{20pt}
+\pagestyle{fancy}
+\fancyhf{}
+
+\ifgameshf@gl
+    \lhead{\includegraphics[height=15pt]{\gameslogo}}
+    \rhead{\raisebox{4pt}{\textsc{\arenatext}}}
+\else
+    \lhead{\includegraphics[height=15pt]{\arenaimg}\hspace{4pt}\raisebox{3pt}{\textsc{\arenatext}}}
+    \rhead{\raisebox{3pt}{\includegraphics[height=7pt]{logos/textonly}}}
+\fi
+
+\lfoot{Problem statement}
+\rfoot{Page \thepage\ of \pageref{LastPage}}
+\renewcommand{\footrulewidth}{\headrulewidth}

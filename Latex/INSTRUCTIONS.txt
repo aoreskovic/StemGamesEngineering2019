@@ -1,0 +1,7 @@
+You can add tasks by copying the "Task.tex" template in "Tasks" folder.
+
+After that you can include it in each day by calling 
+
+\import{Tasks/}{"taskname"}
+
+command

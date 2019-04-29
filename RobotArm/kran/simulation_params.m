@@ -32,7 +32,7 @@ transRadiusOut = 85;
 transRadiusIn = 50;
 transStroke = 3500;
 transRadiusShaft = 37.5/2;
-transRadiusDeadVol = 65;
+transRadiusDeadVol = 40;
 transHeightDeadVol = 30;
 
 transPistonAreaA = transRadiusIn^2*pi;

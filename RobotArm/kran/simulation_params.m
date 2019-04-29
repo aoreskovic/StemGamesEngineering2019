@@ -2,6 +2,12 @@
 Tsim = 100;
 Ts = 50e-3;
 
+% Driving test
+pointOne = [8 5.65 0]; %Promijeniti
+pointTwo = [-7.5 3.4 7.5]; %Promijeniti
+pointThree = [0 2.9 2.5]; %Promijeniti
+refPointsVector = [pointThree, pointOne, pointThree, pointTwo, pointThree];
+
 %% HYDRAULIC DATA
 % Hydraulic rot
 rotRadiusOut = 110;
@@ -33,3 +39,4 @@ transDeadVolB = transDeadVolA - transRadiusShaft^2*pi*transHeightDeadVol;
 
 transOneDamping = 5e4;
 transTwoDamping = 5e4;
+

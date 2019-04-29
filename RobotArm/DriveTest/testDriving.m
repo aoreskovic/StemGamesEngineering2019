@@ -2,6 +2,7 @@ clear all; clc;
 
 simulation_params;
 Tsim = 300;
+Ts = 0.1;
 
 pointOne = [8 5.65 0];
 pointTwo = [-7.5 3.4 7.5]; %Rijeseno

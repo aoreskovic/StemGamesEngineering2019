@@ -16,11 +16,12 @@ rotPistonAreaB = rotPistonAreaA - rotRadiusShaft^2*pi;
 rotDeadVolA = rotRadiusDeadVol^2*pi*rotHeightDeadVol;
 rotDeadVolB = rotDeadVolA - rotRadiusShaft^2*pi*rotHeightDeadVol;
 
-rotDamping = 1e5;
+rotDamping = 5e5;
 
 % Hydraulic trans
 transRadiusOut = 85;
-transRadiusIn = 75;
+%transRadiusIn = 75;
+transRadiusIn = 50;
 transStroke = 3500;
 transRadiusShaft = 37.5/2;
 transRadiusDeadVol = 65;
@@ -31,5 +32,5 @@ transPistonAreaB = transPistonAreaA - transRadiusShaft^2*pi;
 transDeadVolA = transRadiusDeadVol^2*pi*transHeightDeadVol;
 transDeadVolB = transDeadVolA - transRadiusShaft^2*pi*transHeightDeadVol;
 
-transOneDamping = 5e4;
-transTwoDamping = 5e4;
+transOneDamping = 5e5;
+transTwoDamping = 5e5;

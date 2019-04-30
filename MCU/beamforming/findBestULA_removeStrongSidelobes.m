@@ -2,16 +2,17 @@ clear all;
 close all;
 
 N = 10;
-d = 0.5;
-freq = 100e6;
-vel = 3e8;
+d = 0.05;
+freq = 30e3;
+vel = 1520;
 lambda = vel/freq;
 
 el = -90:0.1:90;
 wantedAngle = 60;
+wantedAngle = 90-wantedAngle;
 elIndex = find(el == wantedAngle);
 
-cosFact = 10;
+cosFact = 2;
 pat = cos(deg2rad(el)).^cosFact;
 
 alpha = deg2rad(-180:0.1:180);

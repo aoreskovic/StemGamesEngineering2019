@@ -1,21 +1,58 @@
-\section{Beamforming system}
+UVOD
 
-You are given a choice to use a transceiver with a single channel, or to create a beamforming array system. The beamforming system can be linear or planar, with elements spaced uniformly, or non-uniformly. Digital baseband pre-processing will be used for beam shaping. The system schematic is given in Figure \ref{fig:antarray_scheme}.
-%TODO fig:antarray_scheme
+Podvodni habitat ostvaruje vezu s brodom pomoću ultrazvučnih hidrofona postavljenih na vrh habitata. Kako bi se povećao domet ultrazvučne komunikacije, više hidrofona se može povezati u beamforming sustav. Za to je na vrhu habitata predviđena pravokutna ravna površina veličine 1 m x 1 m, koja je prikazana u referentnom koordinatnom sustavu na slici \ref{fig:coord}.
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=0.4\textwidth]{ula.png}
+   \caption{Reference coordinate system with available beamformer area}
+   \label{fig:coord}
+\end{figure}
 
-Your task is to choose if you wish to use a single transceiver element, or to design an antenna array system to meet your link budget.
+Hidrofon radi u frekvencijskom rasponu od 20 kHz do 90 kHz, a za komunikaciju je odabrana frekvencija nosioca od 30 kHz. Smatrajte da je signal uskopojasan. Hidrofon ima kosinusni dijagram zračenja opisan formulom
+[\ D(\phi,\theta) = \cos^2(\theta) ]\
+gdje je $\phi$ kut azimuta, a $\theta$ kut elevacije. Dijagram zračenja u referentnom koordinatnom sustavu je prikazan slikom \ref{fig:hydrophone}.
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=0.4\textwidth]{hydrophone.png}
+   \caption{Farfield of a hydrophone element}
+   \label{fig:hydrophone}
+\end{figure}
+Hidrofoni su fizički kružni, promjera 5 cm. Svi hidrofoni antenskog sustava postavljaju se s maksimumom zračenja u zenit, tj. okomito na površinu mora. S druge strane, brod raspolaže s jednim hidrofonom montiranim na trup broda i okrenutim u nadir, tj. okomito na morsko dno.
 
-An beamforming array is defined by the number of elements along the x-axis (N), and the number of elements along the y-axis (M). Vectors $dx$ and $dy$ define the spacing between each element, and their length is N-1 and M-1, respectively.
+Smatrajte da se komunikacija odvija u Jadranskome moru, prosječnog saliniteta 28\% i u temperaturi mora od 20\circ.
 
-The beamforming matrix, $bfMatrix$, represents the weight and phase factors that are applied to each array element. Each element of $bfMatrix$ is a single complex number.
 
-%TODO Define the radiation pattern of all available elements 
+TASK 1
 
-The position of the ship relative to the submarine is given in Figures \ref{fig:array_task1} to \ref{fig:array_task3}. You job is to define a transceiving system to create a beam that will direct the signal between two communication channel ends. Your beamforming precision will be evaluated, as well as the end contribution to the link budget.
+Potrebno je dizajnirati linearni antenski niz za postizanje najboljeg linka između dviju stanica. Zadana su tri scenarija:
+Scenarij 1
+Brod se naalzi točno iznad antenskog sustava.
+Scenarij 2
+Brod se nalazi iznad uzdužne osi antenskog sustava, na elevaciji od 60 stupnjeva (note to self: u odnosu na horizont)
+Scenarij 3
+Brod se nalazi iznad uzdužne osi antenskog sustava, na elevaciji od 30 stupnjeva.
+Scenarij 4
+Brod se nalazi iznad uzdužne osi antenskog sustava, na elevaciji od 10 stupnjeva.
 
-%TODO fig:array_task1
-% Brod se nalazi iznad podmornice
-%TODO fig:array_task2
-% Problem koji se rješava u jednoj osi
-%TODO fig:array_task3
-% Problem u sfernoj domeni, u dvije osi
+Dizajnirajte jedan linearni antenski niz koji će raditi dobro za sva 4 scenarija. Antenski niz je definiran y koordinatom svakog antenskog elementa. Broj elemenata je proizvoljan, uz ograničenja zadana u uvodnom dijelu zadatka.
+
+Za svaki od 4 scenarija odredite težinske faktore koji se dovode na svaki antenski element kako bi se postigao najbolji mogući beamforming za taj scenarij.
+
+
+Output data
+
+elementCoordinates - Jednodimenzionalni niz koji označava pozicije antenskog elementa na y osi
+
+beamformingWeights - Jednodimenzionalni niz kompleksnih brojeva duljine jednake elementCoordinates.
+
+Svaki element beamformingWeights niza odgovara težini primijenjenoj na respektivni element iz elementCoordinates niza.
+
+
+Scoring
+
+Za sve zadane scenarije evaluira se antenski sustav koji ste dizajnirali. U prva tri scenarija, bodovi se dodjeljuju za usmjerenost koju antenski sustav ostvaruje u smjeru broda.
+Ako se brod nalazi u glavnoj latici ili u prvoj sporednoj latici, tada tim dobiva bodove za dani scenarij. No, ako se brod nalazi u prvoj sekundarnoj latici, timu se oduzimaju bodovi koji odgovaraju razlici najveće usmjerenosti antenskog niza i usmjerenosti u smjeru broda.
+
+U scenariju 4, dizajnirani antenski sustav se evaluira sa težinskim faktorima koje izračunate, te uspoređuje usmjerenost koju antenski sustav ostvaruje u smjeru broda u odnosu na usmjerenost koju bi ostvario u slučaju uniformne pobude. Najveći broj bodova koji se u ovom scenariju može ostvariti je 10.
+
+Antenski sustav koji se sastoji od samo jednog elementa ne dobiva bodove ni u kojem scenariju.

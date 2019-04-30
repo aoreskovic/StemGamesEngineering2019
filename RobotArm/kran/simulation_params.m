@@ -28,7 +28,7 @@ rotDeadVolB = rotDeadVolA - rotRadiusShaft^2*pi*rotHeightDeadVol;
 rotDamping = 5e5;
 
 % Hydraulic trans
-transRadiusOut = 85;
+transRadiusOut = 60;
 transRadiusIn = 50;
 transStroke = 3500;
 transRadiusShaft = 37.5/2;

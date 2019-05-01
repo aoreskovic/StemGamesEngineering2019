@@ -8,9 +8,6 @@ char *bitstream_to_bytestream(char *bitstream, int length);
 void frame_sync(char **bytestream, int length);
 void frame_step(char **bytestream, int frame_length);
 int frame_decoder(char *bytestream, char **data);
-complex *channel_correction(complex *input, int first_carrier, int ofdm_size, 
-	char *pilot_map);
-
 double *ofdm_demodulator(complex *input, int *carrier_idx, int carrier_no, 
 	char **data);
 unsigned short crc16_check(char *msg, int length);

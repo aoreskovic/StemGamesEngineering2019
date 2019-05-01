@@ -5,12 +5,12 @@
 
 typedef double complex[2];
 
-void dft(complex *input, complex *output, int N);
-void idft(complex *input, complex *output, int N);
-
 double complex_abs(complex c);
 double complex_angle(complex c);
 void complex_add_angle(complex *c, double delta);
+
+void dft(complex *input, complex *output, int N);
+void idft(complex *input, complex *output, int N);
 
 static const unsigned short crc16tab[256]= {
     0x0000,0x1021,0x2042,0x3063,0x4084,0x50a5,0x60c6,0x70e7,

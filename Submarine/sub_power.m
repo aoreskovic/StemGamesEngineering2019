@@ -1,4 +1,4 @@
-function [Pb] = sub_power(speed_kn,cilynder_l, sub_radius)
+function Pb  = sub_power(speed_kn,cilynder_l, sub_radius)
 %sub_power Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -12,8 +12,12 @@ rop = 1300; % kg/m^3 - Plastics
 % Physical constants
 g = 9.81; % m/s^2
 
+negative = 1;
 
-
+if speed_kn < 0
+    negative = -1;
+    speed_kn = speed_kn * -1;
+end
 
 % Surface
 
@@ -55,8 +59,10 @@ CT = CF * (1 + k);
 Re = CT * 0.5 * row * speed_ms^2 * sub_surface / 1000; % kW
 Pe = Re * speed_ms; % kW
 Pb1 = Pe/(0.5*0.98);
-Pb= Pb1/0.85;
+Pb = Pb1/0.85; % kW
 
+
+Pb = Pb * negative;
 
 end
 

@@ -1,4 +1,4 @@
-function [Pb] = sub_power(speed_kn,cilynder_l, sub_radious)
+function [Pb] = sub_power(speed_kn,cilynder_l, sub_radius)
 %sub_power Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -17,22 +17,22 @@ g = 9.81; % m/s^2
 
 % Surface
 
-sub_length = cilynder_l + 2 * sub_radious;
+sub_length = cilynder_l + 2 * sub_radius;
 
-sur_cylinder = 2 * sub_radious * pi * cilynder_l;
-sur_sphere =  4 * sub_radious^2 * pi;
+sur_cylinder = 2 * sub_radius * pi * cilynder_l;
+sur_sphere =  4 * sub_radius^2 * pi;
 
 sub_surface = sur_cylinder + sur_sphere;
 
 % Volume
 
-vol_cylinder = sub_radious^2 * cilynder_l * pi; % m^3
-vol_sphere = 4/3 * sub_radious^3 * pi; % m^3
+vol_cylinder = sub_radius^2 * cilynder_l * pi; % m^3
+vol_sphere = 4/3 * sub_radius^3 * pi; % m^3
 sub_volume = vol_cylinder + vol_sphere; % m^3
 
 istisnina = row * sub_volume; % t
 
-CB =  sub_volume / (sub_length * 2 * sub_radious * 2 * sub_radious); % Block coefficient
+CB =  sub_volume / (sub_length * 2 * sub_radius * 2 * sub_radius); % Block coefficient
 
 
 
@@ -48,7 +48,7 @@ CF = 0.075/(log10(Rn)-2)^2; % Friction coefficient
 Fn = speed_ms /sqrt(9.08665 * sub_length);
 
 
-k=-0.095+25.6 *CB/((sub_length/(2*sub_radious))^2);
+k=-0.095+25.6 *CB/((sub_length/(2*sub_radius))^2);
 
 CT = CF * (1 + k);
 

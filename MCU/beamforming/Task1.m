@@ -97,6 +97,10 @@ bfMatrix = csvread('task1_scenario4.csv');
 
 score = targetD - targetDuniform;
 
+if targetD < 0
+    err.invokeError('negativeDirectivity');
+end
+
 fprintf('Score: %2.04f\n', score);
 
 err.printErrors();

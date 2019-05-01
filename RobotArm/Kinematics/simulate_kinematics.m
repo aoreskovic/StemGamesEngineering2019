@@ -35,12 +35,12 @@ end
 
 if direct
     dims = size(solutionDirectTable.Variables);
-    directCorrect = zeros(dims(1));
+    directCorrect = zeros(dims(1),1);
     refDirectTable = readtable(refFolder + "direct.csv");
     assert(all((size(solutionDirectTable.Variables) == [dims(1), 3])), "Wrong csv format for direct.");
     
     for i=1:dims(1)
-        setCraneInPosition(refDirectTable(i, :));
+        status = setCraneInPosition(refDirectTable(i, :));
         refBase = [[0], [refDirectTable(i, :).q1]];
         refRot = [[0], [refDirectTable(i, :).q2]];
         refTrans1 = [[0], [refDirectTable(i, :).q3]];
@@ -48,18 +48,22 @@ if direct
         refPulley = [[0], [refDirectTable(i, :).q5]];
         Tsim = 20;
         pause(1);
-        sim('kinematics_crane.slx')
-        
-        pause(1);
-        posMean = mean(loadPosition.signals.values(end-numFilterPoints+1:end, :), 1);
-        velMean = mean(loadVelocity.signals.values(end-numFilterPoints+1:end, :), 1);
+        if(~status)
+            sim('kinematics_crane.slx')
 
-        positionOffset = norm([posMean(1)-solutionDirectTable(i, :).x, ...
-                               posMean(2)-solutionDirectTable(i, :).y, ...
-                               posMean(3)-solutionDirectTable(i, :).z]);
-                           
-        if positionOffset < posEpsilon && norm(velMean) < velEpsilon
-            directCorrect(i) = 1;
+            pause(1);
+            posMean = mean(loadPosition.signals.values(end-numFilterPoints+1:end, :), 1);
+            velMean = mean(loadVelocity.signals.values(end-numFilterPoints+1:end, :), 1);
+
+            positionOffset = norm([posMean(1)-solutionDirectTable(i, :).x, ...
+                                   posMean(2)-solutionDirectTable(i, :).y, ...
+                                   posMean(3)-solutionDirectTable(i, :).z]);
+
+            if positionOffset < posEpsilon && norm(velMean) < velEpsilon
+                directCorrect(i) = 1;
+            end
+        else
+            directCorrect(i) = -1; % Constraint violation. Pulley angle not large enough.
         end
     end
  
@@ -67,32 +71,40 @@ end
 
 if inverse
     dims = size(solutionInverseTable.Variables);
-    inverseCorrect = zeros(dims(1));
+    inverseCorrect = zeros(dims(1),1);
     refInverseTable = readtable(refFolder + "inverse.csv");
     assert(all((size(solutionInverseTable.Variables) == [dims(1), 5])), "Wrong csv format for direct.");
     
     for i=1:dims(1)
-        setCraneInPosition(solutionInverseTable(i, :));
+        status = setCraneInPosition(solutionInverseTable(i, :));
         refBase = [[0], [solutionInverseTable(i, :).q1]];
         refRot = [[0], [solutionInverseTable(i, :).q2]];
         refTrans1 = [[0], [solutionInverseTable(i, :).q3]];
         refTrans2 = [[0], [solutionInverseTable(i, :).q4]];
         refPulley = [[0], [solutionInverseTable(i, :).q5]];
         Tsim = 20;
-        sim('kinematics_crane.slx')
-        
-        pause(0.5);
-        posMean = mean(loadPosition.signals.values(end-numFilterPoints+1:end, :), 1);
-        velMean = mean(loadVelocity.signals.values(end-numFilterPoints+1:end, :), 1);
+        if(~status)
+            sim('kinematics_crane.slx')
 
-        positionOffset = norm([posMean(1)-refInverseTable(i, :).x, ...
-                               posMean(2)-refInverseTable(i, :).y, ...
-                               posMean(3)-refInverseTable(i, :).z]);
-                           
-        if positionOffset < posEpsilon && norm(velMean) < velEpsilon
-            inverseCorrect(i) = 1;
-        end
+            pause(0.5);
+            posMean = mean(loadPosition.signals.values(end-numFilterPoints+1:end, :), 1);
+            velMean = mean(loadVelocity.signals.values(end-numFilterPoints+1:end, :), 1);
+
+            positionOffset = norm([posMean(1)-refInverseTable(i, :).x, ...
+                                   posMean(2)-refInverseTable(i, :).y, ...
+                                   posMean(3)-refInverseTable(i, :).z]);
+
+            if positionOffset < posEpsilon && norm(velMean) < velEpsilon
+                inverseCorrect(i) = 1;
+            end
+        else
+            inverseCorrect(i) = -1; % Constraint violation. Pulley angle not large enough.
+        end   
     end
-
+   
 end
+
+% Write results to file
+loadStatus = 0; % All files successfully loaded. Ovo treba dodat negdje, mozda umjesto assert?
+resultStatus = WriteKinematicsResults(solutionFolder, loadStatus, directCorrect, inverseCorrect);
 

@@ -1,0 +1,29 @@
+\documentclass[a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlist[description]{style=unboxed}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{circuitikz}
+
+\usetikzlibrary{calc,positioning,shapes,decorations.pathreplacing}
+
+\tikzset{
+	short/.style={draw,rectangle,text height=3pt,text depth=13pt,
+		text width=7pt,align=center,fill=gray!30},
+	long/.style={short,text width=1.5cm},
+	verylong/.style={short,text width=4.5cm}
+}
+
+\begin{document}
+\subsection{Prvi zadatak}
+Submarine needs electric power to drive the main propeller shaft and to operate all the equipment on board. The main supply of the electric power on your submarine is a synchronous generator. The generator rotor is fitted on the same shaft as the steam turbine. The generator converts the mechanical power from the steam turbine into electrical energy which is supplied to each load on the submarine. Generators are typically purchased based on the requirements of a specific application. In this task you will be designing a three-phase synchronous generator for your submarine. Nominal values of the synchronous generator are given as: 100 kVA, 400 V, power factor 0.8, 50 Hz, 3000 rpm.
+Synchronous generator design is not a simple task and to make it easier for you only limited  number of parameters need to be determined. Main dimensions that you need to calculate are the rotor diameter, the stator diameter and the air gap length. Next, you have to determine number of conductors in the stator and rotor slots. Lastly, for the design completeness synchronous reactance in p.0.u must be calculated. 
+The rotor body of the generator is made from laminations with slots to take the windings. Windings located on the rotor are called field (excitation) windings. Field windings are supplied with a direct current 24 A to create a field current linkage 2352 A (mean value?). The created current linkage is cossinusoidally distributed in the air gap (length of the air gap is constant). Magnetic flux density created by the current linkage is shown in figure 1. The rotor diameter is sized to operate at near the stress limit of the steel alloy. Maximum allowable peripheral speed is 80 m/s and machine must be capable of sustaining 70 \% overspeed. 
+Stator windings or armature windings are integral one-layer windings embedded in 18 slots. Stator length is 0,5 m. 
+\end{document}

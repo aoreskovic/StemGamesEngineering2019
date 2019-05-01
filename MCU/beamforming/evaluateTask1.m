@@ -9,11 +9,17 @@ err = linkError.instance();
 N = length(elements);
 
 % Parameter format
+if (length(elements) == 1)
+    err.invokeError('notAnArray');
+end
 if (size(elements) == [1 N]) ~= ones(1,2)
     err.invokeError('arrayParameter');
 end
 elements = transpose([zeros(N,1) elements' zeros(N,1)]);
 if size(bfMatrix) ~= N
+    err.invokeError('arrayParameter');
+end
+if sum(abs(bfMatrix) > 1) > 0
     err.invokeError('arrayParameter');
 end
 

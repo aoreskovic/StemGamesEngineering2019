@@ -9,7 +9,7 @@ classdef linkError < handle
         %ERRORMAP Defined error codes and their description, and
         %criticality flag
         errorMap = containers.Map( ...
-            {'trxMethod', 'arrayLength', 'freqRange', 'freqLicense', 'arrayParameter', 'negativeDirectivity'}, ...
+            {'trxMethod', 'arrayLength', 'freqRange', 'freqLicense', 'arrayParameter', 'negativeDirectivity', 'notAnArray'}, ...
             {
                 {'Unsupported TRX method', true}
                 {'Antenna array is larger than the submarine', true}
@@ -17,6 +17,7 @@ classdef linkError < handle
                 {'No frequency license', false}
                 {'Array parameter error', true}
                 {'Beamformer achieved negative directivity', false}
+                {'Not a beamformer', true}
             } ...
         );
     end

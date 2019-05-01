@@ -9,13 +9,14 @@ classdef linkError < handle
         %ERRORMAP Defined error codes and their description, and
         %criticality flag
         errorMap = containers.Map( ...
-            {'trxMethod', 'arrayLength', 'freqRange', 'freqLicense', 'arrayParameter'}, ...
+            {'trxMethod', 'arrayLength', 'freqRange', 'freqLicense', 'arrayParameter', 'negativeDirectivity'}, ...
             {
                 {'Unsupported TRX method', true}
                 {'Antenna array is larger than the submarine', true}
                 {'Frequency out of bounds', true}
                 {'No frequency license', false}
                 {'Array parameter error', true}
+                {'Beamformer achieved negative directivity', false}
             } ...
         );
     end
@@ -52,6 +53,12 @@ classdef linkError < handle
                     error('Link error was critical');
                 end
             end
+        end
+
+        function flushErorrs(obj)
+            %FLUSHERRORS Clear all errors
+            obj.triggerredErrors = [];
+            obj.errorCount = 0;
         end
     end
 

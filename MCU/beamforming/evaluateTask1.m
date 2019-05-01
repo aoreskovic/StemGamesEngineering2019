@@ -1,10 +1,7 @@
-clear all;
-close all; 
+function [targetD, maxD, maxAz] = evaluateTask1(elements, bfMatrix, targetAz)
 
 vel = 1520;
 freq = 30e3;
-bfMatrix = exp(1i*[1.12224670903235]).^[0:9];
-elements = [0 0; 0 1; 0 2; 0 3; 0 4; 0 5; 0 6; 0 7; 0 8; 0 9]./20;
 
 err = linkError.instance();
 
@@ -12,10 +9,10 @@ err = linkError.instance();
 N = length(elements);
 
 % Parameter format
-if (size(elements) == [N 2]) ~= ones(1,2)
+if (size(elements) == [1 N]) ~= ones(1,2)
     err.invokeError('arrayParameter');
 end
-elements = transpose([elements zeros(N,1)]);
+elements = transpose([zeros(N,1) elements' zeros(N,1)]);
 if size(bfMatrix) ~= N
     err.invokeError('arrayParameter');
 end
@@ -37,7 +34,9 @@ antenna = ...
         'FrequencyRange',[0 1.2e9], ...
         'CosinePower',[2 2] ...
     );
-% pattern(antenna,freq,-180:180,-90:90,'Type','powerdb','CoordinateSystem','polar');
+figure;
+pattern(antenna,freq,-180:180,-90:90,'Type','directivity','CoordinateSystem','polar');
+title('Hydrophone directivity');
 
 array = ...
     phased.ConformalArray( ...
@@ -82,17 +81,20 @@ vcoord = -1:numPrecuv:1;
 % Array directivity
 D = max(max(farField));
 fprintf('Array directivity: %2.04f dBi\n', D(1));
+maxD = D(1);
 
 % Direction of maximum beam
 [maxU, maxV] = find(farField == D(1));
 maxAzEl = uv2azel([uctrl(maxU);vctrl(maxV)]);
+maxAz = maxAzEl(2);
 fprintf('Main lobe direction: Azimuth %2.04f Elevation %2.04f\n', maxAzEl(2), maxAzEl(1));
 
 % Directivity at target
-targetAz = 30;
 targetEl = 0;
-[pat_azel,elctrl,azctrl] = uv2azelpat(farField,ucoord,vcoord);
-[~,azIndex] = min(abs(targetAz-azctrl));
-[~,elIndex] = min(abs(targetEl-elctrl));
-targetD = pat_azel(azIndex,elIndex);
+% [pat_azel,elctrl,azctrl] = uv2azelpat(farField,ucoord,vcoord);
+% [~,azIndex] = min(abs(targetAz-azctrl));
+% [~,elIndex] = min(abs(targetEl-elctrl));
+targetD = directivity(array,freq,[targetAz;targetEl],'PropagationSpeed',vel);
 fprintf('Directivity at target: %2.04f dBi\n', targetD);
+
+end

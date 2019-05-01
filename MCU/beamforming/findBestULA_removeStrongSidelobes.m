@@ -8,7 +8,7 @@ vel = 1520;
 lambda = vel/freq;
 
 el = -90:0.1:90;
-wantedAngle = 60;
+wantedAngle = 70;
 wantedAngle = 90-wantedAngle;
 elIndex = find(el == wantedAngle);
 

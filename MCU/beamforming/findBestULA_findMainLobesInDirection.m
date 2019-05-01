@@ -8,7 +8,7 @@ vel = 1520;
 lambda = vel/freq;
 
 el = 0:0.1:180;
-wantedAngle = 60; % In domain from evaluateArray function
+wantedAngle = 70; % In domain from evaluateArray function
 wantedAngle = 90 - wantedAngle; % In domain used herein
 elIndex = find(el == wantedAngle);
 

@@ -17,9 +17,15 @@ if size(bfMatrix) ~= N
     err.invokeError('arrayParameter');
 end
 
+% Element 1D distances
+distMin = 0.05;
+if sum(diff(sort(elements)) > distMin) > 0
+    err.invokeError('arrayParameter');
+end
+
 % Area limits
-xmax = 10;
-ymax = 10;
+xmax = 1;
+ymax = 1;
 if ((~isempty(find(elements < 0)) | ...
         (~isempty(find(elements(1,:) > xmax))) | ...
         (~isempty(find(elements(2,:) > ymax)))))

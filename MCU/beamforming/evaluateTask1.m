@@ -29,9 +29,12 @@ if sum(diff(sort(elements)) > distMin) > 0
     err.invokeError('arrayParameter');
 end
 
+% Adjust coordinate system
+elements = elements + 0.225;
+
 % Area limits
-xmax = 1;
-ymax = 1;
+xmax = 0.45;
+ymax = 0.45;
 if ((~isempty(find(elements < 0)) | ...
         (~isempty(find(elements(1,:) > xmax))) | ...
         (~isempty(find(elements(2,:) > ymax)))))

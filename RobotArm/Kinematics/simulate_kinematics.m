@@ -1,15 +1,17 @@
 %% KINEMATICS
 
+open_system("kinematics_crane.slx")
+
 files = dir(solutionFolder);
 
 numFilterPoints = 10;  % evaluate this many points from end
 posEpsilon = 0.1;
-velEpsilon = 0.01;
 
 direct = 0;
 inverse = 0;
 solutionDirectTable = 0;
 solutionInverseTable = 0;
+
 for i=1:length(files)  
     file = files(i);
     fileName = convertCharsToStrings(file.name);
@@ -17,27 +19,67 @@ for i=1:length(files)
     if name == "direct"
         if direct == 0
             direct = 1;
-            solutionDirectTable = readtable(solutionFolder + fileName);
-        else
-            assert(false, "More than 1 file for direct.")
+            
+            try  % check for csv format (if all fields exist)
+                solutionDirectTable = readtable(solutionFolder + fileName);
+                dims = size(solutionDirectTable.Variables);
+                for j=1:dims(1)
+                   a = solutionDirectTable(j, :).x;
+                   a = solutionDirectTable(j, :).y;
+                   a = solutionDirectTable(j, :).z;                   
+                end
+            catch
+                outputFileId = fopen(solutionFolder + "result.txt", 'w');
+                fprintf(outputFileId, "Wrong csv format for direct.");
+                fclose(outputFileId);
+            return
+            end
+            
+        else % if more that 1 file for direct
+            outputFileId = fopen(solutionFolder + "result.txt", 'w');
+            fprintf(outputFileId, "More than 1 file for direct.");
+            fclose(outputFileId);
+            return
         end
-    elseif name == "inverse"
+        
+        
+    elseif name == "inverse"    
         if inverse == 0
             inverse = 1;
-            solutionInverseTable = readtable(solutionFolder + fileName);
-        else
-            assert(false, "More than 1 file for inverse.")
+            
+            try % check for csv format (if all fields exist)
+               solutionInverseTable = readtable(solutionFolder + fileName);
+               dims = size(solutionInverseTable.Variables);
+               for j=1:dims(1)
+                  a = solutionInverseTable(j, :).q1;
+                  a = solutionInverseTable(j, :).q2;
+                  a = solutionInverseTable(j, :).q3;
+                  a = solutionInverseTable(j, :).q4;
+                   a = solutionInverseTable(j, :).q5;
+               end
+            
+            catch
+                outputFileId = fopen(solutionFolder + "result.txt", 'w');
+                fprintf(outputFileId, "Wrong csv format for inverse.");
+                fclose(outputFileId);
+                return
+            end
+            
+        else % if more that 1 file for inverse
+            outputFileId = fopen(solutionFolder + "result.txt", 'w');
+            fprintf(outputFileId, "More than 1 file for inverse.");
+            fclose(outputFileId);
+            return
         end
     end
 end
 
-
-
+directCorrect = zeros(dims(1),1);
+% check direct kinematics
 if direct
+       
     dims = size(solutionDirectTable.Variables);
-    directCorrect = zeros(dims(1),1);
-    refDirectTable = readtable(refFolder + "direct.csv");
-    assert(all((size(solutionDirectTable.Variables) == [dims(1), 3])), "Wrong csv format for direct.");
+    refDirectTable = readtable(readOnlyFolder + "direct.csv");
     
     for i=1:dims(1)
         status = setCraneInPosition(refDirectTable(i, :));
@@ -47,10 +89,11 @@ if direct
         refTrans2 = [[0], [refDirectTable(i, :).q4]];
         refPulley = [[0], [refDirectTable(i, :).q5]];
         Tsim = 20;
-        pause(1);
+        
+        
         if(~status)
+            pause(1);
             sim('kinematics_crane.slx')
-
             pause(1);
             posMean = mean(loadPosition.signals.values(end-numFilterPoints+1:end, :), 1);
             velMean = mean(loadVelocity.signals.values(end-numFilterPoints+1:end, :), 1);
@@ -59,52 +102,55 @@ if direct
                                    posMean(2)-solutionDirectTable(i, :).y, ...
                                    posMean(3)-solutionDirectTable(i, :).z]);
 
-            if positionOffset < posEpsilon && norm(velMean) < velEpsilon
+            if positionOffset < posEpsilon
                 directCorrect(i) = 1;
             end
         else
             directCorrect(i) = -1; % Constraint violation. Pulley angle not large enough.
         end
-    end
- 
+    end 
 end
 
+inverseCorrect = zeros(dims(1),1);
+% check inverse kinematics
 if inverse
     dims = size(solutionInverseTable.Variables);
-    inverseCorrect = zeros(dims(1),1);
-    refInverseTable = readtable(refFolder + "inverse.csv");
-    assert(all((size(solutionInverseTable.Variables) == [dims(1), 5])), "Wrong csv format for direct.");
+    refInverseTable = readtable(readOnlyFolder + "inverse.csv");
     
-    for i=1:dims(1)
-        status = setCraneInPosition(solutionInverseTable(i, :));
-        refBase = [[0], [solutionInverseTable(i, :).q1]];
-        refRot = [[0], [solutionInverseTable(i, :).q2]];
-        refTrans1 = [[0], [solutionInverseTable(i, :).q3]];
-        refTrans2 = [[0], [solutionInverseTable(i, :).q4]];
-        refPulley = [[0], [solutionInverseTable(i, :).q5]];
-        Tsim = 20;
-        if(~status)
-            sim('kinematics_crane.slx')
+    try
+        for i=1:dims(1)
+            status = setCraneInPosition(solutionInverseTable(i, :));
+            refBase = [[0], [solutionInverseTable(i, :).q1]];
+            refRot = [[0], [solutionInverseTable(i, :).q2]];
+            refTrans1 = [[0], [solutionInverseTable(i, :).q3]];
+            refTrans2 = [[0], [solutionInverseTable(i, :).q4]];
+            refPulley = [[0], [solutionInverseTable(i, :).q5]];
+            Tsim = 20;
+            if(~status)
+                pause(1);
+                sim('kinematics_crane.slx')
+                pause(1);
+                posMean = mean(loadPosition.signals.values(end-numFilterPoints+1:end, :), 1);
+                velMean = mean(loadVelocity.signals.values(end-numFilterPoints+1:end, :), 1);
 
-            pause(0.5);
-            posMean = mean(loadPosition.signals.values(end-numFilterPoints+1:end, :), 1);
-            velMean = mean(loadVelocity.signals.values(end-numFilterPoints+1:end, :), 1);
+                positionOffset = norm([posMean(1)-refInverseTable(i, :).x, ...
+                                       posMean(2)-refInverseTable(i, :).y, ...
+                                       posMean(3)-refInverseTable(i, :).z]);
 
-            positionOffset = norm([posMean(1)-refInverseTable(i, :).x, ...
-                                   posMean(2)-refInverseTable(i, :).y, ...
-                                   posMean(3)-refInverseTable(i, :).z]);
-
-            if positionOffset < posEpsilon && norm(velMean) < velEpsilon
-                inverseCorrect(i) = 1;
-            end
-        else
-            inverseCorrect(i) = -1; % Constraint violation. Pulley angle not large enough.
-        end   
+                if positionOffset < posEpsilon
+                    inverseCorrect(i) = 1;
+                end
+            else
+                inverseCorrect(i) = -1; % Constraint violation. Pulley angle not large enough.
+            end   
+        end
+    catch
+        
     end
-   
 end
 
 % Write results to file
-loadStatus = 0; % All files successfully loaded. Ovo treba dodat negdje, mozda umjesto assert?
-resultStatus = WriteKinematicsResults(solutionFolder, loadStatus, directCorrect, inverseCorrect);
-
+resultStatus = WriteKinematicsResults(solutionFolder, direct, inverse, directCorrect, inverseCorrect);
+if ~resultStatus
+    copyfile(solutionFolder + "result.txt", readOnlyFolder);
+end

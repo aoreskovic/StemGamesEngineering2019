@@ -1,21 +1,89 @@
-\section{Beamforming system}
+\documentclass{article}[a4paper]
 
-You are given a choice to use a transceiver with a single channel, or to create a beamforming array system. The beamforming system can be linear or planar, with elements spaced uniformly, or non-uniformly. Digital baseband pre-processing will be used for beam shaping. The system schematic is given in Figure \ref{fig:antarray_scheme}.
-%TODO fig:antarray_scheme
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{textcomp}
 
-Your task is to choose if you wish to use a single transceiver element, or to design an antenna array system to meet your link budget.
+\title{Beamforming}
 
-An beamforming array is defined by the number of elements along the x-axis (N), and the number of elements along the y-axis (M). Vectors $dx$ and $dy$ define the spacing between each element, and their length is N-1 and M-1, respectively.
+\begin{document}
 
-The beamforming matrix, $bfMatrix$, represents the weight and phase factors that are applied to each array element. Each element of $bfMatrix$ is a single complex number.
+\maketitle
 
-%TODO Define the radiation pattern of all available elements 
+\section*{Introduction}
 
-The position of the ship relative to the submarine is given in Figures \ref{fig:array_task1} to \ref{fig:array_task3}. You job is to define a transceiving system to create a beam that will direct the signal between two communication channel ends. Your beamforming precision will be evaluated, as well as the end contribution to the link budget.
+An underwater habitat connects wirelessly to a ship on the surface by means of ultrasonic hydrophones installed at the top of the habitat. In order to increase communications range, multiple hydrophones can make a beamforming system. A flat rectangular area, 1 m x 1 m in dimension, is provisioned. The area lies in the y-z plane of reference coordinate system, as depicted in Figure \ref{fig:coord}.
+\begin{figure}[h!]
+   \centering
+   \includegraphics[width=0.4\textwidth]{coord.png}
+   \caption{Reference coordinate system with available beamformer area}
+   \label{fig:coord}
+\end{figure}
 
-%TODO fig:array_task1
-% Brod se nalazi iznad podmornice
-%TODO fig:array_task2
-% Problem koji se rješava u jednoj osi
-%TODO fig:array_task3
-% Problem u sfernoj domeni, u dvije osi
+Hydrophone operates in frequency range of 20 kHz to 90 kHz. The communication link uses a carrier frequency of 30 kHz. Hydrophone has a cosine radiation pattern, described by expression
+\[ D(\phi,\theta) = \cos^2(\theta) \]
+with $\phi$ being azimuth angle, and $\theta$ elevation angle. The radiation pattern is presented in the reference coordinate system in Figure \ref{fig:hydrophone}.
+\begin{figure}[h!]
+   \centering
+   \subfigure[3D view]{\includegraphics[width=0.415\textwidth]{hydrophone_3d.png}}
+   \hfill
+   \subfigure[Azimuth cut at 0deg]{\includegraphics[width=0.45\textwidth]{hydrophone_cut.png}}
+   \caption{Radiation pattern of a hydrophone element}
+   \label{fig:hydrophone}
+\end{figure}
+Physically, hydrophones are circular, 5 cm in diameter. All hydrophones in the beamforming system are installed with their radiation maximum pointed to zenith, i.e. perpendicular to sea surface. At the other end, the ship is equipped with a single hydrophone mounted on ship's hull, and pointing at nadir, i.e. perpendicular to seabed.
+
+Consider the signal narrowband. The ship is in the farfield of the beamforming system. Assume the communication link is being established in the Adriatic sea, with average salinity of 38\textperthousand, and sea temperature of 20\textdegree.
+
+\pagebreak
+
+\section*{Task 1}
+
+Design a single linear antenna array to achieve the best link between the habitat and the ship in four given scenarios.
+\begin{description}
+	\item[Scenario 1] The ship is directly above the beamforming system.
+	\item[Scenario 2] The ship is located along the longitudinal (y) axis of the beamforming system, at an elevation of 30\textdegree.
+	\item[Scenario 3] The ship is located along the longitudinal (y) axis of the beamforming system, at an elevation of 60\textdegree.
+	\item[Scenario 4] The ship is located along the longitudinal (y) axis of the beamforming system, at an elevation of 70\textdegree.
+\end{description}
+
+\begin{figure}[h!]
+   \centering
+   \subfigure[Scenario 1]{\includegraphics[width=0.45\textwidth]{scenario1.png}}
+   \hfill
+   \subfigure[Scenario 2]{\includegraphics[width=0.45\textwidth]{scenario2.png}}
+   \\
+   \subfigure[Scenario 3]{\includegraphics[width=0.45\textwidth]{scenario3.png}}
+   \hfill
+   \subfigure[Scenario 1]{\includegraphics[width=0.45\textwidth]{scenario4.png}}
+   \caption{Scenarios for Task 1}
+\end{figure}
+
+Elevation angle is considered from beamforming system's normal.
+
+A beamforming system is defined by giving y coordinates of each hydrophone element. Number of elements is arbitrary, given the limitations introduced in Introduction. For each of the four scenarios, provide complex weights that are applied to each of the hydrophone elements to achieve optimal beamforming for the particular scenario.
+
+\subsection*{Output data}
+
+\begin{description}
+	\item[task1\_elements.csv] \,\\ The file contains a one-dimensional array representing the position of each hydrophone element along the y axis.
+	\item[task1\_scenarioX.csv] \,\\ The file contains a one-dimensional array of complex numbers representing the weights applied to each hydrophone element. Weights are given for elements in the same order as defined in task1\_elements.csv. Array length is equal to the number of elements in the beamforming system. All numbers are inside, or at the edge of the unit circle.
+\end{description}
+
+\subsection*{Scoring}
+
+The beamforming system you designed is evaluated for each of the given scenarios. For the first three scenarios, points are awarded for the directivity the beamforming system achieves in the direction of the ship, after applying the given beamforming weights. If the ship is in the main lobe of the beamforming system, points are awarded in the amount that corresponds to the directivity of the main lobe. If the ship is in the strongest secondary lobe, then the number of awarded points is calculated as
+\[ D_\textrm{target} - \dfrac{\varDelta \phi}{10} \]
+where $D_\textrm{target}$ is the directivity in the direction of the ship, and $\varDelta \phi$ the angular distance between the ship and the direction of maximum directivity in degrees. The ship is considered to be within a radiation lobe if it is within 6 dB drop-off of the considered radiation lobe.
+
+In scenario 4, the beamforming system is evaluated with the given beamforming weights, and its directivity compared to that of the same beamforming system with uniform excitation. The points are then awarded as
+\[ D_\textrm{target,weighted} - D_\textrm{target,uniform} \]
+The highest number of points for this scenario is 15.
+
+For all scenarios, the following rules apply: A beamforming system constructed with just one element is awarded no points. A beamforming system acheiving negative directivity in the direction of the ship is awarded no points. Directivity is consided in units dBi. Negative points are not awarded (nor penalized :) ).
+
+After evaluating the task for both teams, the total number of points is normalized to the best team. Hence, the best team is pondered to 50 points, and the points for other teams is linearly scaled accordingly.
+Nakon evaluacije svih timova za oba zadatka, ukupan broj bodova svakog tima se normira na najbolji tim. Dakle, najbolji tim dobiva 50 bodova, a bodovi ostalih timova se linearno skaliraju prema njima.
+
+\end{document}

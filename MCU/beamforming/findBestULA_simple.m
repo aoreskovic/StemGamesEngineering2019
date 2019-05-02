@@ -1,14 +1,14 @@
 clear all;
 close all;
 
-N = 4;
-d = 1;
-freq = 100e6;
-vel = 3e8;
+N = 10;
+d = 0.05;
+freq = 30e6;
+vel = 1520;
 lambda = vel/freq;
 
 el = -90:0.01:90;
-wantedAngle = 45;
+wantedAngle = 70;
 elIndex = find(el == wantedAngle);
 
 cosFact = 2;

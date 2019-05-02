@@ -1,0 +1,29 @@
+\documentclass[a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlist[description]{style=unboxed}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{circuitikz}
+
+\usetikzlibrary{calc,positioning,shapes,decorations.pathreplacing}
+
+\tikzset{
+	short/.style={draw,rectangle,text height=3pt,text depth=13pt,
+		text width=7pt,align=center,fill=gray!30},
+	long/.style={short,text width=1.5cm},
+	verylong/.style={short,text width=4.5cm}
+}
+
+\begin{document}
+\subsection{Prvi zadatak}
+Submarine needs electric power to drive the main propeller shaft and to operate all the equipment on board. The main supply of the electric power on your submarine is a synchronous generator. The generator rotor is fitted on the same shaft as the steam turbine. The generator converts the mechanical power from the steam turbine into electrical energy which is supplied to each load on the submarine. Generators are typically purchased based on the requirements of a specific application. In this task you will be designing a three-phase synchronous generator for your submarine. Nominal values of the synchronous generator are given as: 100 kVA, 400 V, power factor 0.8, 50 Hz, 3000 rpm.
+Synchronous generator design is not a simple task and to make it easier for you only a limited  number of parameters need to be determined. The main dimensions of the generator that you need to calculate are the rotor diameter, the stator diameter and the air gap length. Next, you have to determine the number of conductors in the stator slots and the number of field winding turns. Lastly, the design of the generator is finished with the calculation of the synchronous reactance in p.u. 
+The rotor body of the generator is made from laminations with slots to take the windings. Windings located on the rotor are called field (excitation) windings. Field windings are supplied with a direct current 28 A to create a field current linkage with the maximum value of 1904 A (ampere turns). The created current linkage is sinusoidally distributed in the air gap (length of the air gap is constant). Magnetic flux density created by the current linkage is shown in figure 1. The rotor diameter is sized to operate at near the stress limit of the steel alloy. Maximum allowable peripheral speed is 80 m/s and the machine must be capable of sustaining 70 \% overspeed. 
+Stator windings or armature windings are full-pitch one-layer windings embedded in 18 slots. Typical voltage drop across stator impedance is assumed so that induced phase voltage \[E_{ph} = 0,98 \cdot U_{n,ph}\] where $U_{n,ph}$ is a RMS value of nominal phase voltage. Stator length is 0,5 m. When calculating the synchronous reactance neglect stator resistance and assume nominal conditions.
+\end{document}

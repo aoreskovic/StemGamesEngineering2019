@@ -15,7 +15,10 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
-   sodipodi:docname="coord.svg">
+   sodipodi:docname="coord.svg"
+   inkscape:export-filename="C:\work\StemGamesEngineering2019\MCU\beamforming\coord.png"
+   inkscape:export-xdpi="600"
+   inkscape:export-ydpi="600">
   <defs
      id="defs2">
     <marker
@@ -175,15 +178,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.6"
-     inkscape:cx="303.22102"
+     inkscape:cx="276.52459"
      inkscape:cy="480.43265"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1001"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-width="1536"
+     inkscape:window-height="801"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1">
     <inkscape:grid
        type="axonomgrid"
@@ -199,7 +202,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -341,6 +344,6 @@
          id="tspan5260-2-8-5-2"
          x="-26.735847"
          y="195.62663"
-         style="font-size:1.41111112px;stroke-width:0.26458332">1m x 1m</tspan></text>
+         style="font-size:1.41111112px;stroke-width:0.26458332">45 cm x 45 cm</tspan></text>
   </g>
 </svg>

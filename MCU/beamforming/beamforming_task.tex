@@ -13,7 +13,7 @@
 
 \section*{Introduction}
 
-An underwater habitat connects wirelessly to a ship on the surface by means of ultrasonic hydrophones installed at the top of the habitat. In order to increase communications range, multiple hydrophones can make a beamforming system. A flat rectangular area, 1 m x 1 m in dimension, is provisioned. The area lies in the y-z plane of reference coordinate system, as depicted in Figure \ref{fig:coord}.
+An underwater habitat connects wirelessly to a ship on the surface by means of ultrasonic hydrophones installed at the top of the habitat. In order to increase communications range, multiple hydrophones can make a beamforming system. A flat rectangular area, 45 cm x 45 cm in dimension, is provisioned. The area lies in the y-z plane of reference coordinate system, as depicted in Figure \ref{fig:coord}.
 \begin{figure}[h!]
    \centering
    \includegraphics[width=0.4\textwidth]{coord.png}
@@ -56,7 +56,7 @@ Design a single linear antenna array to achieve the best link between the habita
    \\
    \subfigure[Scenario 3]{\includegraphics[width=0.45\textwidth]{scenario3.png}}
    \hfill
-   \subfigure[Scenario 1]{\includegraphics[width=0.45\textwidth]{scenario4.png}}
+   \subfigure[Scenario 4]{\includegraphics[width=0.45\textwidth]{scenario4.png}}
    \caption{Scenarios for Task 1}
 \end{figure}
 
@@ -67,15 +67,15 @@ A beamforming system is defined by giving y coordinates of each hydrophone eleme
 \subsection*{Output data}
 
 \begin{description}
-	\item[task1\_elements.csv] \,\\ The file contains a one-dimensional array representing the position of each hydrophone element along the y axis.
+	\item[task1\_elements.csv] \,\\ The file contains a one-dimensional array representing the position of each hydrophone element along the y axis in metres.
 	\item[task1\_scenarioX.csv] \,\\ The file contains a one-dimensional array of complex numbers representing the weights applied to each hydrophone element. Weights are given for elements in the same order as defined in task1\_elements.csv. Array length is equal to the number of elements in the beamforming system. All numbers are inside, or at the edge of the unit circle.
 \end{description}
 
 \subsection*{Scoring}
 
-The beamforming system you designed is evaluated for each of the given scenarios. For the first three scenarios, points are awarded for the directivity the beamforming system achieves in the direction of the ship, after applying the given beamforming weights. If the ship is in the main lobe of the beamforming system, points are awarded in the amount that corresponds to the directivity of the main lobe. If the ship is in the strongest secondary lobe, then the number of awarded points is calculated as
+The beamforming system you designed is evaluated for each of the given scenarios. For the first three scenarios, points are awarded for the directivity the beamforming system achieves in the direction of the ship, after applying the given beamforming weights. If the ship is in the main lobe or the strongest side lobe of the beamforming system, points are awarded in the amount that corresponds to the directivity of the main lobe, deducting a penalty for a depointing error. The number of awarded points is taken as
 \[ D_\textrm{target} - \dfrac{\varDelta \phi}{10} \]
-where $D_\textrm{target}$ is the directivity in the direction of the ship, and $\varDelta \phi$ the angular distance between the ship and the direction of maximum directivity in degrees. The ship is considered to be within a radiation lobe if it is within 6 dB drop-off of the considered radiation lobe.
+where $D_\textrm{target}$ is the directivity in the direction of the ship, and $\varDelta \phi$ the angular distance between the ship and the direction of beamformer's maximum directivity in degrees. The ship is considered to be within a radiation lobe if it is within 6 dB drop-off of the considered radiation lobe.
 
 In scenario 4, the beamforming system is evaluated with the given beamforming weights, and its directivity compared to that of the same beamforming system with uniform excitation. The points are then awarded as
 \[ D_\textrm{target,weighted} - D_\textrm{target,uniform} \]
@@ -84,6 +84,5 @@ The highest number of points for this scenario is 15.
 For all scenarios, the following rules apply: A beamforming system constructed with just one element is awarded no points. A beamforming system acheiving negative directivity in the direction of the ship is awarded no points. Directivity is consided in units dBi. Negative points are not awarded (nor penalized :) ).
 
 After evaluating the task for both teams, the total number of points is normalized to the best team. Hence, the best team is pondered to 50 points, and the points for other teams is linearly scaled accordingly.
-Nakon evaluacije svih timova za oba zadatka, ukupan broj bodova svakog tima se normira na najbolji tim. Dakle, najbolji tim dobiva 50 bodova, a bodovi ostalih timova se linearno skaliraju prema njima.
 
 \end{document}

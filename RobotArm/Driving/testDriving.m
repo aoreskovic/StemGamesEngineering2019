@@ -20,4 +20,4 @@ actuatorRefVector = [actuatorRefThree; actuatorRefOne; actuatorRefThree; actuato
 %%
 loadStatus = 0;
 resultsFolder = "./";
-resultStatus = WriteDrivingResults(resultsFolder, loadStatus, activeTime, performanceCost, pointIndex, isFinished);
+%resultStatus = WriteDrivingResults(resultsFolder, loadStatus, activeTime, performanceCost, pointIndex, isFinished);

@@ -26,7 +26,6 @@ if length(dir(solutionFolder)) > 0
     run('kran/simulate_driving.m')
 end
 
-
 %% TASK 3 DRIVING
 
 

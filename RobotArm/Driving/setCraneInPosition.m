@@ -1,5 +1,6 @@
-function y = setCraneInPosition(table)
+function status = setCraneInPosition(table)
     
+    status = 0; % By defaulty, return OK
     rot_pattern1 = '^(?:[^|]*\|){33}([^|]*)';
     rot_pattern2 = '(?:[^|]*\|){6}([^|]*)$';
     trans_pattern1 = '^(?:[^|]*\|){33}([^|]*)';
@@ -59,7 +60,7 @@ function y = setCraneInPosition(table)
               "/BeltAndPulley/Revolute Joint", 'MaskValueString', str);
     
     % Calculate top of the crane position and set load position
-    L = 4.85949 + table.q3 + table.q4 - 0.15;
+    L = 4.85949 + table.q3 + table.q4;
     a = 1.81648;
     b = 0.6634945;
     c0 = 1.331 + 0.194;
@@ -71,12 +72,20 @@ function y = setCraneInPosition(table)
     theta = gamma - gamma0;
 
     x0 = -0.24164;
-    y0 = 2.640 - 0.5;
-    deltaY = R*deg2rad(table.q5);
-    
-    xp = (x0+ L*cos(theta))*cos(deg2rad(table.q1));
-    yp = y0 + L*sin(theta) - deltaY;
-    zp = -(x0+ L*cos(theta))*sin(deg2rad(table.q1));
+    y0 = 2.640;
+
+    if(theta <= pi/4)
+        deltaY = (1 + R*deg2rad(table.q5) - table.q3 - table.q4 - 0.36*sin(theta))/2 + 0.36*sin(theta);
+        xp = (x0+ (L-0.18)*cos(theta))*cos(deg2rad(table.q1));
+        yp = y0 + L*sin(theta) - deltaY;
+        zp = -(x0+ (L-0.18)*cos(theta))*sin(deg2rad(table.q1));
+    else
+        deltaY = (1 + R*deg2rad(table.q5) - table.q3 - table.q4)/2;
+        xp = (x0+ L*cos(theta))*cos(deg2rad(table.q1));
+        yp = y0 + L*sin(theta) - deltaY;
+        zp = -(x0+ L*cos(theta))*sin(deg2rad(table.q1));   
+    end
+
     position_str = "[" + num2str([xp yp zp]) + "]";
     angle_str =  num2str(table.q1 + 180);
     
@@ -91,6 +100,14 @@ function y = setCraneInPosition(table)
       
     set_param("kinematics_crane/Crane/Crane Mechanics" + ...
               "/BeltAndPulley/Rigid Transform2", 'MaskValueString', str);
+          
+    % Check whether pulley angle is large enough not to break physical
+    % constraints in the simulation
+    dPulley = deltaY - 0.05; % Distance from the pulley to the top of the crane
+    dTop = 0.18*sin(theta);
+    if(dPulley - dTop <= 0.01)
+        status = 1; % Constraints would be violated
+    end
 end
 
 

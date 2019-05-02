@@ -1,35 +1,32 @@
-%Synchronous machine design
-%Rated values
-Sn = 3; % kVA, rated apparent power
-Un = 400; % V, rated voltage, line-line voltage effective value
-fn = 50; % Hz, rated frequency
-pf = 0.8; % rated power facor
-n = 3000; % rpm, rated speed
-m = 3; % number of phases
+function [Ds, Dr, delta, zQ, Xd_pu] = SimpleMachineDesign (Sn, Un, pf, nn, fn, m)
 
-p = 60*fn/n; % number of pole pairs
+p = 60*fn/nn; % number of pole pairs
+
+% The machine must be capable of sustaining a 70 % overspeed
+% that gives maximum peripheral speed in m/s
+vmax = 80 ;
+Dr = (60*vmax)/(pi*1.7*nn); % rotor diameter
 
 % Field current linkage theta = 2284 A required to produce maximum magnetic flux density
 % B_1delta,max = 0,8 T
 B_1delta_max = 0.8;
-theta = 2284;
+theta = 1904;
 % Assume that magnetic permeability of iron is infinite
 mi0 = 4*pi*10^(-7);
+% delta = theta*mi0/B_1delta_max;
 delta = theta*mi0/B_1delta_max;
 
-% The machine must be capable of sustaining a 70 % overspeed and the
-% maximum allowable rotor peripheral speed
-% Proraèun elektriènih strojeva, Sirotiæ, Krajzl
-% maximum peripheral speed in m/s
-vmax = 80;
-Ds = (60*vmax)/(pi*1.7*n); % rotor diameter
-Dr = Ds - 2*delta; % delta is air-gap
+% Number of winding turns per pole Nf, field winding current 28 A,
+% Number of conductors Nf*2 = zf
+If = 28;
+Nf_p = theta/If;
+Nf = Nf_p*2*p;
 
-% Ds = 0.3;
+% Rotor diameter
+Ds = Dr + 2*delta; % delta is air-gap
 
 % Rated power
-% S = 3*Un,ph*In,ph = sqrt(3)*Un*In
-% Flux density variation in the air gap with the maximum value of the fundamental flux density B_1delta,max = 0,8 T and period 2*Tau_p 
+% S = 3*Un,ph*In,ph = sqrt(3)*Un*In; Un = Un,ph; In = In,ph
 % Stator length l = 0,5 m
 l = 0.5;
 % Effective value of induced voltage in one conductor
@@ -44,16 +41,34 @@ Q = 18;
 % Number of slots per phase Q/m
 % Effective value of induced voltage in one phase
 % E_ph_rms = zQ*E_1C_rms*(Q/m)*kw
-% kw is winding factor kw = 0,96
-kw = 0.96;
+% kw is winding factor kw
+% number of slots per pole and phase q
+q = Q/(2*p*m);
+kw = 1/(2*q*sin((pi/6)/q));
 E_ph_rms = Un/sqrt(3);
 zQ = E_ph_rms/(E_1C_rms*(Q/m)*kw);
-
-% Define equivalent circuit => vector diagram => Xd, calculation of base values 
+zQ = ceil(zQ);
 
 % Base values
+[U_B, I_B, Z_B] = baseValues(Un, Sn);
+I_n = I_B/sqrt(2);
+Upu_n = 1.02*Un/U_B;
+Ipu_n_abs = I_n/I_B;
+% Define equivalent circuit => vector diagram => Xd
+% Calculate synchronous inductance, neglect stator resistance
+load_angle = 0.436; % rad, 25°
+% ??? E0_pu???
+E0_pu_abs = 2.94; %pu
+% Upu_n = E0_pu- j*Xd*Ipu_ns
+Xd_pu = (E0_pu_abs*sin(load_angle))/(pf*Ipu_n_abs);
+Xd = Xd_pu*Z_B;
+Ld = Xd/(2*pi*50);
+end
+
+function [U_B, I_B, Z_B] = baseValues(Un, Sn)
 U_B = sqrt(2)*Un/sqrt(3);
 S_B = Sn;
 I_B = 2*S_B/(3*U_B);
-% U<(0) = E<delta - j*Xd*I<phi
-% ...
+Z_B = U_B/I_B;
+end
+

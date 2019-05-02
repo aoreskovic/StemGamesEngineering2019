@@ -27,7 +27,7 @@ refPoints = reshape(refPointsVector,[3, numOfPoints])';
 
 % Make sure loadPosition is vector row of size [1, 3]
 loadPosition = reshape(loadPosition, [1, 3]);
-loadPosition(2) = loadPosition(2) + 0.5; % bottom of load
+
 % Initialize point number and cost value
 if(isempty(pointIndex))
     pointIndex = 0;

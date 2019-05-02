@@ -1,3 +1,4 @@
+clear all; % Obavezno ocistiti persistent varijable!!!
 teamFolder = pwd + "/InputFiles";
 Ts = 0.05;
 
@@ -35,7 +36,7 @@ if isSimulationActive(solutionFolder, "result.txt")
 end  
 
 %% TASK 3 DRIVING
-clearvars -except teamFolder Ts 
+clearvars -except teamFolder Ts
 solutionFolder = teamFolder + "/Driving/Regulators/";
 readOnlyFolder = teamFolder + "/Driving/C/";
 

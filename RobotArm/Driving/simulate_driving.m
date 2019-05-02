@@ -125,8 +125,7 @@ catch
 end
 
 % Set driving test parameters
-Tsim = 250;
-distanceGain = 5/6;
+distanceGain = 5/12;
 timeGain = 20;
 
 pointOne = [8 -5 0];

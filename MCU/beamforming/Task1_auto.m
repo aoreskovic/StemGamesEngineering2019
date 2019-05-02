@@ -101,3 +101,10 @@ end
 outputCsvFile = fopen('scores.csv','w');
 fprintf(outputCsvFile,'%s',outputCsvString);
 fclose(outputCsvFile);
+
+% Time when evaluation was done
+
+time = clock;
+timeFile = fopen('time.txt','w');
+fprintf(timeFile,'%d-%02d-%02d %02d:%02d:%02.0d', time(1), time(2), time(3), time(4), time(5), round(time(6)));
+fclose(timeFile);

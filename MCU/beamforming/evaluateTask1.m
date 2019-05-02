@@ -100,10 +100,12 @@ vcoord = -1:numPrecuv:1;
 % Is the target in two tallest lobes?
 [lobeD,lobeAzIdx] = findpeaks(azCut,'SortStr','descend','NPeaks',2);
 lobesValid = [false false];
+usedLobe = 0;
 for ii=1:2
     azCutSection = azCut(lobeAzIdx(ii):(find(azimuths == targetAz)));
     if sum(azCutSection <= 0) == 0
         lobesValid(ii) = true;
+        usedLobe = ii;
         break;
     end
 end
@@ -126,5 +128,10 @@ targetEl = 0;
 % [~,elIndex] = min(abs(targetEl-elctrl));
 targetD = directivity(array,freq,[targetAz;targetEl],'PropagationSpeed',vel);
 fprintf('Directivity at target: %2.04f dBi\n', targetD);
+
+% Are we actually inside the lobe?
+if (lobeD(usedLobe) - targetD) > 6
+    err.invokeError('lobeTooFar');
+end
 
 end

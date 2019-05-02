@@ -23,16 +23,17 @@
 }
 
 \begin{document}
-\section{AC voltage rectifier and regulator}
+\section{DC voltage power supply}
 
 \subsection{Introduction}
 
 For fully functional operation, submarine/robot arm/habitat is equipped with 
 lot of computer based subsystems and electronic devices which operate on DC 
 voltage. To ensure proper operation the DC voltage has to be stable and without 
-noise. To ensure stable DC voltage, linear regulator on Fig. 1. is used. Due to 
-extreme conditions in the system, regulators often fail and components have to 
-be repaired or replaced with proper spare part.
+noise. To ensure stable DC voltage, device on Fig. 1. is used. Device is 
+composed of several parts as it is shown on figure. Due to extreme conditions 
+in the system, regulators often fail and components have to be repaired or 
+replaced with proper spare part.
 
 In this task, your job is to:
 \begin{itemize}
@@ -42,7 +43,7 @@ proper low pass filter,
 \item find the probability of future malfunction in standby redundant system.
 \end{itemize}
 
-\textbf{Regulator specifications.} Regulator specifications are provided with 
+\textbf{Device specifications.} Device specifications are provided with 
 the following table. In each task you have to ensure that the values specified
 in the table correspond to the values which will be measured in simulation. 
 
@@ -54,7 +55,7 @@ in the table correspond to the values which will be measured in simulation.
     PARAMETER & TEST CONDITIONS & VALUE & UNIT \\ \hline 
     Output voltage ($V_o$)& $I_o = 1$ A & $10.00$ & V \\ \hline
     Output current ($I_o$) & a & $1.5$ & A \\ \hline
-    Ripple rejection & (50 Hz) & $78$ & dB \\ \hline
+    Ripple rejection & (12.8 kHz) & $78$ & dB \\ \hline
    	Dropout voltage & $I_o = 1.5$ A & $2$ & V \\ \hline
     \end{tabularx}
 \end{table}
@@ -67,7 +68,7 @@ As it can be seen in regulator scheme, some components are not determined. In
 this subtask you need to specify resistor $R_1$ and diode $D_1$. Additionally, 
 you have to determine positions of the negative and the positive input of the 
 amplifier $A_1$. Based on the regulators operating values provided with table
-\ref{tab:spec} and regulator test points diagrams (Fig. 1. - Fig. 5) you have 
+\ref{tab:spec} and regulator test points diagrams (Fig. 1. - Fig. 4) you have 
 to determine specifications for the resistor $R_1$ and diode $D_1$. You have to 
 find the real components from the DigiKey Electronics product database. 
 
@@ -90,13 +91,16 @@ diode, respectively.
 \label{ele:task:2}
 To achieve specified ripple rejection at required frequency, design a LC low 
 pass filter which filters output of a regulator. As in previous task you have 
-to provide DigiKey part numbers for LC filter. 
+to provide DigiKey part numbers for LC filter. \textbf{Note:} The ripple 
+rejection of the regulator part of the device is $50$ dB at $12.8$ kHz.
 
 Again, there are constraints for your choice of components:
 \begin{itemize}
-\item $L_1$ has nameof footprint,
+\item $L_1$ has no additional constraints 
+(think about already mentioned implicit constraints),
 \item $C_2$ has to be a ceramic capacitor with footprint given with 
-\ref{fig:footprint2}. 
+Fig. \ref{fig:footprint2},
+\item $Q$ factor has to be equal $\frac{\sqrt{2}}{2}$ for $R_L = 10$ $\Omega$.  
 \end{itemize}
 
 Your choice is graded in the similar fashion as before:
@@ -154,7 +158,29 @@ up to \textbf{5 pts} for each component.
 correct probability and up to \textbf{5 pts} for correct documentation.
 \end{itemize}
 
-
+\newpage
+\begin{sidewaysfigure}
+\begin{circuitikz}[scale=2]
+    \def\xPortLeft{0}
+    \def\yTerminalBottom{0}
+    \def\yL{1.5}
+    \def\xL{1}
+    \def\xR{1.75}
+    \def\xC{2.25}
+    \def\xPortRight{3}
+    % left loop
+    \draw                               (\xPortLeft,\yL)
+            to[L=$L$, o-]               (\xL, \yL)
+            to[R=$R$]                   (\xR, \yL)
+            to[short]                   (\xC,\yL)
+            to[C, l_=$C$,*-*]           (\xC,\yTerminalBottom);
+    % right branch
+    \draw                               (\xC,\yL)
+            to[short]                   (\xPortRight,\yL)
+            to[open,v^=$v_2(t)$,o-o]    (\xPortRight,\yTerminalBottom)
+            to[short]                   (\xC,\yTerminalBottom);
+\end{circuitikz}
+\end{sidewaysfigure}
 
 \begin{sidewaysfigure}[h!]
 \centering

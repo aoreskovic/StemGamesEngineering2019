@@ -7,7 +7,7 @@ persistent pointIndex costArray waitTime reset isFinished time
 
 % Initialize parameters
 epsPosition = 0.25;
-maxWaitTime = 1;
+maxWaitTime = 5;
 
 % Check whether vector sizes are correct
 numOfPoints = length(refPointsVector)/3;
@@ -31,7 +31,7 @@ loadPosition(2) = loadPosition(2) + 0.5; % bottom of load
 % Initialize point number and cost value
 if(isempty(pointIndex))
     pointIndex = 0;
-    costArray = 20e4*ones(numOfPoints,1);
+    costArray = 1e4*ones(numOfPoints,1);
     waitTime = 0;
     reset = 1;
     isFinished = 0;

@@ -1,2 +1,0 @@
-All files loaded successfully!
-Outputs created!

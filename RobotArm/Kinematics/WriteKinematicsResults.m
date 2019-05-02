@@ -41,7 +41,7 @@ if(resultsFile ~= -1)
         end   
     end
 else
-   assert(false, "Could not open result.txt file!");
+   assert(false, "Could not open results.txt file!");
 end
 
 

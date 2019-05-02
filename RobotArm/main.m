@@ -34,7 +34,6 @@ if isSimulationActive(solutionFolder, "result.txt")
     run('Identification/test_identification.m')
 end  
 
-
 %% TASK 3 DRIVING
 clearvars -except teamFolder Ts 
 solutionFolder = teamFolder + "/Driving/Regulators/";

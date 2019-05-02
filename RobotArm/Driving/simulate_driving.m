@@ -21,8 +21,6 @@ end
 
 
 try
-    outputFileId = fopen(solutionFolder + "result.txt", "w");
-
     % if .c files, first create .m files
     if isC
         str = "";
@@ -119,12 +117,12 @@ try
     end
 
 catch
+   outputFileId = fopen(solutionFolder + "result.txt", "w");
    fprintf(outputFileId, "Error while loading files. All files should be .m or .c files!");
    fclose(outputFileId);
    return
 end
 
-fprintf(outputFileId, "All files loaded successfully!" + newline);
 
 pointOne = [8 5.65 0];
 pointTwo = [-7.5 3.4 7.5]; %Rijeseno
@@ -139,12 +137,9 @@ actuatorRefVector = [actuatorRefThree; actuatorRefOne,; actuatorRefThree; actuat
 
 
 
-
-
 sim(kranFile + ".slx")
 
-close_system("kran.slx");
-
+WriteDrivingResults(solutionFolder, activeTime, performanceCost, pointIndex, isFinished)
 copyfile(solutionFolder + "result.txt", readOnlyFolder);
 fclose(outputFileId);
 return

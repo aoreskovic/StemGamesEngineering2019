@@ -4,16 +4,7 @@ Ts = 0.05;
 %% TASK 1 KINEMATICS
 clearvars -except teamFolder
 solutionFolder = teamFolder + "/Kinematics/Solution/";
-<<<<<<< HEAD
 readOnlyFolder = teamFolder + "/Kinematics/Ref/";
-=======
-refFolder = teamFolder + "/Kinematics/Ref/";
-run('kran/simulation_params.m')
-
-if length(dir(solutionFolder)) > 0
-    run('Kinematics/simulate_kinematics.m')
-end
->>>>>>> 5dd398c3c52546c19faadee6414c7c32bdccb4d3
 
 if isSimulationActive(solutionFolder, "result.txt")
     run('kran/simulation_params.m')
@@ -27,23 +18,15 @@ solutionFolder = teamFolder + "/Identification/Solution/";
 readOnlyFolder = teamFolder + "/Identification/Ref/";
 identifyFolder = teamFolder + "/Identification/Identify/";
 
-baseVoltage = [0, [0]];
-rotValve = [0, [0]];
-transValve1 = [0, [0]];
-transValve2 = [0, [0]];
-pulleyVoltage = [0, [0]];
+% needed to start simulation
+rotValve = [0, [0]]; transValve1 = [0, [0]]; transValve2 = [0, [0]]; 
+baseVoltage = [0, [0]]; pulleyVoltage = [0, [0]];
 
 % simulate identification
 if isSimulationActive(identifyFolder + "Input/", "result.txt")
     run('kran/simulation_params.m')
-    run('Identification/simulate_identification.m')
+    %run('Identification/simulate_identification.m')
 end  
-
-<<<<<<< HEAD
-
-=======
-%% TASK 3 DRIVING
->>>>>>> 5dd398c3c52546c19faadee6414c7c32bdccb4d3
 
 % test identification
 if isSimulationActive(solutionFolder, "result.txt")

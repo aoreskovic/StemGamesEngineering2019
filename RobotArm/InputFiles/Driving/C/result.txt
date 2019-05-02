@@ -1,1 +1,5 @@
-All files loaded successfully!
+Successfully loaded results.
+
+Not a single point has been reached.
+
+Test duration: 536s

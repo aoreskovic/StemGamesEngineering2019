@@ -104,7 +104,7 @@ if inverse
    
 end
 
-% Write results to file
+%% Write results to file
 loadStatus = 0; % All files successfully loaded. Ovo treba dodat negdje, mozda umjesto assert?
 resultStatus = WriteKinematicsResults(solutionFolder, loadStatus, directCorrect, inverseCorrect);
 

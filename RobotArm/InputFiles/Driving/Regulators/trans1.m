@@ -1,9 +1,9 @@
 function y = trans1(t, coordNum, pos, vel, load_pos, load_vel, top_pos, top_vel)
 
 % Hardcode references
-actuatorRefOne = [0, 0.7, 3.4, 3.4, 6150];
-actuatorRefTwo = [-135, 0.415, 3.4, 3.4, 4300];
-actuatorRefThree = [-90, 0.8, 0, 0, 2000];
+actuatorRefOne = [0, 0.7, 3.4, 3.4, 14850];
+actuatorRefTwo = [-135, 0.415, 3.4, 3.4, 11050];
+actuatorRefThree = [-90, 0.8, 0, 0, 3700];
 actuatorRefVector = [actuatorRefThree; actuatorRefOne,; actuatorRefThree; actuatorRefTwo; actuatorRefThree];
 
 baseRef = actuatorRefVector(coordNum, 1);

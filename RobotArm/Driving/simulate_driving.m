@@ -1,4 +1,5 @@
 %% DRIVING
+
 files = dir(solutionFolder);
 rt = sfroot;
 methodHandles = rt.find('-isa','Stateflow.EMChart');
@@ -123,19 +124,20 @@ catch
    return
 end
 
+% Set driving test parameters
+Tsim = 250;
+distanceGain = 5/6;
+timeGain = 20;
 
-pointOne = [8 5.65 0];
-pointTwo = [-7.5 3.4 7.5]; %Rijeseno
-pointThree = [0 2.9 2.5]; %Rijeseno
-
+pointOne = [8 -5 0];
+pointTwo = [-7.5 -5 7.5];
+pointThree = [0 0.5 2.5];
 refPointsVector = [pointThree, pointOne, pointThree, pointTwo, pointThree];
 
-actuatorRefOne = [0, 0.7, 3.4, 3.4, 6150];
-actuatorRefTwo = [-135, 0.415, 3.4, 3.4, 4300];
-actuatorRefThree = [-90, 0.8, 0, 0, 2000];
+actuatorRefOne = [0, 0.7, 3.4, 3.4, 14850];
+actuatorRefTwo = [-135, 0.415, 3.4, 3.4, 11050];
+actuatorRefThree = [-90, 0.8, 0, 0, 3700];
 actuatorRefVector = [actuatorRefThree; actuatorRefOne,; actuatorRefThree; actuatorRefTwo; actuatorRefThree];
-
-
 
 sim(kranFile + ".slx")
 

@@ -1,0 +1,11 @@
+Successfully loaded results.
+
+DIRECT KINEMATICS
+    Example 1: Configuration not possible!
+    Example 2: Failed! Try again!
+    Example 3: Configuration not possible!
+
+INVERSE KINEMATICS
+    Example 1: Successful! Congratz!
+    Example 2: Successful! Congratz!
+    Example 3: Successful! Congratz!

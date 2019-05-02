@@ -5,7 +5,7 @@ open_system("kinematics_crane.slx")
 files = dir(solutionFolder);
 
 numFilterPoints = 10;  % evaluate this many points from end
-posEpsilon = 0.25;
+posEpsilon = 0.1;
 
 direct = 0;
 inverse = 0;
@@ -74,7 +74,7 @@ for i=1:length(files)
     end
 end
 
-directCorrect = zeros(dims(1));
+directCorrect = zeros(dims(1),1);
 % check direct kinematics
 if direct
        
@@ -111,7 +111,7 @@ if direct
     end 
 end
 
-inverseCorrect = zeros(dims(1));
+inverseCorrect = zeros(dims(1),1);
 % check inverse kinematics
 if inverse
     dims = size(solutionInverseTable.Variables);

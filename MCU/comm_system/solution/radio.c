@@ -121,26 +121,6 @@ int frame_decoder(char *bytestream, char **data) {
 	return len + PREAMBLE_LENGTH * 2 + 2 + 1;
 }
 
-#define REF_PILOT_PHASE 0
-
-complex *channel_correction(complex *input, int first_carrier, int ofdm_size, 
-	char *pilot_map) {
-
-	complex *output = (complex *) malloc(sizeof(complex) * ofdm_size);
-	dft(input, output, ofdm_size);
-
-	double delta = 0.0;
-
-	for (int i = first_carrier; i < ofdm_size; i++) {
-		if (pilot_map[i]) {
-			delta = complex_angle(input[i]) - REF_PILOT_PHASE;
-		} else {
-			complex_add_angle(&input[i], delta);
-		}
-	}
-
-}
-
 double *ofdm_demodulator(complex *spectrum, int *carrier_idx, int carrier_no, 
 	char **data) {
 

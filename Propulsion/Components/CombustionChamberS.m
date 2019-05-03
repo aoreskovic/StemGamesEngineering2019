@@ -8,9 +8,7 @@ classdef CombustionChamberS < matlab.System & PhysicalProperties & matlab.system
     properties(Nontunable)
         thetaG_in = 10; %Fuel temperature [°C]
         thetaO2_in = 10; %Oxygen temperature [°C]
-        qmG_nom = 0.0034; %Nominal fuel mass flow rate [kg/s]
-        const_ret_coef = 10; %Flue gas constant return coefficient [-]
-        lin_ret_coef = 4; %Flue gas linear return coefficient [-]
+
         
     end
 
@@ -71,8 +69,6 @@ classdef CombustionChamberS < matlab.System & PhysicalProperties & matlab.system
             assert(obj.thetaG_in < 70, 'fuel temperature over 70!')
             assert(obj.thetaO2_in > 0, 'oxygen temperature below 0!')
             assert(obj.thetaO2_in < 100, 'oxygen temperature over 100!')
-            assert(obj.qmG_nom > 0, 'Nominal fuel mass flow rate below 0!')
-            assert(obj.const_ret_coef > 0, 'Flue gas constant return coefficien below 0!')            
         end
 
         function [out,out2,out3] = getOutputSizeImpl(obj)
@@ -115,7 +111,7 @@ classdef CombustionChamberS < matlab.System & PhysicalProperties & matlab.system
             % out = propagatedInputFixedSize(obj,1);
         end
 
-        function [thetaFGout, qnH20out, qnCO2out] = stepImpl(obj, qmG, theta_ret, qmGdelayed)
+        function [thetaFGout, qnH20out, qnCO2out] = stepImpl(obj, qmG, theta_ret, qnRet)
             % Implement algorithm. Calculate y as a function of input u and
             % discrete states.
             obj.qnG = qmG/obj.M_ethanol; %kmol/s, fuel molar flow rate
@@ -124,10 +120,9 @@ classdef CombustionChamberS < matlab.System & PhysicalProperties & matlab.system
             obj.qn_O2=obj.O2_ratio*obj.qnG; %kmol/s, oxygen molar flow rate
             obj.qn_CO2 = obj.CO2_ratio*obj.qnG; %kmol/s, generated carbon dioxide molar flow rate
             obj.qn_H2O = obj.H2O_ratio * obj.qnG; %kmol/s, generated water vapour molar flow rate
-            obj.ret = obj.qmG_nom/obj.M_ethanol * obj.const_ret_coef + (qmGdelayed-obj.qmG_nom)/obj.M_ethanol * obj.lin_ret_coef; %kmol/kmolG, molar flow rate of return flue gas reduced to fuel molar flow rate in time step
-            obj.qn_H20_ret = obj.H2O_ratio * obj.ret; %kmol/s,molar flow rate of returned H2O
-            obj.qn_CO2_ret = obj.CO2_ratio * obj.ret; %kmol/s,molar flow rate of returned CO2
-        
+            obj.qn_H20_ret = obj.H2O_ratio/(obj.CO2_ratio+obj.H2O_ratio) * qnRet; %kmol/s,molar flow rate of returned H2O
+            obj.qn_CO2_ret = obj.CO2_ratio/(obj.CO2_ratio+obj.H2O_ratio) * qnRet; %kmol/s,molar flow rate of returned CO2
+
             %initial guess
             obj.theta_fg_prev = theta_ret; %°C, flue gas exit temperature calculated in previous iteration
             obj.theta_fg1 = theta_ret + 600; %°C, flue gas temperature at combustion chamber exit

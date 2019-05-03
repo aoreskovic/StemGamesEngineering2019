@@ -73,9 +73,11 @@ A beamforming system is defined by giving y coordinates of each hydrophone eleme
 
 \subsection*{Scoring}
 
-The beamforming system you designed is evaluated for each of the given scenarios. For the first three scenarios, points are awarded for the directivity the beamforming system achieves in the direction of the ship, after applying the given beamforming weights. If the ship is in the main lobe or the strongest side lobe of the beamforming system, points are awarded in the amount that corresponds to the directivity of the main lobe, deducting a penalty for a depointing error. The number of awarded points is taken as
+The beamforming system you designed is evaluated for each of the given scenarios. For the first three scenarios, points are awarded for the directivity the beamforming system achieves in the direction of the ship, after applying the given beamforming weights. If the ship is in the main lobe of the beamforming system, the number of awarded points is equal to
+\[ D_\textrm{target} - \varDelta \phi \]
+where $D_\textrm{target}$ is the directivity in the direction of the ship, and $\varDelta \phi$ the angular distance between the ship and the direction of beamformer's maximum directivity in degrees. If the ship is within the strongest sidelobe of the beamforming system, the number of awarded points is equal to
 \[ D_\textrm{target} - \dfrac{\varDelta \phi}{10} \]
-where $D_\textrm{target}$ is the directivity in the direction of the ship, and $\varDelta \phi$ the angular distance between the ship and the direction of beamformer's maximum directivity in degrees. The ship is considered to be within a radiation lobe if it is within 6 dB drop-off of the considered radiation lobe.
+The ship is considered to be within a radiation lobe if it is within 6 dB drop-off of the considered radiation lobe.
 
 In scenario 4, the beamforming system is evaluated with the given beamforming weights, and its directivity compared to that of the same beamforming system with uniform excitation. The points are then awarded as
 \[ D_\textrm{target,weighted} - D_\textrm{target,uniform} \]

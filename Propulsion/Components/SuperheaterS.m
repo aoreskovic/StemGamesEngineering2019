@@ -113,7 +113,7 @@ classdef SuperheaterS < matlab.System & HeatTransferCoefficient & matlab.system.
                     obj.C2 = obj.C_steam; %jaca struja
                     obj.weaker = 'flueGas';
                 end
-                [obj.AlfaT, obj.w_pipe] = alphaTube(obj, obj.qn_H2O, obj.qn_CO2, (obj.theta_fg3+theta_fg2)/2, obj.flueGasFlowArea, obj.pipeDiameterInternal);
+                [obj.AlfaT, obj.w_pipe] = alphaTube(obj, obj.qn_H2O, obj.qn_CO2, (obj.theta_fg3+theta_fg2)/2, obj.flueGasFlowArea, obj.pipeDiameterInternal, obj.pipeLength);
                 obj.k_super = HTCoverall(obj, obj.AlfaT, obj.AlfaS, obj.pipeDiameterInternal, obj.pipeDiameterExternal, obj.pipeConductivity);
                 assert(obj.k_super>0, 'Superheater k less than 0!')
                 assert(obj.k_super<300, 'Superheater k over 300!')
@@ -170,7 +170,7 @@ classdef SuperheaterS < matlab.System & HeatTransferCoefficient & matlab.system.
             assert(obj.pipeConductivity > 0, 'Superheater pipe thermal conductivty less than zero!')
             assert(obj.pipeConductivity < 350, 'Superheater pipe thermal conductivty too big!')
             assert(obj.pipeLength > 0, 'Superheater pipe length less than zero!')
-            assert(obj.pipeLength < 50, 'Superheater pipe length too big!')
+            assert(obj.pipeLength <= 5, 'Superheater pipe length too big!')
         end
 
         function [out,out2,out3,out4,out5,out6] = getOutputSizeImpl(obj)

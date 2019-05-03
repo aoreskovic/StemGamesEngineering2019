@@ -1,5 +1,7 @@
-[targetD, ~, ~, ~] = evaluateTask1(elements,bfMatrix,targetAz);
-[targetDuniform, ~, ~, ~] = evaluateTask1(elements,ones(1,length(elements)),targetAz);
+disp("Evaluating with given beamforming weights ...");
+[targetD, ~, ~, ~] = evaluateTask1(elements,bfMatrix,targetAz,false);
+disp("Evaluating with uniform excitation ...");
+[targetDuniform, ~, ~, ~] = evaluateTask1(elements,ones(1,length(elements)),targetAz,false);
 
 fprintf('Depointing error: %2.04f deg\n', abs(maxAz-targetAz));
 

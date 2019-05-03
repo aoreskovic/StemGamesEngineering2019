@@ -1,4 +1,4 @@
-function [targetD, maxD, maxAz, lobesValid] = evaluateTask1(elements, bfMatrix, targetAz)
+function [targetD, maxD, maxAz, lobesValid] = evaluateTask1(elements, bfMatrix, targetAz, verifyLobes)
 
 vel = 1520;
 freq = 30e3;
@@ -130,8 +130,10 @@ targetD = directivity(array,freq,[targetAz;targetEl],'PropagationSpeed',vel);
 fprintf('Directivity at target: %2.04f dBi\n', targetD);
 
 % Are we actually inside the lobe?
-if (lobeD(usedLobe) - targetD) > 6
-    err.invokeError('lobeTooFar');
+if verifyLobes
+    if (usedLobe == 0) || ((lobeD(usedLobe) - targetD) > 6)
+        err.invokeError('lobeTooFar');
+    end
 end
 
 end

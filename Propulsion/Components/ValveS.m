@@ -11,10 +11,11 @@ classdef ValveS < matlab.System & matlab.system.mixin.Propagates
         theta1_nom = 297.14; %Nominal superheating temperature [°C]
         qmd_nom = 0.2040; %Nominal steam mass flow rate [kg/s]
         eta_nom = 0.8; %Efficiency at nominal working conditions [-]
-        a = -8; % Quadratic efficiency coefficient
+        a = -2; % Quadratic efficiency coefficient
+        K = 0.1254; % Stodola coefficient
     end
     properties(Nontunable, Access = private)
-        K
+        
         b
         c
         qv_inlet_nom
@@ -60,7 +61,6 @@ classdef ValveS < matlab.System & matlab.system.mixin.Propagates
             obj.qv_rel = 0;
             obj.eta_stage = 0;
             obj.eta = 0;
-            obj.K = obj.qmd_nom*sqrt(obj.theta1_nom+273.15)/(sqrt(obj.p1*obj.p1-obj.p2*obj.p2));
             obj.qv_inlet_nom = obj.qmd_nom * XSteam('v_pT', obj.p1, obj.theta1_nom); %m3/s, nominal inlet steam volume flow rate
             obj.s1_nom = XSteam('s_pT', obj.p1, obj.theta1_nom); % nominal inlet steam enthalpy
             obj.qv_outlet_nom = obj.qmd_nom*XSteam('v_ps', obj.p2, obj.s1_nom); %m3/s, nominal outlet steam volume flow rate
@@ -124,7 +124,9 @@ classdef ValveS < matlab.System & matlab.system.mixin.Propagates
             assert(obj.theta1_nom < 600, 'Superheating temperature too high!')
             assert(obj.qmd_nom > 0, 'Nominal valve mass flow negative!')
             assert(obj.qmd_nom < 2, 'Nominal valve mass flow too high!')
-            assert(obj.a < 0, 'turbine efficiency quadratic coefficient positive!')            
+            assert(obj.a < 0, 'turbine efficiency quadratic coefficient positive!')   
+            assert(obj.K > 0, 'Stodola coefficient negative!')   
+
         end
 
         function [out,out2,out3] = getOutputSizeImpl(obj)

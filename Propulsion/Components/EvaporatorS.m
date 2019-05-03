@@ -12,7 +12,8 @@ classdef EvaporatorS < matlab.System & HeatTransferCoefficient & matlab.system.m
         pipeThickness = 0.002; %Evaporator pipe thickness [m]
         AlfaS = 3500; %Evaporation heat transfer coefficient [W/m2K]
         pipeConductivity = 58; % Tube material thermal conductivity [W/(mK)]
-        
+        pipeLength = 4; %Pipe length [m]
+
     end
 
     properties(Access = protected)
@@ -63,6 +64,8 @@ classdef EvaporatorS < matlab.System & HeatTransferCoefficient & matlab.system.m
             assert(obj.p1 > 4, 'Evaporation pressure below 4 bar!')
             assert(obj.p1 <= 50, 'Evaporation pressure over 50 bar!')
             assert(obj.A_evap > 0, 'Evaporator heat transfer area below 0 m2!')
+            assert(obj.pipeLength > 0, 'Evaporator pipe length less than zero!')
+            assert(obj.pipeLength <= 5, 'Evaporator pipe length too big!')
           
         end
 
@@ -137,7 +140,7 @@ classdef EvaporatorS < matlab.System & HeatTransferCoefficient & matlab.system.m
                 iter = iter + 1; %new iteration
                 assert(iter<1000, 'Evaporator - convergence not achieved')
                 obj.theta_fg2_prv = obj.theta_fg2; %°C, flue gas evaporator exit temperature calculated in previous iteration
-                [obj.AlfaT, obj.w_pipe] = alphaTube(obj, obj.qn_H2O, obj.qn_CO2, (obj.theta_fg2+theta_fg1)/2, obj.flueGasFlowArea, obj.pipeDiameterInternal);
+                [obj.AlfaT, obj.w_pipe] = alphaTube(obj, obj.qn_H2O, obj.qn_CO2, (obj.theta_fg2+theta_fg1)/2, obj.flueGasFlowArea, obj.pipeDiameterInternal, obj.pipeLength);
                 obj.k_evap = HTCoverall(obj, obj.AlfaT, obj.AlfaS, obj.pipeDiameterInternal, obj.pipeDiameterExternal, obj.pipeConductivity);
                 assert(obj.k_evap > 0, 'Evaporator overall heat transfer coefficient below 0 W/m2K!')
                 assert(obj.k_evap < 500, 'Evaporator overall heat transfer coefficient over 500 W/m2K!')

@@ -11,7 +11,7 @@ classdef HeatTransferCoefficient < PhysicalProperties
     
     
     methods
-        function [alfaT, w] = alphaTube(obj, qn_H20, qn_CO2, T_fg, A, d)
+        function [alfaT, w] = alphaTube(obj, qn_H20, qn_CO2, T_fg, A, d, L)
             %UNTITLED3 Construct an instance of this class
             %   Detailed explanation goes here
             qn_DP = qn_H20 + qn_CO2;
@@ -25,8 +25,17 @@ classdef HeatTransferCoefficient < PhysicalProperties
             cpFG = CmpFG/M*1000;
             lmbda = thermalConductivity(obj, T_fg);
             Pr = mi * cpFG / lmbda;
-            assert(Re>2300, 'laminar!')
-            Nu = 0.0398*Pr*Re^0.75/(1+1.74*Re^-0.125*(Pr-1));
+            if Re > 3000
+                Nu = 0.0398*Pr*Re^0.75/(1+1.74*Re^-0.125*(Pr-1));
+            elseif Re < 2300
+                Pe = Re*Pr;
+                Nu = 1.86*(Pe*d/L)^(1/3);
+            else
+                Pe = Re*Pr;
+                NuL = 1.86*(Pe*d/L)^(1/3);
+                NuT = 0.0398*Pr*Re^0.75/(1+1.74*Re^-0.125*(Pr-1));
+                Nu = NuL + (NuT-NuL)/(3000-2300) * (Re-2300);
+            end
             %end
             alfaT = Nu * lmbda / d;
         end

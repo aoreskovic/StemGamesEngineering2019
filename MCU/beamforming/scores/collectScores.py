@@ -2,7 +2,7 @@ import time
 
 while 1:
 
-   outCsv = open("scores.csv","w")
+   outCsv = open("../htdocs/scores.csv","w")
 
    outCsv.write("Team;Scenario 1;Scenario 2;Scenario 3;Scenario 4;Scenario 5;Total;Last evaluated\n")
 

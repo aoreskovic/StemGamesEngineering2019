@@ -4,7 +4,7 @@ close all;
 err = linkError.instance();
 err.flushErorrs();
 
-outputScoreData = ["Team"; "Scenario 1"; "Scenario 2"; "Scenario 3"; "Scenario 4"; "Total"; "Last evaluated"]';
+% outputScoreData = ["Team"; "Scenario 1"; "Scenario 2"; "Scenario 3"; "Scenario 4"; "Total"; "Last evaluated"]';
 
 teams = ["reference"];
 
@@ -139,20 +139,17 @@ for teamIdx = 1:length(teams)
 
     diary off;
 
-    outputScoreData = [outputScoreData ; [teamName teamScore teamTime]];
+    % Format and write output file
 
-end
-
-% Format and write output file
-
-outputCsvString = '';
-for team = 1:size(outputScoreData,1)
-    for scenario = 1:size(outputScoreData,2)
-        outputCsvString = sprintf('%s%s;',outputCsvString,outputScoreData(team,scenario));
+    outputCsvString = strcat(teamName,";");
+    for col = 1:length(teamScore)
+        outputCsvString = sprintf('%s%2.04f;',outputCsvString,teamScore(col));
     end
     outputCsvString = outputCsvString(1:end-1);
-    outputCsvString = sprintf('%s\n',outputCsvString);
+    outputCsvString = sprintf('%s;%s',outputCsvString,teamTime);
+    
+    outputCsvFile = fopen(strcat("score_",teamName,".csv"),'w');
+    fprintf(outputCsvFile,'%s',outputCsvString);
+    fclose(outputCsvFile);
+
 end
-outputCsvFile = fopen('scores.csv','w');
-fprintf(outputCsvFile,'%s',outputCsvString);
-fclose(outputCsvFile);

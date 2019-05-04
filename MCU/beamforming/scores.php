@@ -43,7 +43,7 @@ if (($handle = fopen("scores.csv", "r")) !== FALSE) {
                echo '<td';
             }
                    
-            if ($c == 0 || $c == 5) {
+            if ($c == 0 || $c == 6) {
                echo ' style="font-weight:bold"';
             }
             

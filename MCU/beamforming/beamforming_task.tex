@@ -67,8 +67,8 @@ A beamforming system is defined by giving y coordinates of each hydrophone eleme
 \subsection*{Output data}
 
 \begin{description}
-	\item[task1\_elements.csv] \,\\ The file contains a one-dimensional array representing the position of each hydrophone element along the y axis in metres.
-	\item[task1\_scenarioX.csv] \,\\ The file contains a one-dimensional array of complex numbers representing the weights applied to each hydrophone element. Weights are given for elements in the same order as defined in task1\_elements.csv. Array length is equal to the number of elements in the beamforming system. All numbers are inside, or at the edge of the unit circle.
+	\item[elements1.csv] \,\\ The file contains a one-dimensional array representing the position of each hydrophone element along the y axis in metres.
+	\item[scenarioX.csv] \,\\ The file contains a one-dimensional array of complex numbers representing the weights applied to each hydrophone element. Weights are given for elements in the same order as listed in elements1.csv. Array length is equal to the number of elements in the beamforming system. All numbers are inside, or at the edge of the unit circle.
 \end{description}
 
 \subsection*{Scoring}
@@ -83,7 +83,26 @@ In scenario 4, the beamforming system is evaluated with the given beamforming we
 \[ D_\textrm{target,weighted} - D_\textrm{target,uniform} \]
 The highest number of points for this scenario is 15.
 
-For all scenarios, the following rules apply: A beamforming system constructed with just one element is awarded no points. A beamforming system acheiving negative directivity in the direction of the ship is awarded no points. Directivity is consided in units dBi. Negative points are not awarded (nor penalized :) ).
+For all scenarios, the following rules apply: A beamforming system constructed with just one element is awarded no points. A beamforming system acheiving negative directivity in the direction of the ship is awarded no points. Directivity is consided in units dBi.
+
+\section{Task 2}
+
+You will now design a planar beamforming system, to enable beamforming toward a ship that is moving in both dimension along the sea surface. You are given a single scenario (\textit{Scenario 5}) in which the ship is located at azimuth angle of 45\textdegree and at elevation of 60\textdegree in the reference coordinate system, describe in Figure \ref{fig:coord}.
+
+\subsection{Output data}
+
+\begin{description}
+	\item[elements2.csv] \,\\ The file contains a planar locations of beamforming elements. One row represents a beamforming element. The first column is the y-coordinate, and the second column is the z-coordinate.
+	\item[scenario5.csv] \,\\ The file contains a one-dimensional array of complex numbers representing the weights applied to each hydrophone element. Weights are given for elements in the same order as listed in elements2.csv. Array length is equal to the number of elements in the beamforming system. All numbers are inside, or at the edge of the unit circle.
+\end{description}
+
+\subsection*{Scoring}
+
+The team will achieve points that correspond to directivity in the direction of the ship.
+
+A beamforming system constructed with just one element is awarded no points. A beamforming system acheiving negative directivity in the direction of the ship is awarded no points. Directivity is consided in units dBi.
+
+\section{Evaluation and results}
 
 After evaluating the task for both teams, the total number of points is normalized to the best team. Hence, the best team is pondered to 50 points, and the points for other teams is linearly scaled accordingly.
 

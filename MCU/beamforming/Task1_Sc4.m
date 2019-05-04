@@ -1,3 +1,5 @@
+close all;
+
 disp("Evaluating with given beamforming weights ...");
 [targetD, ~, ~, ~] = evaluateTask1(elements,bfMatrix,targetAz,false);
 disp("Evaluating with uniform excitation ...");

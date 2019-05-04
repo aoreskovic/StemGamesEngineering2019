@@ -4,7 +4,7 @@ while 1:
 
    outCsv = open("scores.csv","w")
 
-   outCsv.write("Team;Scenario 1;Scenario 2;Scenario 3;Scenario 4;Total;Last evaluated\n")
+   outCsv.write("Team;Scenario 1;Scenario 2;Scenario 3;Scenario 4;Scenario 5;Total;Last evaluated\n")
 
    teams = ["reference"]
 

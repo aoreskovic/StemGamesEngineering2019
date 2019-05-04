@@ -1,4 +1,4 @@
-Evaluation started at 11:51:01
+Evaluation started at 13:42:20
 
 
 ===========================
@@ -45,8 +45,16 @@ Directivity at target: -7.9471 dBi
 Depointing error: 78.3952 deg
 Score: 9.4300
 Total link errors: 0
+===========================
+TASK 2, SCENARIO 5
+===========================
+Array directivity: 17.5012 dBi
+Main lobe direction: Azimuth 22.9545 Elevation -11.3996
+Directivity at target: 0.4886 dBi
+Score: 0.4886
+Total link errors: 0
 
 
 ===========================
-Total score: 95.8500
-Evaluation completed at 11:53:00
+Total score: 48.4135
+Evaluation completed at 13:44:42

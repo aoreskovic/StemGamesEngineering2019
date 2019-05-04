@@ -25,12 +25,12 @@ for teamIdx = 1:length(teams)
         error('No team folder');
     end
 
-    if (exist(strcat(teamName,"/elements.csv"),'file') ~= 2)
+    if (exist(strcat(teamName,"/elements1.csv"),'file') ~= 2)
         teamScore = zeros(1,4);
-        disp("No beamformer implemented.");
+        disp("No beamformer implemented for task 1.");
     else
 
-        elements = csvread(strcat(teamName,"/elements.csv"));
+        elements = csvread(strcat(teamName,"/elements1.csv"));
 
         % Scenario 1
         fprintf('===========================\nTASK 1, SCENARIO 1\n===========================\n');
@@ -45,7 +45,8 @@ for teamIdx = 1:length(teams)
 
             try
                 Task1_Sc123;
-            catch
+            catch e
+                disp(e.message);
                 score = 0;
             end
         end
@@ -68,7 +69,8 @@ for teamIdx = 1:length(teams)
 
             try
                 Task1_Sc123;
-            catch
+            catch e
+                disp(e.message);
                 score = 0;
             end
         end
@@ -91,7 +93,8 @@ for teamIdx = 1:length(teams)
 
             try
                 Task1_Sc123;
-            catch
+            catch e
+                disp(e.message);
                 score = 0;
             end
         end
@@ -114,7 +117,8 @@ for teamIdx = 1:length(teams)
 
             try
                 Task1_Sc4;
-            catch
+            catch e
+                disp(e.message);
                 score = 0;
             end
         end
@@ -124,6 +128,39 @@ for teamIdx = 1:length(teams)
         err.printErrors();
         err.flushErorrs();
 
+    end
+
+    if (exist(strcat(teamName,"/elements2.csv"),'file') ~= 2)
+        teamScore = zeros(1,4);
+        disp("No beamformer implemented for task 2.");
+    else
+
+        elements = csvread(strcat(teamName,"/elements2.csv"));
+
+        % Scenario 5
+        fprintf('===========================\nTASK 2, SCENARIO 5\n===========================\n');
+
+        targetAz = 45;
+        targetEl = 60;
+
+        if (exist(strcat(teamName,"/scenario5.csv"),'file') ~= 2)
+            score = 0;
+            disp("No solution for scenario 5.");
+        else
+            bfMatrix = csvread(strcat(teamName,"/scenario5.csv"));
+
+            try
+                Task2_Sc5;
+            catch e
+                disp(e.message);
+                score = 0;
+            end
+        end
+
+        teamScore = [teamScore score];
+
+        err.printErrors();
+        err.flushErorrs();
     end
     
     close all;
@@ -135,7 +172,7 @@ for teamIdx = 1:length(teams)
     time = clock;
     teamTime = sprintf('%02d:%02d:%02d', time(4), time(5), round(time(6)));
     
-    disp(sprintf("\n\n===========================\nTotal score: %2.04f\nEvaluation completed at %s", sum(teamScore), teamTime));
+    disp(sprintf("\n\n===========================\nTotal score: %2.04f\nEvaluation completed at %s", teamScore(end), teamTime));
 
     diary off;
 
@@ -143,7 +180,7 @@ for teamIdx = 1:length(teams)
 
     outputCsvString = strcat(teamName,";");
     for col = 1:length(teamScore)
-        outputCsvString = sprintf('%s%2.04f;',outputCsvString,teamScore(col));
+        outputCsvString = sprintf('%s%2.4f;',outputCsvString,teamScore(col));
     end
     outputCsvString = outputCsvString(1:end-1);
     outputCsvString = sprintf('%s;%s',outputCsvString,teamTime);

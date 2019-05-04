@@ -14,3 +14,7 @@ if targetD < 0
 end
 
 fprintf('Score: %2.04f\n', score);
+
+if score > 15
+    score = 15;
+end

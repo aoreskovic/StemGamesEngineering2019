@@ -13,7 +13,7 @@
 
 \section*{Introduction}
 
-An underwater habitat connects wirelessly to a ship on the surface by means of ultrasonic hydrophones installed at the top of the habitat. In order to increase communications range, multiple hydrophones can make a beamforming system. A flat rectangular area, 45 cm x 45 cm in dimension, is provisioned. The area lies in the y-z plane of reference coordinate system, as depicted in Figure \ref{fig:coord}.
+An underwater habitat connects wirelessly to a ship on the surface by means of ultrasonic hydrophones installed at the top of the habitat. In order to increase communications range, multiple hydrophones can be used to make a beamforming system. A flat rectangular area, 45 cm x 45 cm in dimension, is provisioned for this purpose. The area lies in the y-z plane of the reference coordinate system, as depicted in Figure \ref{fig:coord}.
 \begin{figure}[h!]
    \centering
    \includegraphics[width=0.4\textwidth]{coord.png}
@@ -32,15 +32,16 @@ with $\phi$ being azimuth angle, and $\theta$ elevation angle. The radiation pat
    \caption{Radiation pattern of a hydrophone element}
    \label{fig:hydrophone}
 \end{figure}
-Physically, hydrophones are circular, 5 cm in diameter. All hydrophones in the beamforming system are installed with their radiation maximum pointed to zenith, i.e. perpendicular to sea surface. At the other end, the ship is equipped with a single hydrophone mounted on ship's hull, and pointing at nadir, i.e. perpendicular to seabed.
 
-Consider the signal narrowband. The ship is in the farfield of the beamforming system. Assume the communication link is being established in the Adriatic sea, with average salinity of 38\textperthousand, and sea temperature of 20\textdegree.
+Physically, hydrophones are circular, 5 cm in diameter. All hydrophones in the beamforming system are installed with their radiation maximum pointing to zenith, i.e. perpendicular to sea surface, as described in Figure \ref{fig:hydrophone}. At the other end, the ship is equipped with a single hydrophone mounted on ship's hull, and pointing at nadir, i.e. perpendicular to seabed.
+
+Consider the signal narrowband. The ship is in the farfield of the beamforming system. Assume the communication link is being established in the Adriatic Sea, with average salinity of 38\textperthousand, and sea temperature of 20 \textdegree C.
 
 \pagebreak
 
 \section*{Task 1}
 
-Design a single linear antenna array to achieve the best link between the habitat and the ship in four given scenarios.
+Design a single linear antenna array along the y-axis to achieve the best link between the habitat and the ship in four given scenarios.
 \begin{description}
 	\item[Scenario 1] The ship is directly above the beamforming system.
 	\item[Scenario 2] The ship is located along the longitudinal (y) axis of the beamforming system, at an elevation of 30\textdegree.
@@ -60,51 +61,67 @@ Design a single linear antenna array to achieve the best link between the habita
    \caption{Scenarios for Task 1}
 \end{figure}
 
-Elevation angle is considered from beamforming system's normal.
-
-A beamforming system is defined by giving y coordinates of each hydrophone element. Number of elements is arbitrary, given the limitations introduced in Introduction. For each of the four scenarios, provide complex weights that are applied to each of the hydrophone elements to achieve optimal beamforming for the particular scenario.
+A beamforming system is defined by y coordinates of each hydrophone element. Number of elements is arbitrary, given the limitations introduced in Introduction. The same beamforming system is used for all four scenarios. For each of the four scenarios, provide complex weights that are applied to each of the hydrophone elements to achieve optimal beamforming for the particular scenario.
 
 \subsection*{Output data}
 
 \begin{description}
 	\item[elements1.csv] \,\\ The file contains a one-dimensional array representing the position of each hydrophone element along the y axis in metres.
-	\item[scenarioX.csv] \,\\ The file contains a one-dimensional array of complex numbers representing the weights applied to each hydrophone element. Weights are given for elements in the same order as listed in elements1.csv. Array length is equal to the number of elements in the beamforming system. All numbers are inside, or at the edge of the unit circle.
+	
+	\item[scenarioX.csv] \textit{e.g. scenario1.csv, \ldots}\,\\ The file contains a one-dimensional array of complex numbers representing the weights applied to each hydrophone element. Weights are given for elements in the same order as they are listed in \textsf{elements1.csv}. Array length is equal to the number of elements in the beamforming system. All numbers are inside, or at the edge of the unit circle.
+	
+	Complex numbers should be stored either in
+	\begin{itemize}
+		\item cartesian notation: \textsf{a+bi}, or
+		\item polar notation: \textsf{P*exp(Ri)}
+	\end{itemize}
 \end{description}
+
+Note that CSV data should be delimited by \textsf{,}.
 
 \subsection*{Scoring}
 
 The beamforming system you designed is evaluated for each of the given scenarios. For the first three scenarios, points are awarded for the directivity the beamforming system achieves in the direction of the ship, after applying the given beamforming weights. If the ship is in the main lobe of the beamforming system, the number of awarded points is equal to
 \[ D_\textrm{target} - \varDelta \phi \]
-where $D_\textrm{target}$ is the directivity in the direction of the ship, and $\varDelta \phi$ the angular distance between the ship and the direction of beamformer's maximum directivity in degrees. If the ship is within the strongest sidelobe of the beamforming system, the number of awarded points is equal to
+where $D_\textrm{target}$ is the directivity in the direction of the ship in dBi, and $\varDelta \phi$ the angular distance between the ship and the direction of beamformer's maximum directivity in degrees. If the ship is within the strongest sidelobe of the beamforming system, the number of awarded points is equal to
 \[ D_\textrm{target} - \dfrac{\varDelta \phi}{10} \]
-The ship is considered to be within a radiation lobe if it is within 6 dB drop-off of the considered radiation lobe.
+The ship is considered to be within a radiation lobe if it is within 6 dB of the considered radiation lobe's maximum radiation.
 
 In scenario 4, the beamforming system is evaluated with the given beamforming weights, and its directivity compared to that of the same beamforming system with uniform excitation. The points are then awarded as
 \[ D_\textrm{target,weighted} - D_\textrm{target,uniform} \]
 The highest number of points for this scenario is 15.
 
-For all scenarios, the following rules apply: A beamforming system constructed with just one element is awarded no points. A beamforming system acheiving negative directivity in the direction of the ship is awarded no points. Directivity is consided in units dBi.
+For all scenarios, the following rules apply: A beamforming system constructed with just one element is awarded no points. A beamforming system acheiving negative directivity (in dBi) in the direction of the ship is awarded no points.
 
-\section{Task 2}
+\section*{Task 2}
 
-You will now design a planar beamforming system, to enable beamforming toward a ship that is moving in both dimension along the sea surface. You are given a single scenario (\textit{Scenario 5}) in which the ship is located at azimuth angle of 45\textdegree and at elevation of 60\textdegree in the reference coordinate system, describe in Figure \ref{fig:coord}.
+You will now design a planar beamforming system, to enable beamforming toward a ship that is moving in both dimension along the sea surface. You are given a single scenario (\textit{Scenario 5}) in which the ship is located at an azimuth angle of 45\textdegree and at elevation of 60\textdegree, as seen from the reference coordinate system.
 
-\subsection{Output data}
+\subsection*{Output data}
 
 \begin{description}
-	\item[elements2.csv] \,\\ The file contains a planar locations of beamforming elements. One row represents a beamforming element. The first column is the y-coordinate, and the second column is the z-coordinate.
-	\item[scenario5.csv] \,\\ The file contains a one-dimensional array of complex numbers representing the weights applied to each hydrophone element. Weights are given for elements in the same order as listed in elements2.csv. Array length is equal to the number of elements in the beamforming system. All numbers are inside, or at the edge of the unit circle.
+	\item[elements2.csv] \,\\ The file contains 2D coordinates of beamforming elements. One row of the file represents one beamforming element. The first column is the y-coordinate, and the second column is the z-coordinate.
+	
+	\item[scenario5.csv] \,\\ The file contains a one-dimensional array of complex numbers representing the weights applied to each hydrophone element. Weights are given for elements in the same order as they are listed in \textsf{elements2.csv}. Array length is equal to the number of elements in the beamforming system. All numbers are inside, or at the edge of the unit circle.
+	
+	Complex numbers should be stored either in
+	\begin{itemize}
+		\item cartesian notation: \textsf{a+bi}, or
+		\item polar notation: \textsf{P*exp(Ri)}
+	\end{itemize}
 \end{description}
+
+Note that CSV data should be delimited by \textsf{,}.
 
 \subsection*{Scoring}
 
-The team will achieve points that correspond to directivity in the direction of the ship.
+The team will achieve points that correspond to directivity in dBi in the direction of the ship.
 
-A beamforming system constructed with just one element is awarded no points. A beamforming system acheiving negative directivity in the direction of the ship is awarded no points. Directivity is consided in units dBi.
+A beamforming system constructed with just one element is awarded no points. A beamforming system acheiving negative directivity (in dBi) in the direction of the ship is awarded no points.
 
-\section{Evaluation and results}
+\section*{Evaluation and results}
 
-Evaluations are performed automatically, and run for the entire duration of the competition day. You will be able to see the results of evaluation (i.e. a scoringboard) for all teams, and thus monitor how everyone progresses. Shortly after the competition day starts, you will be contacted on Slack with details on how to access the scoring board, and the FTP server on which you will upload your files. Each time your code is evaluated, you will find evaluator's log file on the same FTP server.
+Evaluations are performed automatically, and will run continuously during the competition day. You will be able to see the results of evaluation for all teams on a scoring board, and thus monitor how everyone progresses. Shortly after the competition day starts, you will be contacted on Slack with details on how to access the scoring board and an FTP server on which you will upload your files. Each time your code is evaluated, you will find evaluator's log file on the same FTP server.
 
 The input files found on FTP server at 17:00 will be taken as team's final solution. No changes will be permitted after that time.
 

@@ -1,0 +1,51 @@
+\documentclass[a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlist[description]{style=unboxed}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{circuitikz}
+\usepackage{tabularx}
+\usepackage{rotating}
+\usepackage{caption} 
+\captionsetup[table]{skip=10pt}
+
+\usetikzlibrary{calc,positioning,shapes,decorations.pathreplacing}
+
+\tikzset{
+	short/.style={draw,rectangle,text height=3pt,text depth=13pt,
+		text width=7pt,align=center,fill=gray!30},
+	long/.style={short,text width=1.5cm},
+	verylong/.style={short,text width=4.5cm}
+}
+
+\begin{document}
+\section{DC voltage power supply - solutions}
+
+\subsection{Finding the proper choice of components}
+\label{ele:task:1}
+
+Determine vo
+
+\subsection{LC filter design}
+\label{ele:task:2}
+
+\subsection{Side task: Reliability of the system with redundant power supply} 
+\label{ele:task:3}
+
+\subsection{Grading scheme}
+Tasks are graded in the following manner:
+\begin{itemize}
+\item tasks \ref{ele:task:1} and \ref{ele:task:2} - up to \textbf{10 pts}, 
+up to \textbf{5 pts} for each component.
+\item task \ref{ele:task:3} - up to \textbf{10 pts} - \textbf{5 pts} for the 
+correct probability and up to \textbf{5 pts} for correct documentation.
+\end{itemize}
+
+ 
+\end{document}

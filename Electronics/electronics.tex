@@ -12,6 +12,8 @@
 \usepackage{circuitikz}
 \usepackage{tabularx}
 \usepackage{rotating}
+\usepackage{caption} 
+\captionsetup[table]{skip=10pt}
 
 \usetikzlibrary{calc,positioning,shapes,decorations.pathreplacing}
 
@@ -30,10 +32,10 @@
 For fully functional operation, submarine/robot arm/habitat is equipped with 
 lot of computer based subsystems and electronic devices which operate on DC 
 voltage. To ensure proper operation the DC voltage has to be stable and without 
-noise. To ensure stable DC voltage, device on Fig. 1. is used. Device is 
-composed of several parts as it is shown on figure. Due to extreme conditions 
-in the system, regulators often fail and components have to be repaired or 
-replaced with proper spare part.
+noise. To ensure stable DC voltage, device on Fig. \ref{fig:schematic}. is used. 
+Device is composed of several parts as it is shown on figure. Due to extreme 
+conditions in the system, regulators often fail and components have to be 
+repaired or replaced with proper spare part.
 
 In this task, your job is to:
 \begin{itemize}
@@ -49,14 +51,30 @@ in the table correspond to the values which will be measured in simulation.
 
 \begin{table}[h!]
     \hyphenpenalty 10000
-    \caption{Regulator specifications}
+    \caption{Device specifications}
     \label{tab:spec}
     \begin{tabularx}{\linewidth}{|X|X|X|X|} \hline
-    PARAMETER & TEST CONDITIONS & VALUE & UNIT \\ \hline 
-    Output voltage ($V_o$)& $I_o = 1$ A & $10.00$ & V \\ \hline
-    Output current ($I_o$) & a & $1.5$ & A \\ \hline
+    PARAMETER & TEST CONDITIONS & VALUE & UNIT \\ \hline
+    Input voltage ($U_{in}$)&  & $330$ & Vpp \\ \hline 
+    Output voltage ($U_{out}$)& $I_{out} = 1$ A & $10$ ($\pm3$) \% & V \\ \hline
+    Output current ($I_{out}$) & $U_{in} = 330$ Vpp & $1.0$ & A \\ \hline
     Ripple rejection & (12.8 kHz) & $78$ & dB \\ \hline
-   	Dropout voltage & $I_o = 1.5$ A & $2$ & V \\ \hline
+    \end{tabularx}
+\end{table}
+
+\begin{table}[h!]
+    \hyphenpenalty 10000
+    \caption{Device element values}
+    \label{tab:elems}
+    \begin{tabularx}{\linewidth}{|X|X|X|X|} \hline
+    ELEMENT & PARAMETER & VALUE & UNIT \\ \hline
+    $T_1$ & transfer ratio ($n$) & $25$ &  dimensionless \\ \hline
+    $D_1$ & $U_{pn}$ & $0.6$ & V \\ \hline 
+    $R_2$ & Resistance & $1$ & M$\Omega$ \\ \hline
+    $R_4$ & Resistance & $470$ & k$\Omega$ \\ \hline
+    $R_L$ & Resistance & 10 & $\Omega$ \\ \hline
+    $Q_1$ & $U_{pn}$ & $0.6$ & V \\ \hline
+    $C_1$ & Capacitance & $10$ & mF \\ \hline
     \end{tabularx}
 \end{table}
 
@@ -64,18 +82,19 @@ in the table correspond to the values which will be measured in simulation.
 
 \subsection{Finding the proper choice of components}
 \label{ele:task:1}
-As it can be seen in regulator scheme, some components are not determined. In 
-this subtask you need to specify resistor $R_1$ and diode $D_1$. Additionally, 
-you have to determine positions of the negative and the positive input of the 
-amplifier $A_1$. Based on the regulators operating values provided with table
-\ref{tab:spec} and regulator test points diagrams (Fig. 1. - Fig. 4) you have 
-to determine specifications for the resistor $R_1$ and diode $D_1$. You have to 
-find the real components from the DigiKey Electronics product database. 
+As it can be seen from the table \ref{tab:elems}, some components are not 
+determined. In this subtask you need to specify resistor $R_1$ and diode $D_2$. 
+Additionally, you have to determine positions of the negative and the positive 
+input of the amplifier $A_1$. Based on the regulators operating values 
+provided with table \ref{tab:spec} and regulator test points diagrams 
+(Fig. 1. - Fig. 4) you have to determine specifications for the resistor 
+$R_1$ and diode $D_1$. You have to find the real components from the DigiKey 
+Electronics product database. 
 
 There are, however, constraints for your choice of components:
 \begin{itemize}
 \item $R_1$ has footprint given with figure Fig. \ref{fig:footprint},
-\item $D_1$ is a through-hole component.
+\item $D_2$ is a through-hole component.
 \end{itemize} 
  
 Your choice is graded in several ways:
@@ -85,21 +104,30 @@ Your choice is graded in several ways:
 \item correct component footprint.
 \end{itemize}
 As a result, you have to provide two DigiKey part numbers for resistor and 
-diode, respectively. 
+diode, respectively.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{images/footprint.png}
+\caption{Component footprint with dimension in millimeters}
+\label{fig:footprint}
+\end{figure}
+
+\newpage
 
 \subsection{LC filter design}
 \label{ele:task:2}
 To achieve specified ripple rejection at required frequency, design a LC low 
 pass filter which filters output of a regulator. As in previous task you have 
 to provide DigiKey part numbers for LC filter. \textbf{Note:} The ripple 
-rejection of the regulator part of the device is $50$ dB at $12.8$ kHz.
+rejection of the regulator part of the device is $58$ dB at $12.8$ kHz.
 
 Again, there are constraints for your choice of components:
 \begin{itemize}
 \item $L_1$ has no additional constraints 
 (think about already mentioned implicit constraints),
 \item $C_2$ has to be a ceramic capacitor with footprint given with 
-Fig. \ref{fig:footprint2},
+Fig. \ref{fig:footprint},
 \item $Q$ factor has to be equal $\frac{\sqrt{2}}{2}$ for $R_L = 10$ $\Omega$.  
 \end{itemize}
 
@@ -112,8 +140,8 @@ Your choice is graded in the similar fashion as before:
 \end{itemize}
 As a result, you have to provide two DigiKey part numbers for inductor and 
 capacitor, respectively. 
-
-\subsection{Side task: Reliability of redundant linear regulator system}
+\newpage
+\subsection{Side task: Reliability of the system with redundant power supply} 
 \label{ele:task:3}
 To increase reliability of the power supply system two different linear 
 regulators are linked in configuration which is given with the Fig. 
@@ -131,13 +159,23 @@ f_2(t) = \lambda_2 e^{-\lambda_2 t}
 
 Your task is to determine probability density function $f_S(t)$ which gives the
 probability of failure in system described with Fig. \ref{fig:psc}. As a result 
-provide probability of a failure for $t = 1000$ $h$ with:
+provide probability of a failure for $t = 10000$ $h$ with:
 \begin{itemize}
 \item[] $\lambda_1 = 1 \cdot10^{-6}$ $h^{-1}$
 \item[] $\lambda_2 = 2 \cdot10^{-6}$ $h^{-1}$ 
 \end{itemize} 
 
-\textbf{Note}: time to failure is increased $T_{fs} = T_{1f} + T_{2f}$. 
+\textbf{Note}: mean time between failures is increased $T_{sf} = 
+T_{1f} + T_{2f}$. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{images/standby.png}
+\caption{Standby system configuration}
+\label{fig:psc}
+\end{figure}
+
+\newpage
 
 \subsection{Solution format}
 Solution for each task is a plain text document containing requested data. For
@@ -158,36 +196,11 @@ up to \textbf{5 pts} for each component.
 correct probability and up to \textbf{5 pts} for correct documentation.
 \end{itemize}
 
-\newpage
-\begin{sidewaysfigure}
-\begin{circuitikz}[scale=2]
-    \def\xPortLeft{0}
-    \def\yTerminalBottom{0}
-    \def\yL{1.5}
-    \def\xL{1}
-    \def\xR{1.75}
-    \def\xC{2.25}
-    \def\xPortRight{3}
-    % left loop
-    \draw                               (\xPortLeft,\yL)
-            to[L=$L$, o-]               (\xL, \yL)
-            to[R=$R$]                   (\xR, \yL)
-            to[short]                   (\xC,\yL)
-            to[C, l_=$C$,*-*]           (\xC,\yTerminalBottom);
-    % right branch
-    \draw                               (\xC,\yL)
-            to[short]                   (\xPortRight,\yL)
-            to[open,v^=$v_2(t)$,o-o]    (\xPortRight,\yTerminalBottom)
-            to[short]                   (\xC,\yTerminalBottom);
-\end{circuitikz}
-\end{sidewaysfigure}
-
 \begin{sidewaysfigure}[h!]
 \centering
 \includegraphics[width=\linewidth]{images/reg.png}
-\caption{Rectifier and linear regulator.}
+\caption{DC voltage power supply schematic}
+\label{fig:schematic}
 \end{sidewaysfigure}
-
-
  
 \end{document}

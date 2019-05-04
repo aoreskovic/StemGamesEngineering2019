@@ -8,5 +8,7 @@ D1 4_4 6; rotate=-45
 D2 7 4_4; rotate=45
 D3 7 5_5; rotate=-45
 D4 5_5 6; rotate=45
-# W 6 9; right
+W 7 7_7; up, size=2
+W 6 6_6; right
+
 # ; draw_nodes=False, label_nodes=True

@@ -1,6 +1,6 @@
 close all;
 
-[targetD, maxD, maxAz, lobesValid] = evaluateTask1(elements,bfMatrix,targetAz);
+[targetD, maxD, maxAz, lobesValid] = evaluateTask1(elements,bfMatrix,targetAz,true);
 
 fprintf('Depointing error: %2.04f deg\n', abs(maxAz-targetAz));
 

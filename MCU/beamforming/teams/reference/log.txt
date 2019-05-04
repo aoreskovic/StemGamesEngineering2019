@@ -1,0 +1,60 @@
+Evaluation started at 15:40:10
+
+
+===========================
+TASK 1, SCENARIO 1
+===========================
+Array directivity: 20.2049 dBi
+Main lobe direction: Azimuth 0.0000 Elevation 0.0000
+Directivity at target: 20.2049 dBi
+Depointing error: 0.0000 deg
+Score: 20.2049
+Total link errors: 0
+
+===========================
+TASK 1, SCENARIO 2
+===========================
+Array directivity: 17.3356 dBi
+Main lobe direction: Azimuth 29.7357 Elevation 0.0000
+Directivity at target: 17.3107 dBi
+Depointing error: 0.2643 deg
+Score: 17.0464
+Total link errors: 0
+
+===========================
+TASK 1, SCENARIO 3
+===========================
+Array directivity: 19.9353 dBi
+Main lobe direction: Azimuth -8.3952 Elevation 0.0000
+Directivity at target: 8.0832 dBi
+Depointing error: 68.3952 deg
+Score: 1.2437
+Total link errors: 0
+
+===========================
+TASK 1, SCENARIO 4
+===========================
+Evaluating with given beamforming weights ...
+Array directivity: 20.1272 dBi
+Main lobe direction: Azimuth -4.5886 Elevation 0.0000
+Directivity at target: 1.4829 dBi
+Evaluating with uniform excitation ...
+Array directivity: 20.2049 dBi
+Main lobe direction: Azimuth 0.0000 Elevation 0.0000
+Directivity at target: -7.9471 dBi
+Depointing error: 78.3952 deg
+Score: 9.4300
+Total link errors: 0
+===========================
+TASK 2, SCENARIO 5
+===========================
+Array directivity: 17.5012 dBi
+Main lobe direction: Azimuth 22.9545 Elevation -11.3996
+Directivity at target: 0.4886 dBi
+Score: 0.4886
+Total link errors: 0
+
+
+===========================
+Total score: 48.4135
+Evaluation completed at 15:42:43

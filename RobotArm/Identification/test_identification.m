@@ -5,6 +5,10 @@ kranFile = "../kran/kran";
 
 open_system(kranFile + ".slx");
 set_param("kran/isIdentification", 'value', "1");
+set_param("kran/isCreate", 'value', "1");
+set_param('kran', 'SimParseCustomCode', "off");
+set_param('kran', 'SimUserSources', "");
+set_param('kran', 'SimCustomHeaderCode', "");
 
 outputFileId = fopen(solutionFolder + "result.txt", "w");
 try
@@ -98,11 +102,10 @@ end
 
 
 % load test signals and set crane in default position
-signals = csvread(readOnlyFolder + "signals.csv");
+signals = csvread(readOnlyFolder + "input_signals.csv");
 q1 = 0; q2 = 0.194; q3 = 0; q4 = 0; q5 = 0;
-table = table(q1, q2, q3, q4, q5);
-          
-setCraneInPosition(table);
+
+setCraneInPosition(table(q1, q2, q3, q4, q5));
 identTime = signals(:, 1);
 base = signals(:, 2);
 rot = signals(:, 3);
@@ -118,6 +121,18 @@ pulleyVoltage = [identTime, [pulley]];
 
 Tsim = identTime(end);
 
+pointOne = [0 0 0];
+pointTwo = [0 0 0];
+pointThree = [0 0 0];
+refPointsVector = [pointThree, pointOne, pointThree, pointTwo, pointThree];
+timeGain = 0;
+distanceGain = 0;
+Krešimir Friganović12:30 PM
+joined engineering_mentori.
+Krešimir Friganović12:30 PM
+set the channel purpose: Privatni kanal za mentore iz Engineering Arene
+Ante Orešković12:30 PM
+
 try
     sim(kranFile + ".slx");
 catch
@@ -127,11 +142,11 @@ catch
 end
 
 try
-    deltaBaseVel = baseMotor.signals.values(:, 1) - solBase(:, 2);
-    deltaRotVel = rotCylinder.signals.values(:, 1) - solRot(:, 2);
-    deltaTrans1Vel = transCylinder1.signals.values(:, 1) - solTrans1(:, 2);
-    deltaTrans2Vel = transCylinder2.signals.values(:, 1) - solTrans2(:, 2);
-    deltaPulleyVel = pulleyMotor.signals.values(:, 1) - solPulley(:, 2);
+    deltaBaseVel = baseMotor.signals.values(:, 2) - solBase(:, 2);
+    deltaRotVel = rotCylinder.signals.values(:, 2) - solRot(:, 2);
+    deltaTrans1Vel = transCylinder1.signals.values(:, 2) - solTrans1(:, 2);
+    deltaTrans2Vel = transCylinder2.signals.values(:, 2) - solTrans2(:, 2);
+    deltaPulleyVel = pulleyMotor.signals.values(:, 2) - solPulley(:, 2);
     
 catch
     fprintf(outputFileId, "Sample time is wrong. Use Ts=" + num2str(Ts));
@@ -140,7 +155,10 @@ catch
 end
 
 
-score = deltaBaseVel^2 + deltaRotVel^2 + deltaTrans1Vel^2 + deltaTrans2Vel^2 + deltaPulleyVel^2;
+score = sum(deltaBaseVel.^2 + deltaRotVel.^2 + deltaTrans1Vel.^2 + ...
+        deltaTrans2Vel.^2 + deltaPulleyVel.^2);
+
+fprintf(outputFileId, "   score:" + num2str(score) + newline);
 
 copyfile(solutionFolder + "result.txt", readOnlyFolder);
 fclose(outputFileId);

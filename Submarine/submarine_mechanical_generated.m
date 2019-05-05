@@ -12,13 +12,16 @@ travel_range = 500;
 battery_capacity = 2;
 speed_kn = 7;
 
+MCR = 0.85;
 
-pressure_conversion = 100000;
+length_c = 11.05;   % m
+radius_r = 1.5;     % m
+radius_rb = 2.2;    % m
 
+power_density_turbine = 0.1; % t/kW
 
-depth_pressure_pa = row*g*max_depth;
-depth_pressure_b = depth_pressure_pa/pressure_conversion;
-
+radius_difference = radius_rb-radius_r;
+sub_length = length_c+2*radius_r;
 
 surface_cylinder = 2*radius_r*pi*length_c;
 surface_sphere = 4*radius_r^2*pi;
@@ -31,12 +34,20 @@ volume_total = volume_cylinder+volume_sphere;
 istisnina = volume_total*row/1000;
 
 
-length_c = 11.05;
-radius_r = 1.5;
-radius_rb = 2.2;
-radius_difference = radius_rb-radius_r;
-sub_length = length_c+2*radius_r;
 CB = volume_total/(sub_length*2*radius_r*2*radius_r);
+
+
+pressure_conversion = 100000;
+
+
+depth_pressure_pa = row*g*max_depth;
+depth_pressure_b = depth_pressure_pa/pressure_conversion;
+
+
+
+
+
+
 
 
 depth_pressure_b = depth_pressure_b;
@@ -56,15 +67,17 @@ kn2ms = 1852/3600;
 
 speed_kn = speed_kn;
 speed_ms = speed_kn*kn2ms;
-Fn = speed_ms/SQRT(9.08665*sub_length);
-CF = 0.075/(LOG10(Rn)-2)^2;
-Rn = speed_ms*(sub_length)/ni;
+Fn = speed_ms/sqrt(9.08665*sub_length);
 ni = 0.000001187;
-CT = CF*(1+k_hull);
+Rn = speed_ms*(sub_length)/ni;
+CF = 0.075/(log10(Rn)-2)^2;
+
 k_hull = -0.095+25.6*CB/(sub_length/(2*radius_r))^2;
+CT = CF*(1+k_hull);
+
 Re = CT*0.5*row*speed_ms^2*surface_total/1000;
 Pe = Re*speed_ms;
 Pb1 = Pe/(0.5*0.98);
 Pb = Pb1/MCR;
-MCR = 0.85;
-E64 = Pb*E148;
+
+E64 = Pb*power_density_turbine;

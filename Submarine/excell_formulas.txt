@@ -1,70 +1,70 @@
 
 
-D3 = 1025;
-D4 = 7850;
-D5 = 9.81;
+row = 1025;
+roc = 7850;
+g = 9.81;
 
 
-D8 = 50;
-D9 = 2;
-D10 = 24;
-D11 = 500;
-D12 = 2;
-D13 = 7;
+max_depth = 50;
+passenger_count2 = 2;
+travel_time = 24;
+travel_range = 500;
+battery_capacity = 2;
+speed_kn = 7;
 
 
-D18 = 100000;
+pressure_conversion = 100000;
 
 
-D16 = D3*D5*D8;
-D17 = D16/D18;
+depth_pressure_pa = row*g*max_depth;
+depth_pressure_b = depth_pressure_pa/pressure_conversion;
 
 
-D29 = 2*D22*PI()*D21;
-D30 = 4*D22^2*PI();
-D31 = D29+D30;
+surface_cylinder = 2*radius_r*pi*length_c;
+surface_sphere = 4*radius_r^2*pi;
+surface_total = surface_cylinder+surface_sphere;
 
 
-D34 = D22^2*PI()*D21;
-D35 = 4/3*D22^3*PI();
-D36 = D34+D35;
-D37 = D36*D3/1000;
+volume_cylinder = radius_r^2*pi*length_c;
+volume_sphere = 4/3*radius_r^3*pi;
+volume_total = volume_cylinder+volume_sphere;
+istisnina = volume_total*row/1000;
 
 
-D21 = 11.05;
-D22 = 1.5;
-D23 = 2.2;
-D24 = D23-D22;
-D25 = D21+2*D22;
-D26 = D36/(D25*2*D22*2*D22);
+length_c = 11.05;
+radius_r = 1.5;
+radius_rb = 2.2;
+radius_difference = radius_rb-radius_r;
+sub_length = length_c+2*radius_r;
+CB = volume_total/(sub_length*2*radius_r*2*radius_r);
 
 
-D40 = D17;
-D41 = D22*2*1000;
-D42 = 125;
-D43 = 1;
+depth_pressure_b = depth_pressure_b;
+Di = radius_r*2*1000;
+sigma = 125;
+k_weld = 1;
 
 
-F39 = D40*D41/(20*D42+D40);
+thickness_hull = depth_pressure_b*Di/(20*sigma+depth_pressure_b);
 
 
-F46 = D31*F39/1000*D4/1000*1.5;
+mass_steel = surface_total*thickness_hull/1000*roc/1000*1.5;
 
 
-H50 = 1852/3600;
+kn2ms = 1852/3600;
 
 
-E50 = D13;
-E51 = E50*H50;
-E52 = E51/SQRT(9.08665*D25);
-E53 = 0.075/(LOG10(E54)-2)^2;
-E54 = E51*(D25)/E55;
-E55 = 0.000001187;
-E56 = E53*(1+E58);
-E58 = -0.095+25.6*D26/(D25/(2*D22))^2;
-E59 = E56*0.5*D3*E51^2*D31/1000;
-E60 = E59*E51;
-E61 = E60/(0.5*0.98);
-E62 = E61/E63;
-E63 = 0.85;
-E64 = E62*E148;
+speed_kn = speed_kn;
+speed_ms = speed_kn*kn2ms;
+Fn = speed_ms/SQRT(9.08665*sub_length);
+CF = 0.075/(LOG10(Rn)-2)^2;
+Rn = speed_ms*(sub_length)/ni;
+ni = 0.000001187;
+CT = CF*(1+k_hull);
+k_hull = -0.095+25.6*CB/(sub_length/(2*radius_r))^2;
+Re = CT*0.5*row*speed_ms^2*surface_total/1000;
+Pe = Re*speed_ms;
+Pb1 = Pe/(0.5*0.98);
+Pb = Pb1/MCR;
+MCR = 0.85;
+E64 = Pb*E148;

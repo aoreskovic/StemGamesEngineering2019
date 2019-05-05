@@ -1,3 +1,5 @@
+close all;
+
 disp("Evaluating with given beamforming weights ...");
 [targetD, ~, ~, ~] = evaluateTask1(elements,bfMatrix,targetAz,false);
 disp("Evaluating with uniform excitation ...");
@@ -12,3 +14,7 @@ if targetD < 0
 end
 
 fprintf('Score: %2.04f\n', score);
+
+if score > 15
+    score = 15;
+end

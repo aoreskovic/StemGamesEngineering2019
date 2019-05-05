@@ -1,4 +1,4 @@
-function [targetD, maxD, maxAz] = evaluateTask1(elements, bfMatrix, targetAz)
+function [targetD, maxD, maxAz, lobesValid] = evaluateTask1(elements, bfMatrix, targetAz, verifyLobes)
 
 vel = 1520;
 freq = 30e3;
@@ -9,17 +9,28 @@ err = linkError.instance();
 N = length(elements);
 
 % Parameter format
-if (length(elements) == 1)
+if (N == 1)
     err.invokeError('notAnArray');
 end
 if (size(elements) == [1 N]) ~= ones(1,2)
     err.invokeError('arrayParameter');
 end
+
+% Area limits
+elements = elements + 0.225;
+xmax = 0.45;
+ymax = 0.45;
+if ((~isempty(find(elements < 0)) | ...
+        (~isempty(find(elements(1,:) > xmax)))))
+    err.invokeError('arrayParameter');
+end
+elements = elements - 0.225;
+
 elements = transpose([zeros(N,1) elements' zeros(N,1)]);
 if size(bfMatrix) ~= N
     err.invokeError('arrayParameter');
 end
-if sum(abs(bfMatrix) > 1) > 0
+if sum(abs(bfMatrix) > 1.0001) > 0
     err.invokeError('arrayParameter');
 end
 
@@ -29,17 +40,7 @@ if sum(diff(sort(elements)) > distMin) > 0
     err.invokeError('arrayParameter');
 end
 
-% Adjust coordinate system
-elements = elements + 0.225;
 
-% Area limits
-xmax = 0.45;
-ymax = 0.45;
-if ((~isempty(find(elements < 0)) | ...
-        (~isempty(find(elements(1,:) > xmax))) | ...
-        (~isempty(find(elements(2,:) > ymax)))))
-    err.invokeError('arrayParameter');
-end
 
 %% Defining antennas and array
 
@@ -79,9 +80,13 @@ figure;
 pattern(array, freq, 'PropagationSpeed', vel, 'CoordinateSystem', 'polar', 'Type', 'directivity');
 title('Array 3D radiation pattern');
 % El = 0
+numPreazel = 0.1;
+azimuths = -180:numPreazel:180;
 figure;
-pattern(array, freq, -180:180, 0, 'PropagationSpeed', vel, 'CoordinateSystem', 'polar', 'Type', 'directivity');
+azCut = pattern(array, freq, azimuths, 0, 'PropagationSpeed', vel, 'CoordinateSystem', 'polar', 'Type', 'directivity');
+pattern(array, freq, azimuths, 0, 'PropagationSpeed', vel, 'CoordinateSystem', 'polar', 'Type', 'directivity');
 title('Array radiation pattern; Azimuth cut, el = 0\circ');
+
 
 %% Evaluating array pattern
 
@@ -92,6 +97,19 @@ vcoord = -1:numPrecuv:1;
 [farField, uctrl, vctrl] = pattern(array, freq, ucoord, vcoord, 'PropagationSpeed', vel, 'CoordinateSystem', 'uv', 'Type', 'directivity');
 
 % KEEP NOTE: There may be multiple maxima
+
+% Is the target in two tallest lobes?
+[lobeD,lobeAzIdx] = findpeaks(azCut,'SortStr','descend','NPeaks',2);
+lobesValid = [false false];
+usedLobe = 0;
+for ii=1:2
+    azCutSection = azCut(lobeAzIdx(ii):(find(azimuths == targetAz)));
+    if sum(azCutSection <= 0) == 0
+        lobesValid(ii) = true;
+        usedLobe = ii;
+        break;
+    end
+end
 
 % Array directivity
 D = max(max(farField));
@@ -111,5 +129,12 @@ targetEl = 0;
 % [~,elIndex] = min(abs(targetEl-elctrl));
 targetD = directivity(array,freq,[targetAz;targetEl],'PropagationSpeed',vel);
 fprintf('Directivity at target: %2.04f dBi\n', targetD);
+
+% Are we actually inside the lobe?
+if verifyLobes
+    if (usedLobe == 0) || ((lobeD(usedLobe) - targetD) > 6)
+        err.invokeError('lobeTooFar');
+    end
+end
 
 end

@@ -7,3 +7,4 @@
 *.raw
 slprj/*
 *autosave
+evaluation/__pycache__

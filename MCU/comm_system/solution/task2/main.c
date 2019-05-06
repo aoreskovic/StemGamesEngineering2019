@@ -7,7 +7,7 @@
 #include <radio.h>
 
 static const short adc_data[] = {
-#include "../../ofdm_carrier.raw"
+#include "../../datasets/ofdm_carrier.raw"
 };
 
 #define N 128

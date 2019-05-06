@@ -1,11 +1,11 @@
 SRC=$(wildcard *.c)
-SRC+=../radio.c ../api/api.c
+SRC+=api/api.c
 OBJS=$(patsubst %.c, %.o, $(SRC))
-INC= -I . -I ../api -I ../
+INC= -I . -I api
 
 CFLAGS += $(INC)
 
-all: main.elf Makefile ../../datasets/single_carrier.raw
+all: main.elf Makefile ../datasets/single_carrier.raw
 
 %.elf: $(OBJS)
 	gcc $^ -lm -o $@

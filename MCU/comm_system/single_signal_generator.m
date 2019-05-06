@@ -15,6 +15,10 @@ for ii=1:Ncoords
     );
 end
 
+datasetFile = fopen('datasets/single_carrier.txt','w');
+fprintf(datasetFile,'%s',dataset_string);
+fclose(datasetFile);
+
 dataset_tmp = double(dataset_string);
 dataset_tmp = de2bi(dataset_tmp, 8);
 dataset_tmp = fliplr(dataset_tmp);
@@ -157,4 +161,4 @@ eq_vec = frames_demod == frames_reshape;
 %% Discrete sample steps (16 bit)
 
 input_sig = int16(modulated_output * 2^15);
-csvwrite('single_carrier.raw', input_sig);
+csvwrite('datasets/single_carrier.raw', input_sig);

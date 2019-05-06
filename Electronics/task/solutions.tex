@@ -30,13 +30,50 @@
 \subsection{Finding the proper choice of components}
 \label{ele:task:1}
 
-Determine vo
+Determine voltage from output:
+\begin{equation}
+U_{out} = V_z \cdot (1 + \frac{R_2}{R_4})
+\end{equation}
+
+Find nominal current of Zener diode (typically 20 mA). Voltage beyond the 
+rectifier is 12 V ($13.2 - 2 \cdot 0.6$). Therefore:
+\begin{equation}
+R_s = \frac{12 - U_z}{I_z}
+\end{equation}
 
 \subsection{LC filter design}
 \label{ele:task:2}
+Determine system transfer function:
+\begin{equation}
+H(s) = \frac{1}{LC} \frac{1}{s^2 + \frac{1}{R_LC} s + \frac{1}{LC}}
+\end{equation}
+Compare with second order filter transfer function:
+\begin{equation}
+H(s) = \frac{\omega_0^2}{s^2 + \frac{\omega_0}{R_LC} s + \omega_0^2}
+\end{equation}
+Therefore:
+\begin{equation}
+Q = \omega_0 R_L C
+\end{equation}
+For getting $\omega_0$ solve:
+\begin{equation}
+20 \log |H(j\omega)| = -20 \text{dB}
+\end{equation}
 
 \subsection{Side task: Reliability of the system with redundant power supply} 
 \label{ele:task:3}
+
+Solution:
+\begin{equation}
+R(t) = \frac{1}{\lambda_1 - \lambda_2} (\lambda_1 e^{-\lambda_2 t} - 
+\lambda_2 e^{-\lambda_2 t})
+\end{equation}
+For $t = 10000$ h and $\lambda_1 = 1 \cdot10^{-6}$ $h^{-1}$, 
+$\lambda_2 = 2 \cdot10^{-6}$ $h^{-1}$ probability of failure is:
+\begin{equation}
+F(10000) = 1 - R(10000) = 9.9 \cdot 10^{-5}
+\end{equation}
+
 
 \subsection{Grading scheme}
 Tasks are graded in the following manner:

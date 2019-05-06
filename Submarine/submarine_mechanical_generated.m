@@ -1,6 +1,3 @@
-function [mass_steel] = sub_mass(length_c, radius_r, max_depth, k_weld, faktor_strukture)
-%sub_mass calculates the mass of a given submarine
-%   Detailed explanation goes here
 
 
 %% Constants
@@ -22,9 +19,9 @@ speed_kn = 7;
 
 MCR = 0.85;
 
-
 sigma = 125;
 k_weld = 1;
+k_structure = 1.5;
 
 length_c = 11.05;   % m
 radius_r = 1.5;     % m
@@ -71,8 +68,25 @@ Di = radius_r*2*1000;
 thickness_hull = depth_pressure_b*Di/(20*sigma+depth_pressure_b);
 
 
-mass_steel = surface_total*thickness_hull/1000*roc/1000*1.5;
+mass_steel = surface_total*thickness_hull/1000*roc/1000*k_structure;
 
+% Power
 
-end
+kn2ms = 1852/3600;
 
+speed_kn = speed_kn;
+speed_ms = speed_kn*kn2ms;
+Fn = speed_ms/sqrt(9.08665*sub_length);
+ni = 0.000001187;
+Rn = speed_ms*(sub_length)/ni;
+CF = 0.075/(log10(Rn)-2)^2;
+
+k_hull = -0.095+25.6*CB/(sub_length/(2*radius_r))^2;
+CT = CF*(1+k_hull);
+
+Re = CT*0.5*row*speed_ms^2*surface_total/1000;
+Pe = Re*speed_ms;
+Pb1 = Pe/(0.5*0.98);
+Pb = Pb1/MCR;
+
+E64 = Pb*power_density_turbine;

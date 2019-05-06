@@ -105,35 +105,61 @@ catch
     return
 end
 
-M = [rotCylinder.time, rotCylinder.signals.values(:, 2)];
-csvwrite(identifyFolder + "Output/" + "rot.csv", M);
-M = [transCylinder1.time, transCylinder1.signals.values(:, 2)];
-csvwrite(identifyFolder + "Output/" + "trans1.csv", M);
-M = [transCylinder2.time, transCylinder2.signals.values(:, 2)];
-csvwrite(identifyFolder + "Output/" + "trans2.csv", M);
-M = [baseMotor.time, baseMotor.signals.values(:, 2)];
-csvwrite(identifyFolder + "Output/" + "base.csv", M);
-M = [pulleyMotor.time, pulleyMotor.signals.values(:, 2)];
-csvwrite(identifyFolder + "Output/" + "pulley.csv", M);
+M = [baseMotor.time,  baseMotor.signals.values(:, 2), rotCylinder.signals.values(:, 2), ...
+     transCylinder1.signals.values(:, 2), transCylinder2.signals.values(:, 2), ...
+     pulleyMotor.signals.values(:, 2)];
 
-fprintf(outputFileId, "Outputs created!");
+csvwrite(identifyFolder + "Output/" + "signals.csv", M);
 
-set = 0;
-while set == 0
-    files = dir(signalsFolder);
-    try
-        index = randi([1, round((length(files)-2) /2)]);
-        copyfile(signalsFolder + "input_signals" + num2str(index) + ".csv", readOnlyFolder);
-        movefile(readOnlyFolder + "input_signals" + num2str(index) + ".csv", ...
-                 readOnlyFolder + "input_signals.csv");
-        copyfile(signalsFolder + "start_position" + num2str(index) + ".csv", readOnlyFolder);
+fprintf(outputFileId, "Outputs created!" + newline);
+
+files = dir(readOnlyFolder);
+for i=1:length(files)
+   name = string(files(i).name);
+   if name ~= "." && name ~= ".."
+        delete(readOnlyFolder + name);
+   end
+end
+
+
+files = dir(signalsFolder);
+indices = randsample(round((length(files)-2) /2), numTestCases);
+for i=1:length(indices)
+    copyfile(signalsFolder + "input_signals" + num2str(indices(i)) + ".csv", readOnlyFolder);
+    copyfile(signalsFolder + "start_position" + num2str(indices(i)) + ".csv", readOnlyFolder);  
+end
+
+
+len = length(dir(readOnlyFolder));
+filesCount = 1;
+for i=1:len
+    
+    files = dir(readOnlyFolder);
+    [~, name, ext] = fileparts(files(i).name);
+    name = string(name); ext = string(ext);
+    if startsWith(name, "input_signals")
+        index = str2num(erase(name, "input_signals"));
+        currName = "input_signals" + num2str(filesCount) + ".csv";
+        cont = 0;
+        for j=1:length(files)
+           if string(files(j).name) == currName
+               cont = 1;
+               break
+           end
+        end
+        
+        if cont
+            filesCount = filesCount + 1;
+            continue
+        end
+        
+        movefile(readOnlyFolder + files(i).name, readOnlyFolder + currName);
         movefile(readOnlyFolder + "start_position" + num2str(index) + ".csv", ...
-                 readOnlyFolder + "start_position.csv");
-        set = 1;
-    catch
-        continue
+                 readOnlyFolder + "start_position" + num2str(filesCount) + ".csv");
+        filesCount = filesCount + 1;
     end
 end
+
 fprintf(outputFileId, "New reference set!" + newline);
 
 copyfile(identifyFolder + "Input/" + "result.txt", identifyFolder + "Output/");

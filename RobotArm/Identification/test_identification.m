@@ -5,68 +5,12 @@ kranFile = "../kran/kran";
 
 open_system(kranFile + ".slx");
 set_param("kran/isIdentification", 'value', "1");
+set_param("kran/isCreate", 'value', "1");
+set_param('kran', 'SimParseCustomCode', "off");
+set_param('kran', 'SimUserSources', "");
+set_param('kran', 'SimCustomHeaderCode', "");
 
 outputFileId = fopen(solutionFolder + "result.txt", "w");
-try
-    for i=1:length(files)
-        file = files(i);
-        fileName = convertCharsToStrings(file.name);
-        [path, name, ext] = fileparts(fileName);
-        if ext == ".csv"
-            if name == "base"
-                solBase = csvread(solutionFolder + fileName);
-                solBase = solBase(:,1:2);
-                dims = size(solBase);
-                if dims(2) ~= 2
-                    throw(exception)
-                end
-            elseif name == "rot"
-                solRot = csvread(solutionFolder + fileName);
-                solRot = solRot(:,1:2);
-                dims = size(solRot);
-                if dims(2) ~= 2
-                    throw(exception)
-                end
-            elseif name == "trans1"
-                solTrans1 = csvread(solutionFolder + fileName);
-                solTrans1 = solTrans1(:,1:2);
-                dims = size(solTrans1);
-                if dims(2) ~= 2
-                    throw(exception)
-                end
-            elseif name == "trans2"
-                solTrans2 = csvread(solutionFolder + fileName);
-                solTrans2 = solTrans2(:,1:2);
-                dims = size(solTrans2);
-                if dims(2) ~= 2
-                    throw(exception)
-                end
-            elseif name == "pulley"
-                solPulley = csvread(solutionFolder + fileName);
-                solPulley = solPulley(:,1:2);
-                dims = size(solPulley);
-                if dims(2) ~= 2
-                    throw(exception)
-                end
-            else
-                fprintf(outputFileId, "Unknown csv file! Remove it and try again!");
-                fclose(outputFileId);
-                return    
-            end
-        end
-    end  
-catch
-    fprintf(outputFileId, "Error loading fils!" + newline + ...
-            "Check again for dimensions and csv format! Soulution has to have 5 files: " ...
-            + newline + "    base, rot, trans1," + ...
-            " trans2 and pulley." + newline + "Every file hast to have 2 columns: " ...
-            + newline + "    time and position.");
-            
-    fclose(outputFileId);
-    return
-end
-
-fprintf(outputFileId, "All files loaded successfully!" + newline);
 
 % needs to be done again...
 rt = sfroot;
@@ -96,55 +40,99 @@ for i=1:length(methodHandles)
     end   
 end 
 
+score = 0;
+for i=1:numTestCases
+    try
+        files = dir(solutionFolder);
+        set = 0;
+        for j=1:length(files)  
+            file = files(j);
+            fileName = convertCharsToStrings(file.name);
+            [path, name, ext] = fileparts(fileName);
+            if "signals" + num2str(i) + ".csv" == fileName
+                signals = csvread(solutionFolder + file.name);
+                dims = size(signals);
+                if dims(2) ~= 6
+                    throw(exception)
+                end   
+                
+                solBase = signals(:, 2);
+                solRot = signals(:, 3);
+                solTrans1 = signals(:, 4);
+                solTrans2 = signals(:, 5);
+                solPulley = signals(:, 6);
+                set = 1;
+            end
+        end
+        if ~set 
+           throw(exception); 
+        end
+    catch
+        fprintf(outputFileId, "Error loading file for task " + num2str(i) + "!" + newline + ...
+                "Check again for dimensions and csv format! Input has to have 6 columns: " ...
+                + newline + "    time, baseVoltage, rotValve," + ...
+                " transValve1, transValve2 and pulleyVoltage, respectively!!");
+        continue
+    end
 
-% load test signals and set crane in default position
-signals = csvread(readOnlyFolder + "signals.csv");
-q1 = 0; q2 = 0.194; q3 = 0; q4 = 0; q5 = 0;
-table = table(q1, q2, q3, q4, q5);
-          
-setCraneInPosition(table);
-identTime = signals(:, 1);
-base = signals(:, 2);
-rot = signals(:, 3);
-trans1 = signals(:, 4);
-trans2 = signals(:, 5);
-pulley = signals(:, 6);
-
-baseVoltage = [identTime, [base]];
-rotValve = [identTime, [rot]];
-transValve1 = [identTime, [trans1]];
-transValve2 = [identTime, [trans2]];
-pulleyVoltage = [identTime, [pulley]];
-
-Tsim = identTime(end);
-
-try
-    sim(kranFile + ".slx");
-catch
-    fprintf(outputFileId, "Simulation failed! Check for actuator limits!");
-    fclose(outputFileId);
-    return
-end
-
-try
-    deltaBaseVel = baseMotor.signals.values(:, 1) - solBase(:, 2);
-    deltaRotVel = rotCylinder.signals.values(:, 1) - solRot(:, 2);
-    deltaTrans1Vel = transCylinder1.signals.values(:, 1) - solTrans1(:, 2);
-    deltaTrans2Vel = transCylinder2.signals.values(:, 1) - solTrans2(:, 2);
-    deltaPulleyVel = pulleyMotor.signals.values(:, 1) - solPulley(:, 2);
+    fprintf(outputFileId, "File for task" + num2str(i) + " loaded successfully!" + newline);
     
-catch
-    fprintf(outputFileId, "Sample time is wrong. Use Ts=" + num2str(Ts));
-    fclose(outputFileId);
-    return
+    % load test signals and set crane in default position
+    signals = csvread(readOnlyFolder + "input_signals" + num2str(i) + ".csv");
+    q1 = 0; q2 = 0.194; q3 = 0; q4 = 0; q5 = 0;
+
+    setCraneInPosition(table(q1, q2, q3, q4, q5));
+    identTime = signals(:, 1);
+    base = signals(:, 2);
+    rot = signals(:, 3);
+    trans1 = signals(:, 4);
+    trans2 = signals(:, 5);
+    pulley = signals(:, 6);
+
+    baseVoltage = [identTime, [base]];
+    rotValve = [identTime, [rot]];
+    transValve1 = [identTime, [trans1]];
+    transValve2 = [identTime, [trans2]];
+    pulleyVoltage = [identTime, [pulley]];
+
+    Tsim = identTime(end);
+
+    pointOne = [0 0 0];
+    pointTwo = [0 0 0];
+    pointThree = [0 0 0];
+    refPointsVector = [pointThree, pointOne, pointThree, pointTwo, pointThree];
+    timeGain = 0;
+    distanceGain = 0;
+
+    try
+        sim(kranFile + ".slx");
+    catch
+        fprintf(outputFileId, "Simulation failed! Check for actuator limits!");
+        continue
+    end
+
+    try
+        deltaBaseVel = baseMotor.signals.values(:, 2) - solBase;
+        deltaRotVel = rotCylinder.signals.values(:, 2) - solRot;
+        deltaTrans1Vel = transCylinder1.signals.values(:, 2) - solTrans1;
+        deltaTrans2Vel = transCylinder2.signals.values(:, 2) - solTrans2;
+        deltaPulleyVel = pulleyMotor.signals.values(:, 2) - solPulley;
+
+    catch
+        fprintf(outputFileId, "Sample time is wrong for example " + num2str(i) + ". Use Ts=" + num2str(Ts));
+        continue
+    end
+
+
+    score = score + sum(deltaBaseVel.^2 + deltaRotVel.^2 + deltaTrans1Vel.^2 + ...
+            deltaTrans2Vel.^2 + deltaPulleyVel.^2);
 end
 
-
-score = deltaBaseVel^2 + deltaRotVel^2 + deltaTrans1Vel^2 + deltaTrans2Vel^2 + deltaPulleyVel^2;
-
-copyfile(solutionFolder + "result.txt", readOnlyFolder);
+fprintf(outputFileId, "   score:" + num2str(score / numTestCases) + newline);
 fclose(outputFileId);
-return
+copyfile(solutionFolder + "result.txt", readOnlyFolder);
+
+
 
 
 

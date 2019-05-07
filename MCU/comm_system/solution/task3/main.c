@@ -6,7 +6,7 @@
 #include <radio.h>
 
 static const short adc_data[] = {
-#include "../../single_carrier.raw"
+#include "../../datasets/single_carrier.raw"
 };
 
 #define N 20

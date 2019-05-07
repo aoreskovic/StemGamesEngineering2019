@@ -5,7 +5,7 @@ INC= -I . -I ../api -I ../
 
 CFLAGS += $(INC)
 
-all: main.elf Makefile ../../single_carrier.raw
+all: main.elf Makefile ../../datasets/ofdm_carrier.raw
 
 %.elf: $(OBJS)
 	gcc $^ -lm -o $@

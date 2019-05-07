@@ -1,95 +1,166 @@
-function [time, base, rot, trans1, trans2, pulley] = createRandomSignals(simTime, Ts)
+clear;
+deltaT = 7;
+numSims = 5;    
+eventProb = 0.5;
+i = 0;
+R = 0.135;
+Ts = 0.05;
+Tsim = 35;
+signalsFolder = "/home/mandicluka/FER/StemGamesEngineering2019/RobotArm/InputFiles" + "/Identification/Signals/";
+open_system('../kran/kran.slx');
+run('../kran/simulation_params.m')
+set_param("kran/isCreate", 'value', "0");
+pointOne = [0 0 0];
+pointTwo = [0 0 0];
+pointThree = [0 0 0];
+refPointsVector = [pointThree, pointOne, pointThree, pointTwo, pointThree];
+timeGain = 0;
+distanceGain = 0;
 
-    deltaT = 5;
+rotValve = [0, [0]]; transValve1 = [0, [0]]; transValve2 = [0, [0]]; 
+baseVoltage = [0, [0]]; pulleyVoltage = [0, [0]];
+
+while i < numSims
+    i = i+1;
+    
+    isBaseSet = 0;
+    isRotSet = 0;
+    isTrans1Set = 0;
+    isTrans2Set = 0;
+    isPulleySet = 0;
+    
+    % set crane in random position
+    q1 =  rand(1) * (360);
+    q2 =  0.194;
+    q3 = 0.1 + rand(1) * (3 - 0.1);
+    q4 = 0.1 + rand(1) * (3 - 0.1);
+    pulleyMin = 800+rad2deg((q3+q4)/R);
+    q5 = pulleyMin + rand(1) * (3000 - pulleyMin);
+
+    %temp
+%     q1 =  0;
+%     q2 =  0.194;
+%     q3 = 0;
+%     q4 = 0;
+%     q5 = 5000;
+    
+    setCraneInPosition(table(q1, q2, q3, q4, q5));
+    writetable(table(q1, q2, q3, q4, q5), signalsFolder + "start_position"+num2str(i) + ".csv")
+    set_param('kran','simulationcommand', 'start');
+    set_param('kran','simulationcommand', 'pause');
+    pause(1)
+
     t = 0;
-    distribution = [0.8, 0.05, 0.05]; % step, ramp, sin
-    
-    
-    base = [0];
-    rot = [0];
-    trans1 = [0];
-    trans2 = [0];
-    pulley = [0];
-    lastValue = [0, 0, 0, 0, 0];
-    time = [0];
-    while t <= simTime
-        linT = linspace(Ts, deltaT, round(deltaT/Ts));
-        time = [time, t + linT];
-        t = t + deltaT; 
-        % base 
-        A = randi([-deltaT, deltaT]) * 40;
-        if abs(lastValue(1) + A) <= 250
-            randNum = rand(1);
-            if randNum < distribution(1) % step
-                base = [base, lastValue(1) + ones([1, round(deltaT/Ts)])*A];
-            elseif randNum < sum(distribution(1:2)) % ramp
-                base = [base, lastValue(1) + (linT)];
-            else % sin
-                base = [base, lastValue(1) + A*sin(linT)];
-            end
-        else
-            base = [base, zeros([1, round(deltaT/Ts)])];
-        end
-        lastValue(1) = base(end);
-        
-        
-        % pulley 
-        if t > 50
-            A = randi([-deltaT, deltaT]) * 30;
-        else
-            A = randi([0, deltaT]) * 30;
-        end
-        randNum = rand(1);
-        if abs(lastValue(2) + A) <= 180
-            if randNum < distribution(1) % step
-                pulley = [pulley, lastValue(2) + ones([1, round(deltaT/Ts)])*A];
-            elseif randNum < sum(distribution(1:2)) % ramp
-                pulley = [pulley, lastValue(2) + (linT)];
-            else % sin
-                pulley = [pulley, lastValue(2) + A*sin(linT)];
-            end
-            lastValue(2) = pulley(end);
-            
-        else
-            pulley = [pulley, zeros([1, round(deltaT/Ts)])];
-        end
-        
-        randNum = randi([1, 3]);
-        if randNum == 1
-            % rot 
-            A = (2*round(rand(1))-1) * 0.05;
-            if lastValue(3) + A*deltaT > 0 && lastValue(3) + A*deltaT < 0.9 
-                rot = [rot, ones([1, round(deltaT/Ts)])*A];
-                lastValue(3) = lastValue(3) + A*deltaT;
-            else
-                rot = [rot, zeros([1, round(deltaT/Ts)])];
-            end
-            trans1 = [trans1, zeros([1, round(deltaT/Ts)])];
-            trans2 = [trans2, zeros([1, round(deltaT/Ts)])];
-        elseif randNum == 2
-            % trans1
-            A = (2*round(rand(1))-1) * 0.05;
-            if lastValue(4) + A*deltaT > 0 && lastValue(4) + A*deltaT < 0.9 
-                trans1 = [trans1, ones([1, round(deltaT/Ts)])*A]
-                lastValue(4) = lastValue(4) + A*deltaT;
-            else
-                trans1 = [trans1, zeros([1, round(deltaT/Ts)])];
-            end
-            rot = [rot, zeros([1, round(deltaT/Ts)])];
-            trans2 = [trans2, zeros([1, round(deltaT/Ts)])];
-        elseif randNum == 3
-            % trans2
-            A = (2*round(rand(1))-1) * 0.05;
-            if lastValue(5) + A*deltaT > 0 && lastValue(5) + A*deltaT < 0.9 
-                trans2 = [trans2, ones([1, round(deltaT/Ts)])*A]
-                lastValue(5) = lastValue(5) + A*deltaT;
-            else
-                trans2 = [trans2, zeros([1, round(deltaT/Ts)])];
-            end
-            rot = [rot, zeros([1, round(deltaT/Ts)])];
-            trans1 = [trans1, zeros([1, round(deltaT/Ts)])];
+    simulationTime = 0;
+    baseAmp = 0; rotAmp = 0; trans1Amp = 0; trans2Amp = 0; pulleyAmp = 0;
+    start = 1;
+    while t < Tsim  
+
+        if ~start
+            q2 = rotCylinder.signals.values(:, 1);
+            q3 = transCylinder1.signals.values(:, 1);
+            q4 = transCylinder2.signals.values(:, 1);
+            q5 = pulleyMotor.signals.values(:, 1);
+            start = 0;
         end
 
+
+        if ~isBaseSet && rand(1) < eventProb
+            isBaseSet = 1;
+            baseAmp = (2*round(rand(1)) - 1) * randi([1, 4]) * 40;
+        else
+            if rand(1) < eventProb
+                baseAmp = 0;
+            end
+        end
+        hydraulicNum = randi([1, 3]);
+        rotAmp = 0; trans1Amp = 0; trans2Amp = 0;
+        if hydraulicNum == 1 && ~isRotSet
+            % turn on rot
+            isRotSet = 1;
+            if q2 < 0.2
+                rotAmp = 0.05;
+            elseif q2 > 0.7
+                rotAmp = -0.05;
+            else
+                rotAmp = (2*round(rand(1)) - 1) * 0.05;
+            end   
+
+        elseif hydraulicNum == 2 && ~isTrans1Set
+            % turn on trans1
+            isTrans1Set = 1;
+            if q3 < 1
+                trans1Amp =  0.05;        
+            elseif q3 > 2.5
+                trans1Amp = -0.05;
+            else
+                trans1Amp = (2*round(rand(1)) - 1) * 0.05;
+            end
+
+        elseif hydraulicNum == 3 && ~isTrans2Set
+            % turn on trans2
+            isTrans2Set = 1;
+            if q4 < 1
+                trans2Amp = 0.05;
+            elseif q4 > 2.5
+                trans2Amp = -0.05;
+            else
+                trans2Amp = (2*round(rand(1)) - 1) * 0.05;
+            end
+        end
+
+
+        if rand(1) < eventProb
+            if R * q5(end) - q3(end) - q4(end) < 2 && ~isPulleySet
+                pulleyAmp = randi([1, 4]) * 30;
+            elseif ~isPulleySet
+                pulleyAmp = (2*round(rand(1)) - 1) * randi([1, 4]) * 30;
+            end 
+            isPulleySet = 1;
+        else
+            if rand(1) < eventProb
+                pulleyAmp = 0;
+            end
+        end
+
+
+        % temp
+%             baseAmp = 180;baseAmp = 0; rotAmp = 0; trans1Amp = 0; trans2Amp = 0; pulleyAmp = 0;
+%             rotAmp = 0;
+%             trans1Amp = 0;
+%             trans2Amp = 0;
+%             pulleyAmp = 0;
+        set_param('kran/baseRef', 'Value', num2str(baseAmp));
+        set_param('kran/rotRef', 'Value', num2str(rotAmp));
+        set_param('kran/trans1Ref', 'Value', num2str(trans1Amp));
+        set_param('kran/trans2Ref', 'Value', num2str(trans2Amp));
+        set_param('kran/pulleyRef', 'Value', num2str(pulleyAmp));
+
+        set_param('kran','simulationcommand', 'continue')
+        while simulationTime < t + deltaT 
+            simulationTime = get_param('kran', 'SimulationTime');
+            pause(0.05);
+        end   
+
+
+        set_param('kran','simulationcommand', 'pause');
+        simulationTime = get_param('kran', 'SimulationTime');
+        t = simulationTime;
+        if abs(Tsim - t) < deltaT
+            break
+        end
+
+        pause(1);                       
     end
 
+    M = [baseMotor.time, baseRef.signals.values(:, 1), rotRef.signals.values(:, 1), ...
+         trans1Ref.signals.values(:, 1), trans2Ref.signals.values(:, 1), ...
+         pulleyRef.signals.values(:, 1)];
+    csvwrite(signalsFolder + "input_signals"+num2str(i) + ".csv", M);
+    done = 1;
+
+    set_param('kran','simulationcommand', 'stop');
+    pause(5);
 end
+
+

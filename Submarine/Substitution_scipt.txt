@@ -1,0 +1,4 @@
+with open('C:/Temp/Substitutions.txt') as f:
+    for l in f:
+        s = l.split()
+        editor.replace(s[0], s[1])

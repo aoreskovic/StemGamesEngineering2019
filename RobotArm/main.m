@@ -50,6 +50,7 @@ end
 clearvars -except teamFolder Ts lockName
 solutionFolder = teamFolder + "/Driving/Regulators/";
 readOnlyFolder = teamFolder + "/Driving/Ref/";
+Tsim = 250;
 
 % needed to start simulation
 rotValve = [0, [0]]; transValve1 = [0, [0]]; transValve2 = [0, [0]]; 

@@ -125,8 +125,8 @@ catch
 end
 
 % Set driving test parameters
-distanceGain = 5/12;
-timeGain = 20;
+distanceGain = 5/24;
+timeGain = 37.5;
 
 pointOne = [8 -5 0];
 pointTwo = [-7.5 -5 7.5];

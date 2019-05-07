@@ -6,3 +6,6 @@
 
 Comps = xlsread('CompressorVariants.xlsx', 'List1')
  save('CompVars', 'Comps')
+ 
+ Pipes = xlsread('PipeVariants.xlsx', 'List1')
+  save('PipeVars', 'Pipes')

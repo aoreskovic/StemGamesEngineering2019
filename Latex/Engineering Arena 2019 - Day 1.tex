@@ -1,13 +1,74 @@
 \documentclass{article}
 \usepackage{standalone}
 \usepackage{fancyhdr}
-\usepackage{graphicx}
-\graphicspath{{Images/Crane/}}
+\graphicspath{{./Images/Crane/}}
 \usepackage[e]{Template/gameshf}
 \usepackage{import}
 \usepackage{caption}
 \usepackage{amsfonts, amsmath, amsthm}
 \usepackage{makecell}
+\usepackage{lastpage}
+
+
+
+
+\hyphenpenalty=10000
+
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+%\usepackage[languagenames,fixlanguage,english]{babelbib}
+\usepackage[pdftex]{hyperref}
+%\usepackage{txfonts}
+\usepackage{subcaption}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{algorithm2e}
+\usepackage{geometry}
+\usepackage{pdflscape}
+
+
+
+%% User defined
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\funcA}{\mathfrak{a}}
+\newcommand{\funcB}{\mathfrak{b}}
+\newcommand{\funcC}{\mathcal{C}}
+\newcommand{\funcU}{\mathcal{U}}
+\newcommand{\funcV}{\mathcal{V}}
+\newcommand{\funcW}{\mathcal{W}}
+\newcommand{\simgrad}{\sym\nabla}
+\newcommand{\heps}{{h,\varepsilon}}
+\newcommand{\epsh}{{\varepsilon(h)}}
+\newcommand{\eps}{{\varepsilon}}
+\newcommand{\twoscale}{{\,\overset{2}{\rightharpoonup}\,}}
+\newcommand{\drtwoscale}{{\,\overset{dr-2}{\rightharpoonup}\,}}
+\DeclareMathOperator{\sym}{sym}
+\DeclareMathOperator{\dvg}{div}
+
+%\newtheorem{exmp}{Example}[section]
+%\newtheorem{note}{Note}
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{corollary}{Corollary}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{lemma}{Lemma}[theorem]
+
+
+
+% Source: 
+%https://tex.stackexchange.com/questions/117990/unicode-math-breaks-declaremathoperator
+\AtBeginDocument{
+	\let\div\relax
+	\DeclareMathOperator{\div}{div}
+}
+
+
 
 %opening
 \title{STEM games 2019}
@@ -91,17 +152,22 @@
 	\end{figure}
 	
 	\noindent
-	\textbf{Crane configuration has been sketched for $q_1 = 0 ^\circ$, $d_1 = 194mm$, $d_2 = 369mm$, $d_3 = 437.22mm$ and $q_2 = 0 ^\circ$. Base coordinate system is defined by red coordinate axes while red dot $L$ represents bottom of the load.} Limits of motor angles and cylinder offsets are given in Table \ref{tab:limits}.
+	\textbf{Crane configuration has been sketched for $q_1 = 0 ^\circ$, $d_1 = 
+	194mm$, $d_2 = 369mm$, $d_3 = 437.22mm$ and $q_2 = 0 ^\circ$. Base 
+	coordinate system is defined by red coordinate axes while red dot $L$ 
+	represents bottom of the load.} Limits of motor angles and cylinder offsets 
+	are given in Table \ref{tab:limits}.
 	
 	\begin{center}
 		\captionof{table}{Actuator position limits}\label{tab:limits}
 		\begin{tabular}{|| c || c c c c c ||}
 			\hline
-			Variable & $q_1$[^{\circ}] & $d_1$[m] & $d_2$[m] & $d_3$[m] &  $q_2$[^{\circ}]\\
+			Variable & $q_1[^{\circ}]$ & $d_1$[m] & $d_2$[m] & $d_3$[m] &  
+			$q_2[^{\circ}]$\\
 			\hline\hline
-			Minimum value & \times & 0 & 0 & 0 & 0 \\ 
+			Minimum value & $\times$ & 0 & 0 & 0 & 0 \\ 
 			\hline
-			Maximum value & \times & 0.8 & 3.5 & 3.5 & 20000 \\ 
+			Maximum value & $\times$ & 0.8 & 3.5 & 3.5 & 20000 \\ 
 			\hline
 		\end{tabular}
 	\end{center}
@@ -143,7 +209,8 @@
 		\captionof{table}{Direct kinematics configurations}\label{tab:direct}
 		\begin{tabular}{|| c || c c c c c ||}
 			\hline
-			Configuration & $q_1$[^{\circ}] & $d_1$[m] & $d_2$[m] & $d_3$[m] &  $q_2$[^{\circ}]\\
+			Configuration & $q_1[^{\circ}]$ & $d_1$[m] & $d_2$[m] & $d_3$[m] &  
+			$q_2[^{\circ}]$\\
 			\hline\hline
 			1. & 0 & 0.194 & 1 & 1 & 1500 \\ 
 			\hline
@@ -196,7 +263,8 @@
 		\captionof{table}{Electric motor parameters}\label{tab:el_params}
 		\begin{tabular}{|| c || c c c c c||}
 			\hline
-			Parameter & $R$[\Omega] & $L$[H] & $k$[V/s] & $J_{rot}$[kgm^2] & $n$\\
+			Parameter & R[$\Omega$] & $L$[H] & $k$[V/s] & $J_{rot}$[kgm$^2$] & 
+			$n$\\
 			\hline\hline
 			Base electric motor &  &  &  & &\\ 
 			\hline

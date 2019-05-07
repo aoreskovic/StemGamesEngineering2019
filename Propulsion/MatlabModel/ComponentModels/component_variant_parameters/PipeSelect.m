@@ -1,12 +1,9 @@
-function [extDiameter,thickness, conductivity] = Pipes(PipeID)
+function [extDiameter,thickness, conductivity] = PipeSelect(PipeID)
 % Pipes Pipe parameters based on selected PipeID
 %   Detailed explanation goes here
-load('PipeVariants.mat', 'Pipes') %load data for all turbines
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
-
+load('PipeVars.mat', 'Pipes') %load data for all turbines
 %input check
-assert(isscalar(PipeID), 'Compressor ID has to be scalar!')
+assert(floor(PipeID)==PipeID, 'Compressor ID has to be scalar!')
 assert(PipeID>0, 'Compressor ID negative!')
 assert(PipeID<=length(Pipes), 'Compressor ID does not exist!')
 

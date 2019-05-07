@@ -86,10 +86,10 @@ Sub.Fuel.Pump.dPcomb = 100000; %Pa, pressure difference between combustion chamb
 
 Q_min = qvFuelMax*Nmin; % l/h, minimal fuel pump volume flow rate
 h_pumpMax = hMax-kPipe*Q_min*Q_min; %m, maximal pump static head
-pmax = h_pumpMax*Sub.Fuel.Pump.density*Sub.Env.g + Sub.Env.pAtm ; %Pa, maximal pressure at which pump can work
+pGaugeMax = h_pumpMax*Sub.Fuel.Pump.density*Sub.Env.g; %Pa,maximalni pretlak 
 
-Sub.Env.maxDepth = floor((pmax-Sub.Env.pAtm-Sub.Fuel.Pump.dPcomb)/(Sub.Env.g*Sub.Env.density));
-Sub.Env.pMax = pmax; %maximal pressure at which fuel pump can operate
+Sub.Env.maxDepth = floor((pGaugeMax-Sub.Env.pAtm)/(Sub.Env.g*Sub.Env.density)*10)/10;
+Sub.Env.pGaugeMax = pGaugeMax; %maximal pressure at which fuel pump can operate
 
 
 

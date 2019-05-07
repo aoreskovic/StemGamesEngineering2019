@@ -1,6 +1,6 @@
 function [sub] = createSub(TurbID,PipeID, PipeLen, EvapPipeNr, SuperPipeNr, CompID, FuelPumpID)
 %fuel tank parameters
-Sub.Fuel.Tank.initMass = 500000; %kg, initial fuel mass
+Sub.Fuel.Tank.initMass = 50000000000; %kg, initial fuel mass
 
 %turbine parameters
 Sub.Turb.id = TurbID; %selected turbine

@@ -9,31 +9,31 @@ Sub.Turb.id = 16; %selected turbine
 
 %heat exchanger parameters
 Sub.HE.Pipe.id = 1; %selected heat exchanger pipe
-Sub.HE.Pipe.length = 2.15; %m, heat exchanger pipe length
-Sub.HE.Evap.nr = 23;  % number of tubes in evaporator
-Sub.HE.Super.nr = 34; % number of tubes in superheater section
+Sub.HE.Pipe.length = 4.77; %m, heat exchanger pipe length
+Sub.HE.Evap.nr = 89;  % number of tubes in evaporator
+Sub.HE.Super.nr = 30; % number of tubes in superheater section
 
 %compressor parameters
-Sub.Compr.id = 5; % selected compressor
+Sub.Compr.id = 16; % selected compressor
 
 %fuel pump parameters
-Sub.Fuel.Pump.id = 3; %selected fuel pump
+Sub.Fuel.Pump.id = 9; %selected fuel pump
 
 %initial guess
 Sub.Compr.Tret = 240; %°C, initial flue gas return temperature
 
 
 %% parameters which can be changed in gui during model execution
-Sub.FG.HE.Evap.FGfraction = 0.949643535090430; % fraction of total flue gas to evaporator
+Sub.FG.HE.Evap.FGfraction = 0.938569792280806; % fraction of total flue gas to evaporator
 
-Sub.Compr.N1 = 0.66; %-, fuel pump relative speed at which compressor load is L1
-Sub.Compr.L1 =0.41; %-, compressor load at fuel pump speed N1
-Sub.Compr.N2 = 1; %-, fuel pump relative speed at which compressor load is L2
-Sub.Compr.L2 = 0.6; %-, compressor load at fuel pump speed N2
+Sub.Compr.N1 = 0.5578; %-, fuel pump relative speed at which compressor load is L1
+Sub.Compr.L1 =0.84; %-, compressor load at fuel pump speed N1
+Sub.Compr.N2 = 0.95; %-, fuel pump relative speed at which compressor load is L2
+Sub.Compr.L2 = 1; %-, compressor load at fuel pump speed N2
 
 
 %% INPUTS
-pump_speed_vector = [ones(1,100)*0.66];
+pump_speed_vector = [ones(1,100)*0.84];
 depth = ones(1,length(pump_speed_vector))*50;
 
 %% calculation of additional submarine parameters

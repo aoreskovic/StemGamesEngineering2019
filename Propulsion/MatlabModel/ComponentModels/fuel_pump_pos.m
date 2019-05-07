@@ -1,4 +1,4 @@
-function [fPump, depth] = fuel_pump_pos(N, p, fPump, Env)
+function [fPump] = fuel_pump_pos(N, p, fPump, Env)
 %fuel_pump_pos Positive displacement pump
 %Inputs:
 %       - N [-] relative speed (0-1)
@@ -13,8 +13,8 @@ g=Env.g;
 roW = Env.density;
 roFuel = fPump.density;
 
-p_max = Env.pMax;%Pa, maximal possible pressure of submarine combustion chamber
-assert(p_max>p, 'pump pressure too big!')
+pGaugeMax = Env.pGaugeMax;%Pa, maximal possible pressure of submarine combustion chamber
+assert(pGaugeMax>p-Env.pAtm-fPump.dPcomb, 'pump pressure too big!')
 h_max = fPump.hMax;
 Q_max = fPump.qvMax;
 N_min = fPump.Nmin;

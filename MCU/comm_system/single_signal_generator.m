@@ -114,7 +114,7 @@ fprintf('Rs = %2.00f baud\n', fs/N);
 % Time scale
 t = 0:1/fs:(N/fs-1/fs);
 % carrier frequency
-fc = 12.8e3;
+fc = 36e3;
 fprintf('fc = %2.00f Hz\n', fc);
 
 modulated_output = [];

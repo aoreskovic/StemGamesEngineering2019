@@ -36,7 +36,7 @@ for ii=1:Ncoords
 end
 
 datasetFile = fopen('datasets/ofdm_carrier_additional.txt','w');
-fprintf(datasetFile,'%s',dataset_string);
+fprintf(datasetFile,'%s',dataset_additional_string);
 fclose(datasetFile);
 
 dataset_additional_tmp = double(dataset_additional_string);

@@ -130,8 +130,8 @@ pipe.thickness = thickness;
 pipe.length =Lchosen;
 Evap.nr = nEvapTubes;
 Super.nr = nSuperTubes;
-% conductivity
-[AinternalEvap,AwallEvap, dInternal]= exchanger_params(pipe,Evap);
+
+[AinternalEvap,AWallEvap, dInternal]= exchanger_params(pipe,Evap);
 
 Steam.HE.Evap.Tsteam = thetaSat; %°C, steam saturation temperature (evaporator temperature)
 Steam.HE.Evap.hIn = h4; %kJ/kg, water enthalpy at evaporator inlet

@@ -162,7 +162,7 @@
 	
 	\section{Tasks} \label{sec:tasks}
 	
-	The system for which you have to design a controller is the crane shown in the Figure \ref{fig:isometry}. The crane consists of a base, two booms(in some crane configurations \textit{Boom 1} is also called \textit{Mast}), two telescopic beams, three hydraulic cylinders, two electric motors and pulley with belt system. Masses of each part of the crane are listed in Table \ref{tab:crane_tab}.\textbf{ For the sake of simplicity and overall system dynamics, load has the mass $m_{load} = 800.59 kg$}.
+	The system for which you have to design a controller is the crane shown in the Figure \ref{fig:isometry}. The crane consists of a base, two booms(in some crane configurations \textit{Boom 1} is also called \textit{Mast}), two telescopic beams, three hydraulic cylinders, two electric motors and pulley with belt system. The purpose of the crane is to load the submarine with goods and equipment which is to be transported to underwater habitats.Masses of each part of the crane are listed in Table \ref{tab:crane_tab}.\textbf{ For the sake of simplicity and overall system dynamics, load has the mass $m_{load} = 800.59 kg$}.
 	
 	\begin{figure}[h!]
 		\centering
@@ -202,6 +202,10 @@
 	\end{figure}
 	
 	\subsection{Kinematics}
+
+	Kinematics model of the crane is important to ensure that the cargo is 
+	precisely placed into the submarine which delivers it to underwater 
+	habitats.
 	
 	Crane configuration and dimensions are shown in Figure \ref{fig:crane_side}, Figure \ref{fig:crane_top} and Figure \ref{fig:crane_back}. Figure \ref{fig:cylinder_conf} shows cylinder configuration with corresponding dimensions given in Table \ref{tab:cylinder_tab}. Load is shown in Figure \ref{fig:load}.
 	
@@ -414,7 +418,7 @@
 
 \subsection{Introduction}
 
-For fully functional operation, robot arm is equipped with 
+For fully functional operation, the crane is equipped with 
 lot of computer based subsystems and electronic devices which operate on DC 
 voltage. To ensure their proper operation the, DC voltage has to be stable and 
 without noise. To ensure stable DC voltage, device on Fig. 

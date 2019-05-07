@@ -1,40 +1,29 @@
 function y = trans1(t, coordNum, pos, vel, load_pos, load_vel, top_pos, top_vel)
+% t: time
+% coordNum: index of a point you are currently targeting
+% pos: measured positions of actuators
+% vel: measured velocities of actuators
+% load_pos: measured load position
+% load_vel: measured load velocity
+% top_pos: measured position of the top of the crane
+% top_vel: measured velocity of the top of the crane
+% y: referent valve opening [m]
 
-% Hardcode references
-actuatorRefOne = [0, 0.7, 3.4, 3.4, 14850];
-actuatorRefTwo = [-135, 0.415, 3.4, 3.4, 11050];
-actuatorRefThree = [-90, 0.8, 0, 0, 3700];
-actuatorRefVector = [actuatorRefThree; actuatorRefOne,; actuatorRefThree; actuatorRefTwo; actuatorRefThree];
 
-baseRef = actuatorRefVector(coordNum, 1);
-rotRef = actuatorRefVector(coordNum, 2);
-trans1Ref = actuatorRefVector(coordNum, 3);
-trans2Ref = actuatorRefVector(coordNum, 4);
-pulleyRef = actuatorRefVector(coordNum, 5);
+% bufferTrans1 is the global buffer used for this function.
+% Example: a = bufferTrans1[4] assigns 4th element of the list to variable a
 
-% Measurement extraction
-rotPos = pos(1);
-trans1Pos = pos(2);
-trans2Pos = pos(3);
-baseAngle = pos(4);
-pulleyAngle = pos(5);
 
-rotVel = vel(1);
-tran1Vel = vel(2);
-trans2Vel = vel(3);
-baseVel = vel(4);
-pulleyVel = vel(5);
-
-deltaRot = rotRef - rotPos;
-if (abs(deltaRot) > 0.005)
-    y = 0;
-else
-    deltaTrans1 = trans1Ref - trans1Pos;
-    if(abs(deltaTrans1) <= 0.005)
-        y = 0;
-    else
-        y = 0.005*sign(deltaTrans1);
-    end
-end
-
+% We recommend you to hardcode all configuration points you have to go through 
+% (points you got in inverse kinematics).
+% Example:
+% actuatorRefOne = [1, 2, 3, 4, 5];
+% actuatorRefTwo = [1, 2, 3, 4, 5];
+% actuatorRefThree = [1, 2, 3, 4, 5];
+% actuatorRefVector = [actuatorRefThree; 
+% 		       actuatorRefOne; 
+% 		       actuatorRefThree; 
+% 		       actuatorRefTwo; 
+% 		       actuatorRefThree];
+	y = 0;
 end

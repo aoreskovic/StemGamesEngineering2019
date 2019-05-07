@@ -47,7 +47,12 @@ if isSimulationActive(solutionFolder, readOnlyFolder, "result.txt")
 end  
 
 %% TASK 3 DRIVING
-clearvars -except teamFolder Ts lockName
+clear all;
+
+teamFolder = pwd + "/InputFiles";
+Ts = 0.05;
+lockName = string(java.net.InetAddress.getLocalHost.getHostName);
+
 solutionFolder = teamFolder + "/Driving/Regulators/";
 readOnlyFolder = teamFolder + "/Driving/Ref/";
 Tsim = 250;

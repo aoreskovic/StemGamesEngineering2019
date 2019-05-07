@@ -1,0 +1,18 @@
+Successfully loaded results.
+
+Not a single point has been reached.
+
+Test duration: 0s
+Successfully loaded results.
+
+Not a single point has been reached.
+
+Test duration: 8.2s
+Successfully loaded results.
+
+Test is finished up to position 1.
+
+Test duration: 57.55s
+Duration 0 to 1: 33.75s
+
+Performance cost: 8978.2142

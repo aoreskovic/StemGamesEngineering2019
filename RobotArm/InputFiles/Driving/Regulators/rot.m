@@ -1,5 +1,8 @@
 function y = rot(t, coordNum, pos, vel, load_pos, load_vel, top_pos, top_vel)
 
+global bufferRot;
+
+a = bufferRot(2);
 % Hardcode references
 actuatorRefOne = [0, 0.7, 3.4, 3.4, 14850];
 actuatorRefTwo = [-135, 0.415, 3.4, 3.4, 11050];

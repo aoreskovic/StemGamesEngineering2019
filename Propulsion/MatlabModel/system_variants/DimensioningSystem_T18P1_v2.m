@@ -3,15 +3,16 @@ clear all
 %Proracun koji se ocekuje od teamova
 %Odabrani parametri:
 
-turbine_nr = 16; %redni broj odabrane turbine
+turbineID = 16; %redni broj odabrane turbine
 thetaFG_evap_in = 750; %temperatura dimnih plinova na ulazu u isparivac
 thetaFG_evap_out = 215; %temperatura dimnih plinova na izlazu iz isparivaca
-pipe_nr = 1;
+pipeID = 1;
 wFGevapReq = 6; %m/s željena brzina strujanja dimnih plinova u isparivacu
 NpumpNom = 0.8; %željena nominalna brzina pumpe
 wFGsuperReq = 1.2; %m/s željena brzina plinova u pregrijacu
 theta_super_out = 250; %željena temperatura dimnih plinova na izlazu iz pregrija?a
-
+PumpID = 9;
+CompressorID = 16;
 
 %zadani parametri
 etaP = 0.75; %efikasnost pumpe
@@ -26,7 +27,7 @@ ro_etanol = 789;
 
 
 
-[Power, p_evap, T1_ref, p_cond, K_stodola, a_eta, b_eta, c_eta, qmd_ref, a_turb, eta_nom] = Turbines(turbine_nr);
+[Power, p_evap, T1_ref, p_cond, K_stodola, a_eta, b_eta, c_eta, qmd_ref, a_turb, eta_nom] = Turbines(turbineID);
 p1 = p_evap;
 p2 = p_cond;
 qmd = qmd_ref;
@@ -58,14 +59,14 @@ qnFGevap = Fi_evap/(CnpFG_evap_in*thetaFG_evap_in-CnpFG_evap_out*thetaFG_evap_ou
 thetaSat = XSteam('Tsat_p', p1);
 LMTD_evap = (thetaFG_evap_in-thetaFG_evap_out)/log((thetaFG_evap_in-thetaSat)/(thetaFG_evap_out-thetaSat));
 k_A_evaporator = Fi_evap*1000/LMTD_evap;
-%%
+
 %mean flue gas volume flow
 M = H20ratio*M_H20 + CO2ratio*M_CO2;
 thetaEvapMean = (thetaFG_evap_in + thetaFG_evap_out)/2;
 qv_evap =qnFGevap * R * (thetaEvapMean+273.15) /pFG;
 
 %seected evaporator parameters:
-[extDiameter,thickness, conductivity, max_W] = Pipes(pipe_nr); %odabir cijevi
+[extDiameter,thickness, conductivity] = PipeSelect(pipeID); %odabir cijevi
 
 
 AEvapFG = qv_evap/wFGevapReq; %m^2 - površina poprecnog presjeka svih cijevi
@@ -73,8 +74,7 @@ intDiameter = extDiameter-2*thickness;
 ATube = intDiameter^2*pi()/4;
 nEvapTubes = round(AEvapFG/ATube) %number of evaporator tubes
 [AlfaTevap, wFGevap] = alfaTube(qnFGevap*H20ratio, CO2ratio*qnFGevap, thetaEvapMean, nEvapTubes*ATube, intDiameter, pFG,2 ,M);
-assert(wFGevap <= max_W, 'brzina prevelika u isparivacu')
-%%
+
 kEvap = overallHTC(AlfaTevap, AlfaEvap, intDiameter, extDiameter, conductivity);
 AWallEvap = k_A_evaporator/kEvap;
 AWallEvapTube = AWallEvap/nEvapTubes;
@@ -121,7 +121,7 @@ while abs(LEvap-LSuper)>0.1
     LSuper = AWallSuperTube/(extDiameter*pi()) %duljina isparivaca
     theta_super_out=theta_super_out+(LSuper-LEvap)/LEvap;
 end
-%%
+
 
 Lchosen = round((LSuper+LEvap)/2, 2);
 evapRatio = qnFGevap/(qnFGevap+qnFGsuper);
@@ -154,7 +154,7 @@ HE.Pipe.dExt = extDiameter;
 %         AwallEvap, AinternalEvap, dInternal, extDiameter, conductivity, ...
 %         AlfaEvap, pFG, Lchosen);
 [HE, FG, Steam] = Evaporator(HE, FG, Steam, pFG);
- %%
+ 
  
 %[AinternalSuper,AwallSuper, ~]= exchanger_params(extDiameter,thickness, ...
  %   Lchosen, nSuperTubes);
@@ -181,7 +181,7 @@ str2.qnCO2 = CO2ratio*qnFGsuper;
 [theta_ret] = flueGasMix(str1, str2);
 
 
-%%
+
 %Combustion
 %proracun odnosa izme?u povratnih DP i svježih DP
 heating_value = 1366940; %kJ/kmol, ethanol lower heating value at 0°C
@@ -194,7 +194,29 @@ qnFGret = (qnFGevap+qnFGsuper)-qnFGnew;
 qnFuel = qnFGnew/5; 
 Mfuel = 2*12+6+16;
 qmFuel = qnFuel*Mfuel;
-QpumpMax = qmFuel/ro_etanol*3600*1000/0.8;
+Qpump = qmFuel/ro_etanol*3600*1000;
+
+
+[qvFuelMax,hMax, Nmin, kPipe] = FuelPumps(PumpID);
+assert(Qpump<qvFuelMax, 'odabrana preslaba pumpa')
+assert(Qpump>qvFuelMax*Nmin, 'odabrana prejaka pumpa')
+NpumpNom = Qpump/qvFuelMax;
+
+
+qmFGret_kg_h = qnFGret*M*3600;
+
+
+[CompqmMin,CompqmMax] = Compressors(CompressorID);
+assert(qmFGret_kg_h<CompqmMax, 'odabrana preslab kompresor')
+assert(qmFGret_kg_h>CompqmMin, 'odabrana prejak kompresor')
+
+
+L_compr = (qmFGret_kg_h-CompqmMin)/(CompqmMax-CompqmMin);
+
+
+qmFGret=qnFGret*M*3600;
+%Results = table(turbineID, Power, pipeID, nEvapTubes, LEvap, AlfaTevap, wFGevap, nSuperTubes, LSuper, AlfaTsuper, wFGsuper, Lchosen, evapRatio, qmFGret, qmFuel, Qpump)
+Res_params = table(turbineID, pipeID, Lchosen, nEvapTubes, nSuperTubes, evapRatio, PumpID, NpumpNom, Qpump, CompressorID, L_compr);
 
 
 %%
@@ -203,9 +225,9 @@ QpumpMax = qmFuel/ro_etanol*3600*1000/0.8;
 sub.FG.HE.Evap.Tin = thetaFG_evap_in; %temperatura dimnih plinova na ulazu u isparivac
 sub.FG.HE.Super.Tin = sub.FG.HE.Evap.Tin;
 sub.HE.Pipe.id = 1; %selected heat exchanger pipe
-pipe_nr=sub.HE.Pipe.id;
+pipeID=sub.HE.Pipe.id;
 
-sub.Turb.id = turbine_nr; %selected turbine
+sub.Turb.id = turbineID; %selected turbine
 
 
 NpumpNom = 0.8; %željena nominalna brzina pumpe
@@ -428,5 +450,5 @@ Mfuel = 2*12+6+16;
 qmFuel = qnFuel*Mfuel;
 Qpump = qmFuel/789*3600*1000;
 qmFGret=qnFGret*M*3600;
-Results = table(turbine_nr, Power, pipe_nr, nEvapTubes, LEvap, AlfaTevap, wFGevap, nSuperTubes, LSuper, AlfaTsuper, wFGsuper, Lchosen, evapRatio, qmFGret, qmFuel, Qpump)
-Res_params = table(turbine_nr, pipe_nr, Lchosen, nEvapTubes, nSuperTubes, evapRatio,qmFGret, Qpump);
+Results = table(turbineID, Power, pipeID, nEvapTubes, LEvap, AlfaTevap, wFGevap, nSuperTubes, LSuper, AlfaTsuper, wFGsuper, Lchosen, evapRatio, qmFGret, qmFuel, Qpump)
+Res_params = table(turbineID, pipeID, Lchosen, nEvapTubes, nSuperTubes, evapRatio,qmFGret, Qpump);

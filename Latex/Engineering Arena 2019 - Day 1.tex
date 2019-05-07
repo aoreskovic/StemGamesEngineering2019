@@ -1,14 +1,14 @@
 \documentclass{article}
-\usepackage{standalone}
+%\usepackage{standalone}
 \usepackage{fancyhdr}
-\graphicspath{{./Images/Crane/}}
-\usepackage[e]{Template/gameshf}
+
+
 \usepackage{import}
 \usepackage{caption}
 \usepackage{amsfonts, amsmath, amsthm}
 \usepackage{makecell}
 \usepackage{lastpage}
-
+\usepackage{moresize}
 
 
 
@@ -25,9 +25,9 @@
 \usepackage{subcaption}
 \usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 \usepackage{algorithm2e}
-\usepackage{geometry}
 \usepackage{pdflscape}
 
+\usepackage[e]{Template/gameshf}
 
 
 %% User defined
@@ -59,7 +59,11 @@
 %\newtheorem{definition}[theorem]{Definition}
 %\newtheorem{lemma}{Lemma}[theorem]
 
+\headheight 40pt              %% put this outside
+\headsep 10pt                 %% put this outside
 
+
+\graphicspath{{./Images/Crane/}}
 
 % Source: 
 %https://tex.stackexchange.com/questions/117990/unicode-math-breaks-declaremathoperator
@@ -78,7 +82,45 @@
 \date{}
 
 \begin{document}
-	\maketitle
+	%\maketitle
+	
+	\thispagestyle{empty}
+	\newpage
+	\thispagestyle{empty}
+	\vspace*{1cm}
+	\begin{center}
+		
+		\textbf{\HUGE{STEM Games 2019}}\\
+		\vspace*{0.4cm}
+		\textbf{\Huge{Engineering Arena}}\\
+		\vspace*{2cm}
+		\includegraphics[width=0.2\textwidth]{logos/e} \\
+		\vspace*{1.5cm}
+		% TODO naslov
+		\huge{LET THERE BE LIGHT}
+		
+		\medskip
+		
+		\normalsize{a problem by}
+		
+		\medskip
+		
+		Dominik Barbarić \\
+		Karla Draženović \\
+		Nenad Ferdelji \\
+		Ante Orešković \\
+		Ivan Pavić \\
+		Vedra Slapničar \\
+		Danijel Zadravec \\
+		Marko Švec 
+		
+		\vspace{6cm}
+		
+		
+		% TODO Neki mini tekst?
+		\normalsize{}
+	\end{center}
+	
 	
 	\section{Introduction}
 	

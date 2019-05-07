@@ -10,7 +10,7 @@ static const short adc_data[] = {
 };
 
 #define N 20
-#define Fc 12800.0
+#define Fc 36000.0
 #define Fs 192000.0
 
 #define SIGNAL_SIZE (sizeof(adc_data) / sizeof(short))

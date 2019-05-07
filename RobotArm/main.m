@@ -42,12 +42,17 @@ end
 if isSimulationActive(solutionFolder, readOnlyFolder, "result.txt")
     lockTask(readOnlyFolder, lockName);
     run('kran/simulation_params.m')
-    run('Identification/test_identification.m')
+    %run('Identification/test_identification.m')
     unlockTask(readOnlyFolder);
 end  
 
 %% TASK 3 DRIVING
-clearvars -except teamFolder Ts lockName
+clear all;
+
+teamFolder = pwd + "/InputFiles";
+Ts = 0.05;
+lockName = string(java.net.InetAddress.getLocalHost.getHostName);
+
 solutionFolder = teamFolder + "/Driving/Regulators/";
 readOnlyFolder = teamFolder + "/Driving/Ref/";
 Tsim = 250;

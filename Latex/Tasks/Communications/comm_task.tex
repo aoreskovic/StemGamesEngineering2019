@@ -20,7 +20,7 @@
 
 \begin{document}
 \section*{Task 1}
-An underwater habitat controls a remotely-operated submarine by sending the coordinates that the submarine has to traverse in sequence. The 3-dimensional coordinates are organized into triplets, as \textsf{xxx.xxx,yyy.yyy,zzz.zzz;} . Each digit and separating characters ("\textsf{,}" and "\textsf{;}") are encoded as an 8-bit ASCII char. Triplets are concatenated and sent sequentially. This datastream is the input to the modulating system of the transmitter.
+An underwater habitat controls a remotely-operated submarine by sending the coordinates that the submarine has to traverse in sequence. The 3-dimensional coordinates are organized into triplets, as \textsf{xxx.xxx,yyy.yyy,zzz.zzz;} . Each digit and separating characters ("\textsf{,}" and "\textsf{;}") are encoded as an 8-bit ASCII character. Triplets are concatenated and sent sequentially. This datastream is the input to the modulating system of the transmitter.
 
 The transmitter first organizes the input stream into packets. Each packet consists of a preamble, header, data, CRC-16 hash, and a postamble. The frame structure is illustrated in Figure \ref{fig:packet}.
 
@@ -46,15 +46,15 @@ The transmitter first organizes the input stream into packets. Each packet consi
 \draw (postamb.south east) -- +(0,-1cm);
 
 \end{tikzpicture}
-\caption{Struktura paketa}
+\caption{Packet structure}
 \label{fig:packet}
 \end{figure}
 
-A preambule is a predefined 64-bit sequence in the form \textsf{0xa5a5a5a5a5a5a5a5}. The postamble is a bitwise-negative of the preamble. Header is an 8-bit word containing the byte-length of the data section of the packet. The shortest size of the data section of the frame is 64 bits, while the largest is 248 bits. The data section is always byte-aligned; i.e. its length is always a multiple of 8 bits.
+Preamble is a predefined 64-bit sequence \textsf{0xa5a5a5a5a5a5a5a5}. Postamble is a bitwise-inverse of the preamble. Header is an 8-bit word containing byte-length of the data section in the packet. The shortest size of the data section is 64 bits, while the largest is 248 bits. The data section is always byte-aligned; i.e. its length is always a multiple of 8 bits.
 
 All the words are stored in packets in big endian notation. The packets are forwarded further in the transmitter chain sequentially, without a guard interval.
 
-The binary sequence of the generated packets are brought to a QPSK modulator. Its constellation is represented by Figure \ref{fig:qpsk}.
+The binary sequence of the generated packets is brought to a QPSK modulator. Its constellation is represented by Figure \ref{fig:qpsk}.
 
 \begin{figure}[h!]
 \centering
@@ -82,7 +82,7 @@ table[meta=label]{
 \label{fig:qpsk}
 \end{figure}
 
-The QPSK-modulated symbols are transposed to carrier frequency $f_c = 12.8 \,\textrm{kHz}$ and transmitted by a hydrophone. Transmitter data-rate is 19.2 kbit/s. At the receiving end, the receiver of the submarine is depicted by a block diagram in Figure \ref{fig:task1}.
+The QPSK-modulated symbols are transposed to carrier frequency $f_c = 36 \,\textrm{kHz}$ and transmitted by a hydrophone. Transmitter data-rate is 9.6 kbit/s. At the receiving end, the receiver aboard a submarine is depicted by a block diagram in Figure \ref{fig:task1}.
 
 \begin{figure}[h!]
 \centering
@@ -92,7 +92,6 @@ The QPSK-modulated symbols are transposed to carrier frequency $f_c = 12.8 \,\te
 \end{figure}
 
 The ADC of the receiving hydrophone operates at a sampling frequency of 192 kSps. An ideal low-pass filter has a cut-off frequency of 96 kHz.
-ADC sustav prijemnog hidrofona ima frekvenciju uzorkovanja 192 kSps. Granična frekvencija idealnog niskopropusnog filtra je 96 kHz.
 
 You are required to implement the digital processing system of the receiver, to demodulate and decode information from the received ultrasonic signal.
 
@@ -105,7 +104,7 @@ Your solution is a C or C++ code implementing the receiver's digital processing 
 	\item[radio.c / cpp] Implements all the routines described further in the text.
 	\item[main.c / cpp] Loads the input data, calls the routines from \textsf{radio.c / cpp}, and outputs decoded data to stdout in the original format.
 \end{description}
-Should your solution require more source files, you must provide a Makefile that compiles the rest of the source files.
+Should your solution use more source files, you must provide a \textsf{Makefile} that compiles the rest of the source files.
 
 Your radio.c / cpp file must implement the following set of functions:
 \begin{description}
@@ -117,8 +116,6 @@ Your radio.c / cpp file must implement the following set of functions:
 	\,\\ Converts \textsf{length} 8-bits words, as output by the previous function, into a bytestream. A pointer to the beginning of the bytestream is returned.
 	\item[void frame\_sync(char **bytestream, int length)]
 	\,\\ Moves the pointer \textsf{*bytestream} to the beginning of the first detected frame. \textsf{length} is the length of the bytestream.
-	\item[void frame\_step(char **bytestream, int frame\_length)]
-	\,\\ Moves the pointer \textsf{*bytestream} by \textsf{frame\_length}
 	\item[void frame\_decoder(char *bytestream, char **data)]
 	\,\\ Decodes the data from a single frame that starts at the pointer \textsf{*bytestream}. Data is stored to \textsf{*data}.
 \end{description}
@@ -131,15 +128,11 @@ You are provided with some helper files:
 	\item[api.o]
 	\,\\ The compiled API described in \textsf{api.h}.
 \end{description}
-Vaše rješenje je C ili C++ kod koji implementira prijemnik zadanog signala. Kod se izvodi kao samostalna aplikacija, a izvorni kod se sastoji od minimalno dvije datoteke:
-\begin{description}
-	\item[radio.c / cpp] Implementira sve rutine navedene u nastavku zadatka.
-	\item[main.c / cpp] Učitava zadane datoteke i poziva rutine iz radio.c /cpp
-\end{description}
 
-\section{Task 2}
 
-Along the submarine's trajectory information, the habitat and the submarine exchange location data on debris scattered around the sea. This data is transmitted in a separate data stream from the trajectory coordinates, but have the same triplet format, as that used in Task 1. The data is split in the same types of packets as in Task 1. The resulting bitstream is then spread into 4 QPSK subcarriers, as depicted in Figure \ref{fig:spread}.
+\section*{Task 2}
+
+Along the submarine's trajectory information, the habitat and the submarine exchange location data on debris scattered around the sea. This data is transmitted in a separate data stream from the trajectory coordinates, but has the same triplet format, as the data from Task 1. The data is packaged in the same manner as in Task 1. The resulting bitstream is then spread into 4 QPSK subcarriers, as depicted in Figure \ref{fig:spread}.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.7\textwidth]{spread.png}
@@ -147,7 +140,7 @@ Along the submarine's trajectory information, the habitat and the submarine exch
 	\label{fig:spread}
 \end{figure}
 
-The obtained QPSK carriers are multiplexed into OFDM that consists of a total of 10 subcarriers. These are organized as depicted in a DFT spectrum in Figure \ref{fig:dft}.
+The obtained QPSK carriers are multiplexed into OFDM that consists of a total of 10 subcarriers. These are organized as depicted by DFT spectrum in Figure \ref{fig:dft}.
 \begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}
@@ -195,13 +188,13 @@ The receiver code from Task 1 has to be modified to work with an OFDM carrier, a
 The \textsf{ofdm\_carrier.raw} file is given. It contains the digitized signal from the ADC, recorded in 32-bit float format.
 
 \subsection*{Implementation}
-You should update your radio.c / cpp and main.c / cpp to implement the new features required for Task 2. Your radio.c / cpp file should implement the following additional functions:
+You should update your \textsf{radio.c / cpp} and \textsf{main.c / cpp} to implement the new features required for Task 2. Your \textsf{radio.c / cpp} file should implement the following additional functions:
 \begin{description}
 	\item[double *ofdm\_demodulator(complex *input, int *carrier\_idx, int carrier\_no, char **data)]
-	\,\\ Demultiplexes the additional data stream from the OFDM carrier given in \textsf{input}, and stores it into \textsf{*data}. The input signal is in baseband, and occupies the entire spectrum. \textsf{carrier\_idx} is a list of DFT bins that contain the additional data stream. \textsf{carrier\_no} is the length of \textsf{carrier\_idx} array.
+	\,\\ Demultiplexes the \underline{additional data stream} from the OFDM carrier given in \textsf{input}, and stores it into \textsf{*data}. The input signal is in baseband in the original sample rate. \textsf{carrier\_idx} is a list of DFT bins that contain the additional data stream. \textsf{carrier\_no} is the length of \textsf{carrier\_idx} array.
 \end{description}
 
-\section{Treći zadatak}
+\section*{Task 3}
 An algorithm for calculating the CRC-16 hash of an input stream should be added to solutions for both tasks. CRC-16 verification should first be implemented as a separate function, and then integrated into the receiver chain. The modification is presented in Figure \ref{fig:task3}.
 
 \begin{figure}[h!]
@@ -214,7 +207,7 @@ An algorithm for calculating the CRC-16 hash of an input stream should be added 
 The CRC-16 hash in data frames is calculated using the CRC-CCITT algorithm, with an initial register state \textsf{0xffff}.
 
 \subsection*{Implementation}
-Your radio.c / cpp code must implement the following additional functions:
+Your \textsf{radio.c / cpp} code must implement the following \underline{additional} functions:
 \begin{description}
 	\item[char crc16\_check(char* bitstream, int length)]
 	\,\\ Returns CRC-16 hash of the given \textsf{bitstream}, of length \textsf{length}.
@@ -222,10 +215,10 @@ Your radio.c / cpp code must implement the following additional functions:
 	\,\\ Decodes the data from a single frame that starts at the pointer \textsf{*bytestream}. Data is stored to \textsf{*data}. The return value specifies if the integrity of the decoded frame is preserved.
 \end{description}
 
-\section{Documentation}
+\section*{Documentation}
 
-Provide a documentation that describes your solution for the receiving chain. Back your implementation by describing the mathematical background of your processing chain. Document the datasets you used to evaluate your solution.
+Provide documentation that describes your solution for the receiving chain. Back your implementation by describing the mathematical background of your processing chain. Document the datasets you used to evaluate your solution.
 
-The documentation will not be graded, but it can help the graders in understanding your approach and validating the theory behind your solution.
+The documentation will not be graded, but it can help mentors in understanding your approach and validating the theory behind your solution.
 
 \end{document}

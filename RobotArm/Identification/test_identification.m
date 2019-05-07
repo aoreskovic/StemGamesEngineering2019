@@ -68,10 +68,10 @@ for i=1:numTestCases
            throw(exception); 
         end
     catch
-        fprintf(outputFileId, "Error loading file for task " + num2str(i) + "!" + newline + ...
+        fprintf(outputFileId,"Error loading file for task " + num2str(i) + "!" + newline + ...
                 "Check again for dimensions and csv format! Input has to have 6 columns: " ...
                 + newline + "    time, baseVoltage, rotValve," + ...
-                " transValve1, transValve2 and pulleyVoltage, respectively!!");
+                " transValve1, transValve2 and pulleyVoltage, respectively!!" + newline);
         continue
     end
 
@@ -107,7 +107,7 @@ for i=1:numTestCases
     try
         sim(kranFile + ".slx");
     catch
-        fprintf(outputFileId, "Simulation failed! Check for actuator limits!");
+        fprintf(outputFileId, "Simulation failed! Check for actuator limits!" + newline);
         continue
     end
 

@@ -409,15 +409,12 @@
 	file in task folder. If you have any questions regarding submission of the 
 	task, ask your mentors.
 	
-	
-	
-
-
+\newpage
 \section{DC voltage power supply}
 
 \subsection{Introduction}
 
-For fully functional operation, submarine is equipped with 
+For fully functional operation, robot arm is equipped with 
 lot of computer based subsystems and electronic devices which operate on DC 
 voltage. To ensure their proper operation the, DC voltage has to be stable and 
 without noise. To ensure stable DC voltage, device on Fig. 
@@ -435,8 +432,10 @@ In this task, your job is to:
 \end{itemize}
 
 \textbf{Device specifications.} Device specifications are provided with 
-the following table. In each task you have to ensure that the values specified
-in the table correspond to the values which will be measured in simulation. 
+the following table. In the first and the second task you have to choose device 
+components. You have to ensure that your choice guarantees that the 
+device operating parameters are within the requirements specified in the 
+table \ref{tab:spec}.
 
 \begin{table}[h!]
 	\hyphenpenalty 10000
@@ -448,9 +447,23 @@ in the table correspond to the values which will be measured in simulation.
 		Output voltage ($U_{out}$)& $I_{out} = 1$ A & $10$ ($\pm5$) \% & V \\ 
 		\hline
 		Output current ($I_{out}$) & $U_{in} = 330$ Vpp & $1.0$ & A \\ \hline
-		Ripple rejection & (12.8 kHz) & $78$ & dB \\ \hline
+		Ripple rejection & (36 kHz) & $78$ & dB \\ \hline
 	\end{tabularx}
 \end{table}
+
+\begin{sidewaysfigure}[h!]
+	\centering
+	\includegraphics[width=\linewidth]{reg.png}
+	\caption{DC voltage power supply device schematic}
+	\label{fig:schematic}
+\end{sidewaysfigure}
+
+\clearpage
+
+\subsection{Finding the proper choice of components}
+\label{ele:task:1}
+As it can be seen from the table \ref{tab:elems}, some components are not 
+determined. 
 
 \begin{table}[h!]
 	\hyphenpenalty 10000
@@ -467,18 +480,10 @@ in the table correspond to the values which will be measured in simulation.
 		$C_1$ & Capacitance & $10$ & mF \\ \hline
 	\end{tabularx}
 \end{table}
-
-\newpage
-
-\subsection{Finding the proper choice of components}
-\label{ele:task:1}
-As it can be seen from the table \ref{tab:elems}, some components are not 
-determined. In this subtask you need to specify resistor $R_1$ and diode $D_2$. 
-Additionally, you have to determine positions of the negative and the positive 
-input of the amplifier $A_1$. Based on the regulators operating values 
-provided with table \ref{tab:spec} you have to determine specifications for 
-the resistor $R_1$ and diode $D_2$. You have to find the components from the 
-DigiKey Electronics product database. 
+In this subtask you need to specify resistor $R_1$ and diode $D_2$. Based on 
+the device operating values provided with table \ref{tab:spec} you have to 
+determine specifications for the resistor $R_1$ and diode $D_2$. You have to 
+find the components from the DigiKey Electronics product database. 
 
 There are, however, constraints for your choice of components:
 \begin{itemize}
@@ -492,12 +497,12 @@ Your choice is graded in several ways:
 	\item correct component voltage, power and current ratings,
 	\item correct component footprint.
 \end{itemize}
-As a result, you have to provide two DigiKey part numbers for resistor and 
+As a result, you have to provide part number for resistor and part number for
 diode, respectively.
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=\linewidth]{footprint.png}
+	\includegraphics[width=0.5\linewidth]{footprint.png}
 	\caption{Component footprint with dimension in millimeters}
 	\label{fig:footprint}
 \end{figure}
@@ -509,7 +514,7 @@ diode, respectively.
 To achieve specified ripple rejection at required frequency, design a LC low 
 pass filter which filters output of a regulator. As in previous task you have 
 to provide DigiKey part numbers for LC filter. \textbf{Note:} The ripple 
-rejection of the regulator part of the device is $58$ dB at $12.8$ kHz.
+rejection of the regulator part of the device is $58$ dB at $36$ kHz.
 
 Again, there are constraints for your choice of components:
 \begin{itemize}
@@ -519,6 +524,7 @@ Again, there are constraints for your choice of components:
 	\item $Q$ factor has to be equal $\frac{\sqrt{2}}{2}$ for $R_L = 10$ 
 	$\Omega$.  
 \end{itemize}
+$Q$ factor has to be as close to $\frac{\sqrt{2}}{2}$ as possible. 
 
 Your choice is graded in the similar fashion as before:
 \begin{itemize}
@@ -527,8 +533,8 @@ Your choice is graded in the similar fashion as before:
 	\item correct footprints, 
 	\item correct current and voltage ratings.
 \end{itemize}
-As a result, you have to provide two DigiKey part numbers for inductor and 
-capacitor, respectively. 
+As a result, you have to provide part number for inductor and 
+part number for capacitor, respectively. 
 \newpage
 \subsection{Side task: Reliability of the system with redundant power supply} 
 \label{ele:task:3}
@@ -574,31 +580,18 @@ task \ref{ele:task:3} (requested probability). Name the files
 \texttt{task1.txt}, \texttt{task2.txt}, \texttt{task3.txt} and put them in 
 the appropriate Google Drive folder.
 
-Additionally, for the task \ref{ele:task:3} you have to provide documentation
-which has to contain derivation of $f_S(t)$.
+Additionally, for the task \ref{ele:task:3} you have to provide paper 
+documentation which has to contain derivation of $f_S(t)$.
 
 \subsection{Grading scheme}
 Tasks are graded in the following manner:
 \begin{itemize}
-	\item tasks \ref{ele:task:1} and \ref{ele:task:2} - up to \textbf{10 pts}, 
-	up to \textbf{5 pts} for each component.
-	\item task \ref{ele:task:3} - up to \textbf{10 pts} - \textbf{5 pts} for 
-	the 
-	correct probability and up to \textbf{5 pts} for correct documentation.
+	\item tasks \ref{ele:task:1} and \ref{ele:task:2} - up to \textbf{5 pts} 
+	each (correct components in each task), 
+	\item task \ref{ele:task:3} - up to \textbf{5 pts} - \textbf{2.5 pts} for 
+	the correct probability and up to \textbf{2.5 pts} for correct 
+	documentation.
 \end{itemize}
 
-\begin{sidewaysfigure}[h!]
-	\centering
-	\includegraphics[width=\linewidth]{reg.png}
-	\caption{DC voltage power supply schematic}
-	\label{fig:schematic}
-\end{sidewaysfigure}
-
-
-
-
-
-
-	
 \end{document}
 

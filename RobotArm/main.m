@@ -38,11 +38,11 @@ if isSimulationActive(identifyFolder + "Input/", identifyFolder + "Output/", "re
     unlockTask(identifyFolder + "Output/");
 end  
 
-% test identification
+%% test identification
 if isSimulationActive(solutionFolder, readOnlyFolder, "result.txt")
     lockTask(readOnlyFolder, lockName);
     run('kran/simulation_params.m')
-    %run('Identification/test_identification.m')
+    run('Identification/test_identification.m')
     unlockTask(readOnlyFolder);
 end  
 

@@ -2,48 +2,63 @@ clear all; % Obavezno ocistiti persistent varijable!!!
 teamFolder = pwd + "/InputFiles";
 Ts = 0.05;
 
+lockName = string(java.net.InetAddress.getLocalHost.getHostName);
+
 %% TASK 1 KINEMATICS
-clearvars -except teamFolder
+clearvars -except teamFolder Ts lockName
 solutionFolder = teamFolder + "/Kinematics/Solution/";
 readOnlyFolder = teamFolder + "/Kinematics/Ref/";
 
-if isSimulationActive(solutionFolder, "result.txt")
+if isSimulationActive(solutionFolder, readOnlyFolder, "result.txt")
+    lockTask(readOnlyFolder, lockName);
     run('kran/simulation_params.m')
     run('Kinematics/simulate_kinematics.m')
+    unlockTask(readOnlyFolder);
 end  
 
 %% TASK 2 IDENTIFICATION
 
-clearvars -except teamFolder
+clearvars -except teamFolder Ts lockName
 solutionFolder = teamFolder + "/Identification/Solution/";
 readOnlyFolder = teamFolder + "/Identification/Ref/";
 identifyFolder = teamFolder + "/Identification/Identify/";
+signalsFolder = teamFolder + "/Identification/Signals/";
+
+numTestCases = 5;
 
 % needed to start simulation
 rotValve = [0, [0]]; transValve1 = [0, [0]]; transValve2 = [0, [0]]; 
 baseVoltage = [0, [0]]; pulleyVoltage = [0, [0]];
 
 % simulate identification
-if isSimulationActive(identifyFolder + "Input/", "result.txt")
+if isSimulationActive(identifyFolder + "Input/", identifyFolder + "Output/", "result.txt")
+    lockTask(identifyFolder + "Output/", lockName);
     run('kran/simulation_params.m')
-    %run('Identification/simulate_identification.m')
+    run('Identification/simulate_identification.m')
+    unlockTask(identifyFolder + "Output/");
 end  
 
 % test identification
-if isSimulationActive(solutionFolder, "result.txt")
+if isSimulationActive(solutionFolder, readOnlyFolder, "result.txt")
+    lockTask(readOnlyFolder, lockName);
     run('kran/simulation_params.m')
     run('Identification/test_identification.m')
+    unlockTask(readOnlyFolder);
 end  
 
 %% TASK 3 DRIVING
-clearvars -except teamFolder Ts
+clearvars -except teamFolder Ts lockName
 solutionFolder = teamFolder + "/Driving/Regulators/";
-readOnlyFolder = teamFolder + "/Driving/C/";
+readOnlyFolder = teamFolder + "/Driving/Ref/";
+Tsim = 250;
 
-if isSimulationActive(solutionFolder, "result.txt")
-    % needed to start simulation
-    rotValve = [0, [0]]; transValve1 = [0, [0]]; transValve2 = [0, [0]]; 
-    baseVoltage = [0, [0]]; pulleyVoltage = [0, [0]];
+% needed to start simulation
+rotValve = [0, [0]]; transValve1 = [0, [0]]; transValve2 = [0, [0]]; 
+baseVoltage = [0, [0]]; pulleyVoltage = [0, [0]];
+
+if isSimulationActive(solutionFolder, readOnlyFolder, "result.txt")
+    lockTask(readOnlyFolder, lockName);
     run('kran/simulation_params.m')
     run('Driving/simulate_driving.m')
+    unlockTask(readOnlyFolder);
 end

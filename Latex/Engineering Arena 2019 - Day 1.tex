@@ -23,7 +23,7 @@
 \usepackage[pdftex]{hyperref}
 %\usepackage{txfonts}
 \usepackage{subcaption}
-\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3.5cm,right=3.5cm,marginparwidth=1.75cm]{geometry}
 \usepackage{algorithm2e}
 \usepackage{pdflscape}
 
@@ -145,24 +145,76 @@
 	\newpage
 	\section{Arena introduction}
 	
-	Firstly, i want to welcome all the contestants that will be competing in 
+	Firstly, I want to welcome all the contestants that will be competing in 
 	2019 STEM Games engineering arena!
 	
 	This year's task focuses on the underwater habitats and logistical problems 
 	around them.
-	Underwater habitats are permanent and semi-permanent habitats located at 
+	Underwater habitats can be permanent and semi-permanent, located at 
 	the sea beds.
-	They provide all facilities required for the human survival
+	They provide all facilities required for the human survival such as 
+	sleeping, eating and attending to personal hygiene.
+	Their most common use is for the scientific research, exploring the biology 
+	of the deep sea life and for the geological research of the ocean tectonic 
+	plates.
+	We also learned a lot about the life and technological problems dealing 
+	with the high pressure environments.
+	By the sea levels rising up the underwater habitats may become widespread, 
+	not only for scientific research, but also as a permanent home for people.
+	Aquanauts, as they are called spend between couple of weeks to a few months 
+	underwater.
+	Future projects that would create larger, more comfortable habitats could 
+	extend missions to years.
+	
+	Although the progress is being made in regenerative systems (for water, 
+	food  and electricity), most of the underwater habitats are not self 
+	sufficient, 
+	and require the constant influx of the supplies.
+	The logistical problems met here can be compared to those of 
+	supplying a space station - the habitats are dependent on the constant 
+	support of the surface to keep the habitat running, transporting new 
+	supplies and energy.
+	
+	For that task, usually purpose built submarines are used,
+	since not all submarines are suited for the habitats located in the deeper 
+	waters.
+	Those submarines, alongside with the supplies, also transfer the habitat 
+	crew, taking people to and from the the habitats, and rescuing them in the 
+	cases of emergencies. 
+	The supplies are loaded into the submarines at the sea ports if the 
+	habitats are close to them and few trips are needed to transfer the 
+	supplies, or from the larger ship located above the habitat, with the 
+	submarine completing multiple dives to transfer the supplies.
+	
+	In both cases some kind of crane is used to load the supplies. 
+	The crane should be able to lift the desired load, pick it and drop it in 
+	precise locations and in some cases stabilize the load on the rocky seas.
+	
+	Another problem is the communication off the habitat with either surface, 
+	other habitats, or ships sailing above them.
+	Due to the salt content the sea water is slightly conductive and therefore 
+	absorbs electromagnetic radio-waves.
+	If the radio communication is needed, ELF ( Extremely low frequency) waves 
+	are used since they are less affected by the salt water losses, but often 
+	it is better to use other solutions.
+	
+	There are many interesting problems around this, but during this 
+	competition we decided to focus on few we foun the most interesting.
+	
+	We want wish you the best luck during the next 3 days!
+	
 	
 	\newpage
-	\section{Introduction}
+	\section{Hydraulic crane - Introduction}
+	
+	
 	
 	\noindent 
 	\textbf{Friendly advice}: Read everything before solving the task. Task grading is automatic. Submission form for every task is described in task's readme file.
 	
-	\section{Tasks} \label{sec:tasks}
+	\subsection{Tasks} \label{sec:tasks}
 	
-	The system for which you have to design a controller is the crane shown in the Figure \ref{fig:isometry}. The crane consists of a base, two booms(in some crane configurations \textit{Boom 1} is also called \textit{Mast}), two telescopic beams, three hydraulic cylinders, two electric motors and pulley with belt system. The purpose of the crane is to load the submarine with goods and equipment which is to be transported to underwater habitats.Masses of each part of the crane are listed in Table \ref{tab:crane_tab}.\textbf{ For the sake of simplicity and overall system dynamics, load has the mass $m_{load} = 800.59 kg$}.
+	The system for which you have to design a controller is the crane shown in the Figure \ref{fig:isometry}. The crane consists of a base, two booms(in some crane configurations \textit{Boom 1} is also called \textit{Mast}), two telescopic beams, three hydraulic cylinders, two electric motors and pulley with belt system. Masses of each part of the crane are listed in Table \ref{tab:crane_tab}.\textbf{ For the sake of simplicity and overall system dynamics, load has the mass $m_{load} = 800.59 kg$}.
 	
 	\begin{figure}[h!]
 		\centering
@@ -414,9 +466,8 @@
 	task, ask your mentors.
 	
 \newpage
-\section{DC voltage power supply}
+\section{DC voltage power supply - introduction}
 
-\subsection{Introduction}
 
 For fully functional operation, the crane is equipped with 
 lot of computer based subsystems and electronic devices which operate on DC 

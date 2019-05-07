@@ -58,7 +58,7 @@ Sub.Turb.qvNom = sqrt(qv_inlet_nom*qv_outlet_nom); %m^3/s, mean nominal steam vo
 
 
 %heat exchanger pipe parameters
-[extDiameter,thickness, conductivity, max_W] = Pipes(Sub.HE.Pipe.id); %%%% nova verzija kad dobijem dimenzije cijevi
+[extDiameter,thickness, conductivity] = Pipes(Sub.HE.Pipe.id); %%%% nova verzija kad dobijem dimenzije cijevi
 Sub.HE.Pipe.dExt = extDiameter; %m, pipe external diameter
 Sub.HE.Pipe.thickness = thickness; %m, pipe thickness
 Sub.HE.Pipe.conductivity = conductivity; %W/mK, pipe thermal conductivity

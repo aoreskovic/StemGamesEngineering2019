@@ -1,5 +1,4 @@
 %% SIMULATION DATA
-Tsim = 250;
 Ts = 0.05;
 
 %% HYDRAULIC DATA

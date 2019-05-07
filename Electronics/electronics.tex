@@ -29,19 +29,19 @@
 
 \subsection{Introduction}
 
-For fully functional operation, submarine/robot arm/habitat is equipped with 
+For fully functional operation, submarine is equipped with 
 lot of computer based subsystems and electronic devices which operate on DC 
-voltage. To ensure proper operation the DC voltage has to be stable and without 
-noise. To ensure stable DC voltage, device on Fig. \ref{fig:schematic}. is used. 
-Device is composed of several parts as it is shown on figure. Due to extreme 
-conditions in the system, regulators often fail and components have to be 
-repaired or replaced with proper spare part.
+voltage. To ensure their proper operation the, DC voltage has to be stable and 
+without noise. To ensure stable DC voltage, device on Fig. 
+\ref{fig:schematic}. is used. Device is composed of several parts as it is 
+shown on the figure. Due to extreme conditions in the system, regulators often 
+fail and components have to be repaired or replaced with proper spare part.
 
 In this task, your job is to:
 \begin{itemize}
 \item find the parts which ensure proper operation of regulator, 
 \item ensure that the output voltage ripple is within the boundaries with 
-proper low pass filter,
+proper choice of parts for the low pass filter,
 \item find the probability of future malfunction in standby redundant system.
 \end{itemize}
 
@@ -56,7 +56,7 @@ in the table correspond to the values which will be measured in simulation.
     \begin{tabularx}{\linewidth}{|X|X|X|X|} \hline
     PARAMETER & TEST CONDITIONS & VALUE & UNIT \\ \hline
     Input voltage ($U_{in}$)&  & $330$ & Vpp \\ \hline 
-    Output voltage ($U_{out}$)& $I_{out} = 1$ A & $10$ ($\pm3$) \% & V \\ \hline
+    Output voltage ($U_{out}$)& $I_{out} = 1$ A & $10$ ($\pm5$) \% & V \\ \hline
     Output current ($I_{out}$) & $U_{in} = 330$ Vpp & $1.0$ & A \\ \hline
     Ripple rejection & (12.8 kHz) & $78$ & dB \\ \hline
     \end{tabularx}
@@ -86,10 +86,9 @@ As it can be seen from the table \ref{tab:elems}, some components are not
 determined. In this subtask you need to specify resistor $R_1$ and diode $D_2$. 
 Additionally, you have to determine positions of the negative and the positive 
 input of the amplifier $A_1$. Based on the regulators operating values 
-provided with table \ref{tab:spec} and regulator test points diagrams 
-(Fig. 1. - Fig. 4) you have to determine specifications for the resistor 
-$R_1$ and diode $D_1$. You have to find the real components from the DigiKey 
-Electronics product database. 
+provided with table \ref{tab:spec} you have to determine specifications for 
+the resistor $R_1$ and diode $D_2$. You have to find the components from the 
+DigiKey Electronics product database. 
 
 There are, however, constraints for your choice of components:
 \begin{itemize}
@@ -126,8 +125,7 @@ Again, there are constraints for your choice of components:
 \begin{itemize}
 \item $L_1$ has no additional constraints 
 (think about already mentioned implicit constraints),
-\item $C_2$ has to be a ceramic capacitor with footprint given with 
-Fig. \ref{fig:footprint},
+\item $C_2$ has footprint given with Fig. \ref{fig:footprint},
 \item $Q$ factor has to be equal $\frac{\sqrt{2}}{2}$ for $R_L = 10$ $\Omega$.  
 \end{itemize}
 
@@ -185,7 +183,8 @@ task \ref{ele:task:3} (requested probability). Name the files
 \texttt{task1.txt}, \texttt{task2.txt}, \texttt{task3.txt} and put them in 
 the appropriate Google Drive folder.
 
-Additionally, for the task \ref{ele:task:3} you have to provide documentation.
+Additionally, for the task \ref{ele:task:3} you have to provide documentation
+which has to contain derivation of $f_S(t)$.
 
 \subsection{Grading scheme}
 Tasks are graded in the following manner:

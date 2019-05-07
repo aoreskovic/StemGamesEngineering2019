@@ -14,6 +14,10 @@ for ii=1:Ncoords
     );
 end
 
+datasetFile = fopen('datasets/ofdm_carrier_elementary.txt','w');
+fprintf(datasetFile,'%s',dataset_string);
+fclose(datasetFile);
+
 dataset_tmp = double(dataset_string);
 dataset_tmp = de2bi(dataset_tmp, 8);
 dataset_tmp = fliplr(dataset_tmp);
@@ -30,6 +34,10 @@ for ii=1:Ncoords
         round(rand*100),round(rand*100),round(rand*100) ...
     );
 end
+
+datasetFile = fopen('datasets/ofdm_carrier_additional.txt','w');
+fprintf(datasetFile,'%s',dataset_string);
+fclose(datasetFile);
 
 dataset_additional_tmp = double(dataset_additional_string);
 dataset_additional_tmp = de2bi(dataset_additional_tmp, 8);
@@ -262,8 +270,8 @@ t = 0:1/fs:(N/fs*length(qpsk_modulated)-1/fs);
 modulated_output = real(ofdmHigh .* exp(1j * 2 * pi * fc * t));
 
 %% Add noise
-%snr = 30;
-%modulated_output = awgn(modulated_output,snr);
+snr = 30;
+modulated_output = awgn(modulated_output,snr);
 
 %% Spectrum
 spektar(modulated_output,fs,length(modulated_output),'OFDM nosioc');
@@ -271,5 +279,5 @@ spektar(modulated_output,fs,length(modulated_output),'OFDM nosioc');
 %% Write to file
 
 input_sig = int16(modulated_output * 2^15);
-csvwrite('ofdm_carrier.raw', input_sig);
+csvwrite('datasets/ofdm_carrier.raw', input_sig);
 

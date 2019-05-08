@@ -129,9 +129,10 @@
 		Dominik Barbarić \\
 		Karla Draženović \\
 		Nenad Ferdelji \\
+		Luka Mandić \\
 		Ante Orešković \\
 		Ivan Pavić \\
-		Vedra Slapničar \\
+		Vedran Slapničar \\
 		Danijel Zadravec \\
 		Marko Švec 
 		
@@ -252,7 +253,7 @@
 		\end{tabular}
 	\end{center}
 	
-	\subsection{Hydraulics system}
+	\subsection{Hydraulics system(5 points)}
 	
 	Part of the crane is actuated using hydraulic system. The system, as we designed it, is shown in Figure \ref{fig:hydraulic} and we are aware it has some flaws. Your first task is to think about how you could redesign the system and improve its performance. Concentrate on what you can conclude with what we have given you, i.e. we ask you to propose a redesign of the schematics. You might want to postpone this task until you are done with other tasks and have a better understanding of the system you are working with.
 	
@@ -263,7 +264,7 @@
 		\label{fig:hydraulic}
 	\end{figure}
 	
-	\subsection{Kinematics}
+	\subsection{Kinematics(20 points)}
 
 	Kinematics model of the crane is important to ensure that the cargo is 
 	precisely placed into the submarine which delivers it to underwater 
@@ -370,8 +371,8 @@
 	Next step is to be able to determine kinematic configuration in opposite direction. Based on load positions specified in Table \ref{tab:inverse}, determine the corresponding angles and offsets $(q_1, d_1, d_2, d_3, q_2)$ for every given configuration. It is often the case that inverse kinematics has multiple valid solutions, so any valid solution you give will be graded as successful. We will set the crane in configuration position you give us and check if it is inside the maximum offset range of $\pm 0.25$ m from reference point given in Table \ref{tab:inverse}.
 	
 	\begin{center}
+		\captionof{table}{Inverse kinematics configurations}
 		\label{tab:inverse}
-		\captionof{table}{Inverse kinematics configurations}\label{tab:inverse}
 		\begin{tabular}{|| c || c c c ||}
 			\hline
 			Configuration & $x_L$[m] & $y_L$[m] & $z_L$[m] \\
@@ -388,7 +389,7 @@
 	\noindent
 	Information on how to submit your solution will be given to you in the \textit{readme} file in task folder. If you have any questions regarding submission of the task, ask your mentors.
 	
-	\subsection{Model identification}
+	\subsection{Model identification(30 points)}
 	
 	Now when you understand kinematics of the crane, it would be useful to know its dynamic model.
 	
@@ -396,12 +397,12 @@
 	
 	For this task you will do exactly that! Some of the parameters of the system are unknown and there is no way to measure them so you have to identify models for all crane actuators.
 	
-	Crane is set to default start position ($q_1 = 0; \ d_1 = 0.194; \  d_2 = 0; \  d_3 = 0; \  q_2 = 0$) and it is ready for driving. Given the known parameters of actuators (Table ), your job is to determine how the actuator will respond. We give you the opportunity to test whatever input signals you want.
+	Crane is set to default start position ($q_1 = 0; \ d_1 = 0.194; \  d_2 = 0; \  d_3 = 0; \  q_2 = 0$) and it is ready for driving. Given the known parameters of actuators (Table \ref{tab:el_params}), your job is to determine how the actuator will respond. We give you the opportunity to test whatever input signals you want.
 	Inputs for DC motors are in Volts [V] and for hydraulic actuators are valve opening in Meters[m]. Input signal limits are given in Table \ref{tab:input_limits}.  In task's \textit{readme} file you can find a way how to test your input signals and submit your results.
 	
 	\begin{center}
-		\label{tab:inverse}
-		\captionof{table}{Electric motor parameters}\label{tab:el_params}
+		\captionof{table}{Electric motor parameters}
+		\label{tab:el_params}
 		\begin{tabular}{|| c || c c c c c||}
 			\hline
 			Parameter & R[$\Omega$] & $L$[mH] & $k$[Vs/rad] & $J_{rot}$[kgm$^2$] & 
@@ -432,7 +433,7 @@
 	As said before, test signals are generated randomly. In total, you will have 5 test cases.  Each test case will start in default start position . 
 	Identification signal for every actuator is \textbf{step} function  (Heaviside function) with random step time in interval [0, $T_{sim}$] and with random value amplitude. Example of one test signal can be found in the task folder.
 	
-	\subsection{Crane driving}
+	\subsection{Crane driving(30 points)}
 	
 	After creating both kinematic and dynamic models of the system, your task is to make it serve its purpose. Crane has to carry a specific cargo from the dock to the submarine cargo space. Desired positions are given in Table \ref{tab:inverse} and you have already calculated inverse dynamics for these coordinates. Crane has to place the load in these points in the order given in Table \ref{tab:trajectory}.
 	
@@ -476,7 +477,7 @@
 	task, ask your mentors.
 	
 \newpage
-\section{DC voltage power supply - introduction}
+\section{DC voltage power supply - introduction(15 points)}
 
 
 For fully functional operation, the crane is equipped with 
@@ -508,7 +509,7 @@ table \ref{tab:spec}.
 	\label{tab:spec}
 	\begin{tabularx}{\linewidth}{|X|X|X|X|} \hline
 		PARAMETER & TEST CONDITIONS & VALUE & UNIT \\ \hline
-		Input voltage ($U_{in}$)&  & $330$ & Vpp \\ \hline 
+		Input voltage ($U_{in}$)&  & $330$ & V \\ \hline 
 		Output voltage ($U_{out}$)& $I_{out} = 1$ A & $10$ ($\pm5$) \% & V \\ 
 		\hline
 		Output current ($I_{out}$) & $U_{in} = 330$ Vpp & $1.0$ & A \\ \hline

@@ -20,8 +20,8 @@ distanceGain = 0;
 rotValve = [0, [0]]; transValve1 = [0, [0]]; transValve2 = [0, [0]]; 
 baseVoltage = [0, [0]]; pulleyVoltage = [0, [0]];
 
-while i < numSims
-    i = i+1;
+%while i < numSims
+    %i = i+1;
     
     isBaseSet = 0;
     isRotSet = 0;
@@ -161,6 +161,6 @@ while i < numSims
 
     set_param('kran','simulationcommand', 'stop');
     pause(5);
-end
+%end
 
 

@@ -24,7 +24,6 @@ c = 2*r*sqrt(1-(d/r)^2);
 
 fi = 2*atan(c/(2*d))
 
-
 Scut = r^2*0.5*(fi-sin(fi))
 
 ratio = Scut/Scirc

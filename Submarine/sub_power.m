@@ -1,9 +1,9 @@
-function Pb  = sub_power(speed_kn,cilynder_l, sub_radius)
+function Pb  = sub_power(speed_kn,length_c, radius_rb)
 %sub_power Summary of this function goes here
 %   Detailed explanation goes here
 
 
-
+MCR = 1;
 % Densities
 row = 1025; % kg/m^3 - Salt water
 roc = 7850; % kg/m^3 - Steel
@@ -19,47 +19,67 @@ if speed_kn < 0
     speed_kn = speed_kn * -1;
 end
 
+sigma = 125;
+k_structure = 1.5;
+
+max_depth = 100;
+
+
+%% Calculations
+
+
+sub_length = length_c+2*radius_rb;
+
 % Surface
 
-sub_length = cilynder_l + 2 * sub_radius;
-
-sur_cylinder = 2 * sub_radius * pi * cilynder_l;
-sur_sphere =  4 * sub_radius^2 * pi;
-
-sub_surface = sur_cylinder + sur_sphere;
+surface_cylinder = 2*radius_rb*pi*length_c;
+surface_sphere = 4*radius_rb^2*pi;
+surface_total = surface_cylinder+surface_sphere;
 
 % Volume
 
-vol_cylinder = sub_radius^2 * cilynder_l * pi; % m^3
-vol_sphere = 4/3 * sub_radius^3 * pi; % m^3
-sub_volume = vol_cylinder + vol_sphere; % m^3
-
-istisnina = row * sub_volume; % t
-
-CB =  sub_volume / (sub_length * 2 * sub_radius * 2 * sub_radius); % Block coefficient
+volume_cylinder = radius_rb^2*pi*length_c;
+volume_sphere = 4/3*radius_rb^3*pi;
+volume_total = volume_cylinder+volume_sphere;
+istisnina = volume_total*row/1000;
 
 
+CB = volume_total/(sub_length*2*radius_rb*2*radius_rb);
 
 
 
-speed_ms = speed_kn * 0.514444;
 
-ni = 0.000001187; % m^2/s - Kinematic vicscosity 
-Rn = speed_ms * sub_length / ni; % Reynolds_number
+% Debljina stjenke
 
-CF = 0.075/(log10(Rn)-2)^2; % Friction coefficient
+pressure_conversion = 100000;
 
-Fn = speed_ms /sqrt(9.08665 * sub_length);
+depth_pressure_pa = row*g*max_depth;
+depth_pressure_b = depth_pressure_pa/pressure_conversion;
+
+Di = radius_rb*2*1000;
+
+thickness_hull = depth_pressure_b*Di/(20*sigma+depth_pressure_b);
 
 
-k=-0.095+25.6 *CB/((sub_length/(2*sub_radius))^2);
+mass_steel = surface_total*thickness_hull/1000*roc/1000*k_structure;
 
-CT = CF * (1 + k);
+% Power
 
-Re = CT * 0.5 * row * speed_ms^2 * sub_surface / 1000; % kW
-Pe = Re * speed_ms; % kW
+kn2ms = 1852/3600;
+
+speed_ms = speed_kn*kn2ms;
+Fn = speed_ms/sqrt(9.08665*sub_length);
+ni = 0.000001187;
+Rn = speed_ms*(sub_length)/ni;
+CF = 0.075/(log10(Rn)-2)^2;
+
+k_hull = -0.095+25.6*CB/(sub_length/(2*radius_rb))^2;
+CT = CF*(1+k_hull);
+
+Re = CT*0.5*row*speed_ms^2*surface_total/1000;
+Pe = Re*speed_ms;
 Pb1 = Pe/(0.5*0.98);
-Pb = Pb1/0.85; % kW
+Pb = Pb1/MCR;
 
 
 Pb = Pb * negative;

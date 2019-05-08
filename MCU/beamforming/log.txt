@@ -1,0 +1,10 @@
+Evaluation started at 14:49:13
+
+
+No beamformer implemented for task 1.
+No beamformer implemented for task 2.
+
+
+===========================
+Total score: 0.0000
+Evaluation completed at 14:49:13

@@ -155,11 +155,16 @@
 	
 	The choice of propulsion system type is one of the most important parts in submarine’s design process since it determines the ability of fulfilling its purpose. Submarines that perform underwater research activities require endurance and certain flexibility in different littoral conditions. For example, conventional motor propulsion systems, such as diesel electric, when operational, require fresh air intake for driving electrical generator. In this way, a period while a submarine can remain submerged is limited by the power and endurance of the battery system and counts in hours or few days at most. Therefore, when it comes to endurance such systems might not be an optimal choice. Technology that overcomes this drawback is a nuclear power system which offers better endurance (even few months) and speed of the submarines but there are number of disadvantages (very expensive, operational limitations in shallow littoral waters etc.) that make them unsuitable for underwater research activities. The most suitable seems to be so called Air Independent Propulsion systems (AIP systems) which are marine propulsion technologies that allows non-nuclear submarine to operate without access to atmospheric oxygen. 
 	
-	One of the most interesting is definitely French AIP technology so called MESMA (Module d'Energie Sous-Marine Autonome). This is the AIP system that uses closed-turbine cycle for powering electrical generator and the heat for steam generation is provided by liquid ethanol (ili bioethanol) combustion in pure oxygen (sometimes mixed with argon). Combustion of pure ethanol (ili bioethanol) makes this system ecologically much more acceptable than other systems that use conventional fuels. In this way, virtually silent MESMA exploits all advantages of AIP systems for maintenance of underwater habitats and performing underwater research or training activities.
-	 
-	Today's assignment is to design a MESMA power generation system for submarine propulsion for a given submarine hull which consists of outer and inner shell, showed on Figure 1. Inside inner shell there is a reserved space of fixed volume (zadati ovdje ili zajedno sa skicom!) consisting of three compartments; fuel tanks compartment (Compartment 1), engineering room compartment (Compartment 2) and cargo place compartment (Compartment 3). Individual volumes of each compartment can be arbitrarily chosen but the sum of all compartment volumes is fixed to a constant value. 
+	One of the most interesting is definitely French AIP technology so called 
+	MESMA (Module d'Energie Sous-Marine Autonome). This is the AIP system that 
+	uses closed-turbine cycle for powering electrical generator and the heat 
+	for steam generation is provided by liquid bioethanol combustion in pure 
+	oxygen. Combustion of pure bioethanol makes this system ecologically much 
+	more acceptable than other systems that use conventional fuels. In this 
+	way, virtually silent MESMA exploits all advantages of AIP systems for 
+	maintenance of underwater habitats and performing underwater research or 
+	training activities.
 	
-	The scheme of MESMA power generation system is given in the assignment description and its performance (range, speed, efficiency, price?) (dopuniti, ako treba, kada tablica bodovanja bude gotova) will be evaluated for different depths according to the scoring table (možda nije dobar naziv) given later in the text. It is important to emphasize that one of evaluation categories is the size of the cargo place compartment so the care must be taken not to oversize the propulsion system which must be placed in other two compartments.
 	
 	The assignment can be divided into two steps: 
 	
@@ -172,21 +177,63 @@
 	Detailed description of the system components is given in the next section.
 	
 	Engineers, good luck!
-	
-	Zadatak,
-	Your task is to design submarine power generation system which can generate sufficient energy to travel xx km and generate minimum required power during xx hours when submarine is being loaded and unloaded.
-	or: to design power generation system which can generate sufficient energy to travel 100 km at depth 50 m 20 km at depth  100 m and 20 km at depth 10 m
-	Formule za nosivost, masu, otpor, maksimalna duljina izmjenjivača, maksimalna snaga turbine i drugo ovisno o veličini podmornice
 		
 	\newpage
 	\section{Power generation system description}
+	
+	
+	\subsection{The submarine}
+	
+	Today's assignment is to design a MESMA power generation system for 
+	submarine propulsion for a given submarine hull which consists of outer and 
+	inner shell, showed on Figure \ref{fig:pwr_scheme}. Inside inner shell 
+	there is a reserved space of fixed volume consisting of five compartments;
+	power system comparment (compartment 5), bioethanol tank (compartment 4), 
+	liquid oxygen tank (compartment 3), cargo storage (compartment 2), and crew 
+	deck (compartment 1).
+	
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=\textwidth]{submarine_side_view.png}
+		\caption{Submarine dimensions}
+		\label{fig:pwr_scheme}
+	\end{figure}
+	
+	The following dimensions are given:
+	\begin{itemize}
+		\item $L = 18 \,\textrm{m}$
+		\item $L_1 = 2 \,\textrm{m}$
+	\end{itemize}
+	Also, dimension $L_5$ is found as
+	\begin{equation}
+		L_5 = (18 \cdot P_\textrm{turb} + 2500)/1000 \,\left[\textrm{m}\right]
+	\end{equation}
+	where the power $P_\textrm{turb}$ is taken in kW. Dimensions $L_2$ and 
+	$L_3$ depend on the chosen amount of fuel and oxygen.
+	
+	Team's solutions will be ranked in the following categories:
+	\begin{itemize}
+		\item Maximum speed
+		\item Maximum range
+		\item Maximum depth
+		\item Available cargo volume
+	\end{itemize}
+    Each category can win you up to 25\% of points available for this task. The 
+    team that achieved the highest score in each category will be awarded the 
+    maximum number of points. The other teams' points will be scaled 
+    accordingly.
+
+	
+	
+	\subsection{Power system}
 	
 	Power generation system schematics are shown on figure \ref{fig:pwr_scheme}.
 	
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=\textwidth]{terma.png}
-		\caption{Power generation system.}
+		\caption{Power generation system}
 		\label{fig:pwr_scheme}
 	\end{figure}
 	
@@ -256,7 +303,13 @@
 		q_v = \sqrt{q_{v,in} \cdot q_{v,out,s}},
 	\end{equation}
 	
-	Turbine efficiency is highest at its nominal design point for which pressures ($p_1$, $p_2$) and inlet temperature T1 are given in table 1, while nominal flow rate is defined by Stodola’s ellipse equation \ref{eq:stodola}. Turbine can operate at other conditions (off design turbine performance with lower, i.e. higher mass flow rates than the nominal) with the cost of reduced efficiency, provided that these conditions are not outside permitted values.
+	Turbine efficiency is highest at its nominal design point for which 
+	pressures ($p_1$, $p_2$) and inlet temperature T1 are given in Excel Table 
+	1, while nominal flow rate is defined by Stodola’s ellipse equation 
+	\ref{eq:stodola}. Turbine can operate at other conditions (off design 
+	turbine performance with lower, i.e. higher mass flow rates than the 
+	nominal) with the cost of reduced efficiency, provided that these 
+	conditions are not outside permitted values.
 	
 	\subsection{Off design turbine performance}
 	
@@ -289,7 +342,8 @@
 		\item Define operational characteristics of some components.
 	\end{itemize}
 	
-	Turbine design parameters are given in \ref{tab:turb_params}.
+	\noindent
+	\textcolor{red}{Turbine design parameters are given in Excel Table 1.}
 	
 	\subsection{Heat exchangers}
 	
@@ -322,7 +376,7 @@
 	Dimensionless parameters $\pi_1$,$\pi_2$,$\pi_3$ are defined as follows:
 	
 	\begin{equation}\label{eq:pi_params}
-		\pi_1 = \frac{\theta'_1 - \theta''_1}{\theta'_1 - \theta'_1},
+		\pi_1 = \frac{\theta'_1 - \theta''_1}{\theta'_1 - \theta'_2},
 	\end{equation}
 	
 	\begin{equation}\label{eq:pi_params2}
@@ -441,7 +495,7 @@
 	\end{itemize}
 	
 	\noindent
-	\textcolor{red}{Data for available tubes are given in table 2.}
+	\textcolor{red}{Data for available tubes is given in Excel Table 2.}
 	
 	\noindent
 	Value of exchanged heat at both sections depends upon stream inlet conditions, overall heat transfer coefficient k and overall heat transfer area A. Heat transfer coefficient k and area A are influenced by number of tubes in each section and its length which define tube side heat exchanger coefficient and total heat transfer area.
@@ -470,7 +524,7 @@
 	Heat flow $\Phi_{cond}$ is rejected to sea water inside condenser “Cond". It can be assumed that condenser "Cond" in the system is properly designed and sea water mass flow at pump "P4" is automatically adjusted to absorb heat flow $\Phi_{cond}$. Therefore, sizing of condenser "Cond" and sea water pump "P4" and its control is not a part of this task and is assumed as ideal. Condensed water always exits condenser “Cond" at saturated liquid state.
 	Maximum sea water temperature at which submarine has to operate is $30^{\circ}C$, and minimal temperature difference between condensing steam and sea water for given condenser is $15^{\circ}C$. 
 	
-	\subsection*{Combustion chamber}
+	\subsection{Combustion chamber}
 	
 	Combustion chamber "Comb" is enclosed space in which ethanol burns in liquid oxygen. It is assumed to be perfectly insulated. During the combustion, lower heating value of ethanol is converted into flue gas enthalpy. Combustion pressure is at least 1 bar above static pressure evaluated at submarine centerline. Pressure loss from combustion chamber "Comb" to heat exchanger "HE" can be neglected.
 	
@@ -554,9 +608,9 @@
 	\end{equation}
 	
 	\noindent
-	Pump parameters are given in table \ref{tab:pump_params}.
+	\textcolor{red}{Pump parameters are given in Excel Table 3.}
 	
-	\subsection*{Compressor}
+	\subsection{Compressor}
 	
 	Part of flue gas at heat exchanger exit after mixing at mixing chamber “Mix" is returned to combustion chamber “Comb" by compressor “Comp". This flue gas return should ensure that flue gas stream “a" always exits combustion chamber at temperature below $\theta_{fg,max}$. Compressor “Comp" can provide any flue gas mass flow rate between minimum and maximum flow rate defined for that compressor type. It can be assumed that sufficient mass of flue gases is always available for return at mixing region “Mix".
 	
@@ -587,44 +641,40 @@
 	\noindent
 	and is bounded between values 0 and 1.
 	
-	\subsection*{Condensate pump}
-	
-	Condensate pump “P3" is used for return of condensed steam at low condensation pressure $p_3$ condenser “Cond" outlet to heat exchanger “HE" at high evaporation pressure $p_4$.
-	\textcolor{red}{(mislim da ovo možemo pojednostaviti na sljedeći način)}
-	Neglecting a pump losses, condensate pump power is defined by:
-
-	\begin{equation}\label{eq:pump_loss}
-		P_{cp} = q_m(h_4 - h') = q_v(p_4 - p_3), 
-	\end{equation}
-
 	\noindent
-	where
+	\textcolor{red}{Compressor parameters are given in Excel Table 2.}
 	
-	\begin{itemize}
-		\item 	$h'$ is enthalpy of dry saturated water at condensation pressure $p_3$
-		\item $h_4$ is actual enthalpy after water compression from dry saturated state at pressure $p_3$ to pressure $p_4$
-	\end{itemize}
+	\subsection{Condensate pump}
+
+	Condensate pump “P3" is used for return of condensed steam at low condensation pressure $p_3$ condenser “Cond" outlet to heat exchanger “HE" at high evaporation pressure $p_4$.
+	Specific enthalpy $h_4 = 359.83 \,\textrm{kW}$ at pump outlet.
 
 	\subsection{Constants}
 	
 	\begin{itemize}
-		\item $\theta_{fg,max} = 800 ^\circ C$
-		\item $Re_{T_{crit}} = 3000$
-		\item $Re_{L_{crit}} = 2300$
-		\item $\alpha_{ev} = 3500 \frac{W}{m^2K}$
-		\item $\alpha_{super} = 70 \frac{W}{m^2K}$
-		\item $\theta_{fuel,in} = 10 ^\circ C$
+		\item $\theta_\textrm{fg,max} = 800 ^\circ C$
+		\item $d_\textrm{pipe} = 20 \,\textrm{mm}$
+		\item $\delta_\textrm{pipe} = 2 \,\textrm{mm}$
+		\item $\lambda_\textrm{pipe}  = 58 \,\textrm{W/mK}$
+		\item $Re_\textrm{crit} = 2300$
+		\item $\alpha_\textrm{ev} = 3500 \frac{W}{m^2K}$
+		\item $\alpha_\textrm{super} = 70 \frac{W}{m^2K}$
+		\item $\theta_\textrm{fuel,in} = 10 ^\circ C$
 		\item $\theta_{O_2,in} = 10 ^\circ C$
-		\item $M_{ethanol} = 46 \frac{kg}{kmol}$
+		\item $M_\textrm{ethanol} = 46 \frac{kg}{kmol}$
 		\item $M_{CO_2} = 44 \frac{kg}{kmol}$
 		\item $M_{H_2O} = 18 \frac{kg}{kmol}$
-		\item $\Delta h_{md} = 1366940 \frac{kJ}{kmol}$
-		\item $C_{mp,O_2}  = $
-		\item $C_{mp,C_2H_6O} = $
-		\item $\rho_{sea\ water} = 1000 \frac{kg}{m^3}$
-		\item $\eta_{cond\ pump} = 0.75$
+		\item $\Delta h_\textrm{md} = 1366940 \frac{kJ}{kmol}$
+		\item $C_{mp,C_2H_6O} = 2.503 \,\frac{kJ}{kmol \cdot K}$
+		\item $\rho_\textrm{sea\ water} = 1000 \frac{kg}{m^3}$
+		\item $\rho_\textrm{ethanol} = 789 \frac{kg}{m^3}$
+		\item $\rho_\textrm{oxygen,l} = 1141 \frac{kg}{m^3}$
 	\end{itemize}
 
+	\noindent
+	\textcolor{red}{Fluid gas properties are given in Excel Table 4.}
+
+\clearpage
 
 \section{Beamforming system introduction}
 
@@ -671,7 +721,7 @@ system. Assume the communication link is being established in the Adriatic Sea,
 with average salinity of 38\textperthousand, and sea temperature of 20 
 \textdegree C.
 
-\subsection*{Task 1}
+\subsection{Linear array}
 
 Design a single linear antenna array along the y-axis to achieve the best link 
 between the habitat and the ship in four given scenarios.
@@ -757,7 +807,7 @@ For all scenarios, the following rules apply: A beamforming system constructed
 with just one element is awarded no points. A beamforming system acheiving 
 negative directivity (in dBi) in the direction of the ship is awarded no points.
 
-\subsection*{Task 2}
+\subsection{Planar array}
 
 You will now design a planar beamforming system, to enable beamforming toward a 
 ship that is moving in both dimension along the sea surface. You are given a 
@@ -795,7 +845,7 @@ A beamforming system constructed with just one element is awarded no points. A
 beamforming system acheiving negative directivity (in dBi) in the direction of 
 the ship is awarded no points.
 
-\subsection*{Evaluation and results}
+\subsection{Evaluation and results}
 
 Evaluations are performed automatically, and will run continuously during the 
 competition day. You can see the results of evaluation for all teams on a 

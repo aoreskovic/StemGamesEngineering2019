@@ -5,7 +5,7 @@ err = linkError.instance();
 err.flushErorrs();
 
 gdrive = "C:/work/gdrive/STEM Games 2019/Teams - Day 2 - References/";
-teams = ["Božje ovèice"];
+teams = ["Akvanauti","Božje ovèice","Divljaè velikog momenta tromosti","FERIT","FESB","Gemischt","Kornjaèe","Mamlazi","Mehrob","Narodne mošnje","Njemaèki strikani","Papkovi papci","Pero Tips","STEM Gains","Stroicizam","Šiljo i Družina","Škrgiæi","Team Pokemon","Torpedo"];
 
 while 1
 

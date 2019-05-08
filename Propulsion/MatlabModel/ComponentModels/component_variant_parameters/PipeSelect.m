@@ -7,8 +7,8 @@ assert(floor(PipeID)==PipeID, 'Compressor ID has to be scalar!')
 assert(PipeID>0, 'Compressor ID negative!')
 assert(PipeID<=length(Pipes), 'Compressor ID does not exist!')
 
-extDiameter = Pipes(PipeID, 2); % kg/h, minimal compressor mass flow rate
-thickness = Pipes(PipeID, 3); %kg/h, maximal compressor mass flow rate
+extDiameter = Pipes(PipeID, 2)/1000; %m, external pipe diameter
+thickness = Pipes(PipeID, 3)/1000; %m, pipe thickness
 conductivity = Pipes(PipeID, 4);
  
 end

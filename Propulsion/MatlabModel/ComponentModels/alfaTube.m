@@ -4,7 +4,8 @@ function [alfaT, w] = alfaTube(qn_H20, qn_CO2, T_fg, A, d, p, L, Mfg)
 %   
 % RecritL = 3000;
 % RecritT = 10000;
-Recrit = 2300;
+RecritL = 2200;
+RecritT = 2500;
 R = 8314; % kJ/kmolK
 qn_DP = qn_H20 + qn_CO2; %kmol/s
 M = Mfg; %kg/kmol, flue gas mixture molar mas
@@ -28,13 +29,20 @@ Pr = mi * cp_FG / lmbda; %-, Prantl number
 %     Nu = NuL + (NuT-NuL)/(RecritT-RecritL) * (Re-RecritL);
 % 
 % end
-if Re < Recrit
+if Re < RecritL
     Pe = Re*Pr;
     Nu = 1.86*(Pe*d/L)^(1/3);
-else
+elseif Re > RecritT
     f=1/((1.82*log10(Re)-1.64)^2);
     Nu = (f/8)*(Re-1000)*Pr/(1+12.7*sqrt(f/8)*(Pr^(2/3)-1));
+else
+    Pe = RecritL*Pr;
+    NuL = 1.86*(Pe*d/L)^(1/3);
+    f=1/((1.82*log10(RecritT)-1.64)^2);
+    NuT = (f/8)*(RecritT-1000)*Pr/(1+12.7*sqrt(f/8)*(Pr^(2/3)-1));
+    Nu = NuL + (NuT-NuL)/(RecritT-RecritL) * (Re-RecritL);
 end
+
 erosion = ro*w*w;
 assert(erosion <= 6800, 'flue gas speed too high! erosion!')
 alfaT = Nu * lmbda / d;

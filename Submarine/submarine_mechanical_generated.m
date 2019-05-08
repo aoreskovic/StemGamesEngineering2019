@@ -17,7 +17,7 @@ travel_range = 500;
 battery_capacity = 2;
 speed_kn = 7;
 
-MCR = 0.85;
+MCR = 1;
 
 sigma = 125;
 k_weld = 1;
@@ -25,7 +25,7 @@ k_structure = 1.5;
 
 length_c = 11.05;   % m
 radius_r = 1.5;     % m
-radius_rb = 2.2;    % m
+radius_rb = 1.7;    % m
 
 power_density_turbine = 0.1; % t/kW
 
@@ -38,8 +38,8 @@ sub_length = length_c+2*radius_r;
 
 % Surface
 
-surface_cylinder = 2*radius_r*pi*length_c;
-surface_sphere = 4*radius_r^2*pi;
+surface_cylinder = 2*radius_rb*pi*length_c;
+surface_sphere = 4*radius_rb^2*pi;
 surface_total = surface_cylinder+surface_sphere;
 
 % Volume
@@ -62,7 +62,6 @@ pressure_conversion = 100000;
 depth_pressure_pa = row*g*max_depth;
 depth_pressure_b = depth_pressure_pa/pressure_conversion;
 
-depth_pressure_b = depth_pressure_b;
 Di = radius_r*2*1000;
 
 thickness_hull = depth_pressure_b*Di/(20*sigma+depth_pressure_b);
@@ -74,7 +73,6 @@ mass_steel = surface_total*thickness_hull/1000*roc/1000*k_structure;
 
 kn2ms = 1852/3600;
 
-speed_kn = speed_kn;
 speed_ms = speed_kn*kn2ms;
 Fn = speed_ms/sqrt(9.08665*sub_length);
 ni = 0.000001187;

@@ -58,36 +58,9 @@ function status = setCraneInPosition(table)
     str = str1 + "on|High|" + num2str(table.q5) + "|deg" + str2;
     set_param("kran/Crane/Crane Mechanics" + ... 
               "/BeltAndPulley/Revolute Joint", 'MaskValueString', str);
-    
-    % Calculate top of the crane position and set load position
-    L = 4.85949 + table.q3 + table.q4;
-    a = 1.81648;
-    b = 0.6634945;
-    c0 = 1.331 + 0.194;
-    c = 1.331 + table.q2;
-    R = 0.135;
 
-    gamma = acos((c^2 - a^2 - b^2)/(-2*a*b));
-    gamma0 = acos((c0^2 - a^2 - b^2)/(-2*a*b));
-    theta = gamma - gamma0;
-
-    x0 = -0.24164;
-    y0 = 2.640;
-
-    if(theta <= pi/4)
-        deltaY = (1 + R*deg2rad(table.q5) - table.q3 - table.q4 - 0.31*sin(theta))/2 + 0.31*sin(theta);
-        xp = (x0+ (L-0.18)*cos(theta))*cos(deg2rad(table.q1));
-        yp = y0 + L*sin(theta) - deltaY;
-        zp = -(x0+ (L-0.18)*cos(theta))*sin(deg2rad(table.q1));
-    else
-        deltaY = (1 + R*deg2rad(table.q5) - table.q3 - table.q4)/2;
-        xp = (x0+ L*cos(theta))*cos(deg2rad(table.q1));
-        yp = y0 + L*sin(theta) - deltaY;
-        zp = -(x0+ L*cos(theta))*sin(deg2rad(table.q1));   
-    end
-
-    position_str = "[" + num2str([xp yp zp]) + "]";
-    angle_str =  num2str(table.q1 + 180);
+    position_str = "[" + num2str([-0.5 -0.15 0]) + "]";
+    angle_str = num2str(0);
     
     str = "RigidTransform|Cartesian|0|m|compiletime|+Z|" + ...
           position_str + ...
@@ -100,14 +73,6 @@ function status = setCraneInPosition(table)
       
     set_param("kran/Crane/Crane Mechanics" + ...
               "/BeltAndPulley/Rigid Transform2", 'MaskValueString', str);
-          
-    % Check whether pulley angle is large enough not to break physical
-    % constraints in the simulation
-    dPulley = deltaY - 0.05; % Distance from the pulley to the top of the crane
-    dTop = 0.18*sin(theta);
-    if(dPulley - dTop <= 0.01)
-        status = 1; % Constraints would be violated
-    end
 end
 
 

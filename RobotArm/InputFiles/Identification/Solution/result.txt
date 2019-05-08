@@ -1,2 +1,0 @@
-File for task1 loaded successfully!
-Sample time is wrong for example 1. Use Ts=0.05

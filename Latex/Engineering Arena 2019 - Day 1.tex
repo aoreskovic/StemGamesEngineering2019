@@ -1,14 +1,14 @@
 \documentclass{article}
-\usepackage{standalone}
+%\usepackage{standalone}
 \usepackage{fancyhdr}
-\graphicspath{{./Images/Crane/}}
-\usepackage[e]{Template/gameshf}
+
+
 \usepackage{import}
 \usepackage{caption}
 \usepackage{amsfonts, amsmath, amsthm}
 \usepackage{makecell}
 \usepackage{lastpage}
-
+\usepackage{moresize}
 
 
 
@@ -23,11 +23,33 @@
 \usepackage[pdftex]{hyperref}
 %\usepackage{txfonts}
 \usepackage{subcaption}
-\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3.5cm,right=3.5cm,marginparwidth=1.75cm]{geometry}
 \usepackage{algorithm2e}
-\usepackage{geometry}
 \usepackage{pdflscape}
 
+\usepackage[e, gameslogo]{Template/gameshf}
+
+
+
+
+
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{circuitikz}
+\usepackage{tabularx}
+\usepackage{rotating}
+\usepackage{caption} 
+\captionsetup[table]{skip=10pt}
+
+\usetikzlibrary{calc,positioning,shapes,decorations.pathreplacing}
+
+\tikzset{
+	short/.style={draw,rectangle,text height=3pt,text depth=13pt,
+		text width=7pt,align=center,fill=gray!30},
+	long/.style={short,text width=1.5cm},
+	verylong/.style={short,text width=4.5cm}
+}
 
 
 %% User defined
@@ -59,7 +81,11 @@
 %\newtheorem{definition}[theorem]{Definition}
 %\newtheorem{lemma}{Lemma}[theorem]
 
+\headheight 40pt              %% put this outside
+\headsep 10pt                 %% put this outside
 
+
+\graphicspath{{./Images/Crane/}{./Images/Electronics/}}
 
 % Source: 
 %https://tex.stackexchange.com/questions/117990/unicode-math-breaks-declaremathoperator
@@ -68,7 +94,8 @@
 	\DeclareMathOperator{\div}{div}
 }
 
-
+\usepackage{enumitem}
+\setlist[description]{style=unboxed}
 
 %opening
 \title{STEM games 2019}
@@ -78,16 +105,127 @@
 \date{}
 
 \begin{document}
-	\maketitle
+	%\maketitle
 	
-	\section{Introduction}
+	\thispagestyle{empty}
+	\newpage
+	\thispagestyle{empty}
+	\vspace*{0cm}
+	\begin{center}
+		
+		\textbf{\Huge{STEM Games 2019}}\\
+		\vspace*{2.4cm}
+		\includegraphics[width=0.4\textwidth]{logos/engineering} \\
+		\vspace*{2.4cm}
+		% TODO naslov
+		\huge{UNDERWATER HABITATS}
+		
+		\medskip
+		
+		\normalsize{a problem by}
+		
+		\medskip
+		
+		Dominik Barbarić \\
+		Karla Draženović \\
+		Nenad Ferdelji \\
+		Luka Mandić \\
+		Ante Orešković \\
+		Ivan Pavić \\
+		Vedran Slapničar \\
+		Danijel Zadravec \\
+		Marko Švec 
+		
+		\vspace{6cm}
+		
+		
+		% TODO Neki mini tekst?
+		\normalsize{}
+	\end{center}
+
+	\newpage
+	\section{Arena introduction}
+	
+	First of all, I would like to to welcome all the contestants that will be 
+	competing in 
+	2019 STEM Games engineering arena!
+	
+	This year's task focuses on the underwater habitats and logistical problems 
+	around them.
+	Underwater habitats can be permanent and semi-permanent, located at 
+	the sea beds.
+	They provide all facilities required for the human survival such as 
+	sleeping, eating and attending to personal hygiene.
+	Their most common use is for the scientific research, exploring the biology 
+	of the deep sea life and for the geological research of the ocean tectonic 
+	plates.
+	We also learned a lot about the life and technological problems dealing 
+	with the high pressure environments.
+	By the sea levels rising up the underwater habitats may become widespread, 
+	not only for scientific research, but also as a permanent home for people.
+	Aquanauts, as they are called spend between couple of weeks to a few months 
+	underwater.
+	Future projects that would create larger, more comfortable habitats could 
+	extend missions to years.
+	
+	Although the progress is being made in regenerative systems (for water, 
+	food  and electricity), most of the underwater habitats are not self 
+	sufficient, 
+	and require the constant influx of the supplies.
+	The logistical problems met here can be compared to those of 
+	supplying a space station - the habitats are dependent on the constant 
+	support of the surface to keep the habitat running, transporting new 
+	supplies and energy.
+	
+	
+	For that task, usually purpose built submarines are used,
+	since not all submarines are suited for the habitats located in the deeper 
+	waters.
+	Those submarines, alongside with the supplies, also transfer people from 
+	the surface to the habitats, and rescuing them in the 
+	cases of emergencies. 
+	The supplies are loaded into the submarines at the sea ports if the 
+	habitats are close to them and few trips are needed to transfer the 
+	supplies, or from the larger ship located above the habitat, with the 
+	submarine completing multiple dives to transfer the supplies.
+	
+	In both cases some kind of crane is used to load the supplies. 
+	The crane should be able to lift the desired load, pick it and drop it in 
+	precise locations and in some cases stabilize the load on the rocky seas.
+	
+	Another problem is the communication off the habitat with either surface, 
+	other habitats, or ships sailing above them.
+	Due to the salt content the sea water is slightly conductive and therefore 
+	absorbs electromagnetic radio-waves.
+	If the radio communication is needed, ELF ( Extremely low frequency) waves 
+	are used since they are less affected by the salt water losses, but often 
+	it is better to use other solutions.
+	
+	There are many interesting problems around this, but during this 
+	competition we decided to focus on few we found the most interesting.
+	
+	We want wish you the best luck during the next 3 days!
+	
+	
+	\newpage
+	\section{Hydraulic crane - Introduction}
+	
+	
 	
 	\noindent 
 	\textbf{Friendly advice}: Read everything before solving the task. Task grading is automatic. Submission form for every task is described in task's readme file.
 	
-	\section{Tasks} \label{sec:tasks}
+	\subsection{Tasks} \label{sec:tasks}
 	
-	The system for which you have to design a controller is the crane shown in the Figure \ref{fig:isometry}. The crane consists of a base, two booms(in some crane configurations \textit{Boom 1} is also called \textit{Mast}), two telescopic beams, three hydraulic cylinders, two electric motors and pulley with belt system. Masses of each part of the crane are listed in Table \ref{tab:crane_tab}.\textbf{ For the sake of simplicity and overall system dynamics, load has the mass $m_{load} = 800.59 kg$}.
+	The system for which you have to design a controller is the crane shown in 
+	the Figure \ref{fig:isometry}. The crane consists of a base, two booms (in 
+	some crane configurations \textit{Boom 1} is also called \textit{Mast}), 
+	two telescopic beams, three hydraulic cylinders, two electric motors and 
+	pulley with belt system. The purpose of the crane is to load the submarine 
+	with goods and equipment which is to be transported to underwater habitats. 
+	Masses of each part of the crane are listed in Table 
+	\ref{tab:crane_tab}.\textbf{ For the sake of simplicity and overall system 
+	dynamics, load has the mass $m_{load} = 800.59 kg$}.
 	
 	\begin{figure}[h!]
 		\centering
@@ -115,7 +253,7 @@
 		\end{tabular}
 	\end{center}
 	
-	\subsection{Hydraulics system}
+	\subsection{Hydraulics system(5 points)}
 	
 	Part of the crane is actuated using hydraulic system. The system, as we designed it, is shown in Figure \ref{fig:hydraulic} and we are aware it has some flaws. Your first task is to think about how you could redesign the system and improve its performance. Concentrate on what you can conclude with what we have given you, i.e. we ask you to propose a redesign of the schematics. You might want to postpone this task until you are done with other tasks and have a better understanding of the system you are working with.
 	
@@ -126,7 +264,11 @@
 		\label{fig:hydraulic}
 	\end{figure}
 	
-	\subsection{Kinematics}
+	\subsection{Kinematics(20 points)}
+
+	Kinematics model of the crane is important to ensure that the cargo is 
+	precisely placed into the submarine which delivers it to underwater 
+	habitats.
 	
 	Crane configuration and dimensions are shown in Figure \ref{fig:crane_side}, Figure \ref{fig:crane_top} and Figure \ref{fig:crane_back}. Figure \ref{fig:cylinder_conf} shows cylinder configuration with corresponding dimensions given in Table \ref{tab:cylinder_tab}. Load is shown in Figure \ref{fig:load}.
 	
@@ -229,8 +371,8 @@
 	Next step is to be able to determine kinematic configuration in opposite direction. Based on load positions specified in Table \ref{tab:inverse}, determine the corresponding angles and offsets $(q_1, d_1, d_2, d_3, q_2)$ for every given configuration. It is often the case that inverse kinematics has multiple valid solutions, so any valid solution you give will be graded as successful. We will set the crane in configuration position you give us and check if it is inside the maximum offset range of $\pm 0.25$ m from reference point given in Table \ref{tab:inverse}.
 	
 	\begin{center}
+		\captionof{table}{Inverse kinematics configurations}
 		\label{tab:inverse}
-		\captionof{table}{Inverse kinematics configurations}\label{tab:inverse}
 		\begin{tabular}{|| c || c c c ||}
 			\hline
 			Configuration & $x_L$[m] & $y_L$[m] & $z_L$[m] \\
@@ -247,7 +389,7 @@
 	\noindent
 	Information on how to submit your solution will be given to you in the \textit{readme} file in task folder. If you have any questions regarding submission of the task, ask your mentors.
 	
-	\subsection{Model identification}
+	\subsection{Model identification(30 points)}
 	
 	Now when you understand kinematics of the crane, it would be useful to know its dynamic model.
 	
@@ -255,12 +397,12 @@
 	
 	For this task you will do exactly that! Some of the parameters of the system are unknown and there is no way to measure them so you have to identify models for all crane actuators.
 	
-	Crane is set to default start position ($q_1 = 0; \ d_1 = 0.194; \  d_2 = 0; \  d_3 = 0; \  q_2 = 0$) and it is ready for driving. Given the known parameters of actuators (Table ), your job is to determine how the actuator will respond. We give you the opportunity to test whatever input signals you want.
+	Crane is set to default start position ($q_1 = 0; \ d_1 = 0.194; \  d_2 = 0; \  d_3 = 0; \  q_2 = 0$) and it is ready for driving. Given the known parameters of actuators (Table \ref{tab:el_params}), your job is to determine how the actuator will respond. We give you the opportunity to test whatever input signals you want.
 	Inputs for DC motors are in Volts [V] and for hydraulic actuators are valve opening in Meters[m]. Input signal limits are given in Table \ref{tab:input_limits}.  In task's \textit{readme} file you can find a way how to test your input signals and submit your results.
 	
 	\begin{center}
-		\label{tab:inverse}
-		\captionof{table}{Electric motor parameters}\label{tab:el_params}
+		\captionof{table}{Electric motor parameters}
+		\label{tab:el_params}
 		\begin{tabular}{|| c || c c c c c||}
 			\hline
 			Parameter & R[$\Omega$] & $L$[mH] & $k$[Vs/rad] & $J_{rot}$[kgm$^2$] & 
@@ -291,7 +433,7 @@
 	As said before, test signals are generated randomly. In total, you will have 5 test cases.  Each test case will start in default start position . 
 	Identification signal for every actuator is \textbf{step} function  (Heaviside function) with random step time in interval [0, $T_{sim}$] and with random value amplitude. Example of one test signal can be found in the task folder.
 	
-	\subsection{Crane driving}
+	\subsection{Crane driving(30 points)}
 	
 	After creating both kinematic and dynamic models of the system, your task is to make it serve its purpose. Crane has to carry a specific cargo from the dock to the submarine cargo space. Desired positions are given in Table \ref{tab:inverse} and you have already calculated inverse dynamics for these coordinates. Crane has to place the load in these points in the order given in Table \ref{tab:trajectory}.
 	
@@ -328,7 +470,194 @@
 	
 	\vspace{10pt}
 	\noindent
-	Your task is to design five controllers, one for every actuator. Discretization time for every controller is $T_s = 50ms$. Information on how to submit your solution will be given to you in the \textit{readme} file in task folder. If you have any questions regarding submission of the task, ask your mentors.
+	Your task is to design five controllers, one for every actuator. 
+	Discretization time for every controller is $T_s = 50ms$. Information on 
+	how to submit your solution will be given to you in the \textit{readme} 
+	file in task folder. If you have any questions regarding submission of the 
+	task, ask your mentors.
 	
+\newpage
+\section{DC voltage power supply - introduction(15 points)}
+
+
+For fully functional operation, the crane is equipped with 
+lot of computer based subsystems and electronic devices which operate on DC 
+voltage. To ensure their proper operation the DC voltage has to be stable and 
+without noise. To ensure stable DC voltage, device on Fig. 
+\ref{fig:schematic}. is used. Device is composed of several parts as it is 
+shown on the figure. Due to extreme conditions in the system, regulators often 
+fail and components have to be repaired or replaced with proper spare part.
+
+In this task, your job is to:
+\begin{itemize}
+	\item find the parts which ensure proper operation of regulator, 
+	\item ensure that the output voltage ripple is within the boundaries with 
+	proper choice of parts for the low pass filter,
+	\item find the probability of future malfunction in standby redundant 
+	system.
+\end{itemize}
+
+\textbf{Device specifications.} Device specifications are provided with 
+the following table. In the first and the second task you have to choose device 
+components. You have to ensure that your choice guarantees that the 
+device operating parameters are within the requirements specified in the 
+table \ref{tab:spec}.
+
+\begin{table}[h!]
+	\hyphenpenalty 10000
+	\caption{Device specifications}
+	\label{tab:spec}
+	\begin{tabularx}{\linewidth}{|X|X|X|X|} \hline
+		PARAMETER & TEST CONDITIONS & VALUE & UNIT \\ \hline
+		Input voltage ($U_{in}$)&  & $330$ & V \\ \hline 
+		Output voltage ($U_{out}$)& $I_{out} = 1$ A & $10$ ($\pm5$) \% & V \\ 
+		\hline
+		Output current ($I_{out}$) & $U_{in} = 330$ Vpp & $1.0$ & A \\ \hline
+		Ripple rejection & (36 kHz) & $78$ & dB \\ \hline
+	\end{tabularx}
+\end{table}
+
+\begin{sidewaysfigure}[h!]
+	\centering
+	\includegraphics[width=\linewidth]{reg.png}
+	\caption{DC voltage power supply device schematic}
+	\label{fig:schematic}
+\end{sidewaysfigure}
+
+\clearpage
+
+\subsection{Finding the proper choice of components}
+\label{ele:task:1}
+As it can be seen from the table \ref{tab:elems}, some components are not 
+determined. 
+
+\begin{table}[h!]
+	\hyphenpenalty 10000
+	\caption{Device element values}
+	\label{tab:elems}
+	\begin{tabularx}{\linewidth}{|X|X|X|X|} \hline
+		ELEMENT & PARAMETER & VALUE & UNIT \\ \hline
+		$T_1$ & transfer ratio ($n$) & $25$ &  dimensionless \\ \hline
+		$D_1$ & $U_{pn}$ & $0.6$ & V \\ \hline 
+		$R_2$ & Resistance & $1$ & M$\Omega$ \\ \hline
+		$R_4$ & Resistance & $470$ & k$\Omega$ \\ \hline
+		$R_L$ & Resistance & 10 & $\Omega$ \\ \hline
+		$Q_1$ & $U_{pn}$ & $0.6$ & V \\ \hline
+		$C_1$ & Capacitance & $10$ & mF \\ \hline
+	\end{tabularx}
+\end{table}
+In this subtask you need to specify resistor $R_1$ and diode $D_2$. Based on 
+the device operating values provided with table \ref{tab:spec} you have to 
+determine specifications for the resistor $R_1$ and diode $D_2$. You have to 
+find the components from the DigiKey Electronics product database. 
+
+There are, however, constraints for your choice of components:
+\begin{itemize}
+	\item $R_1$ has footprint given with figure Fig. \ref{fig:footprint},
+	\item $D_2$ is a through-hole component.
+\end{itemize} 
+
+Your choice is graded in several ways:
+\begin{itemize}
+	\item component price,
+	\item correct component voltage, power and current ratings,
+	\item correct component footprint.
+\end{itemize}
+As a result, you have to provide part number for resistor and part number for
+diode, respectively.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=0.5\linewidth]{footprint.png}
+	\caption{Component footprint with dimension in millimeters}
+	\label{fig:footprint}
+\end{figure}
+
+\newpage
+
+\subsection{LC filter design}
+\label{ele:task:2}
+To achieve specified ripple rejection at required frequency, design a LC low 
+pass filter which filters output of a regulator. As in previous task you have 
+to provide DigiKey part numbers for LC filter. \textbf{Note:} The ripple 
+rejection of the regulator part of the device is $58$ dB at $36$ kHz.
+
+Again, there are constraints for your choice of components:
+\begin{itemize}
+	\item $L_1$ has no additional constraints 
+	(think about already mentioned implicit constraints),
+	\item $C_2$ has footprint given with Fig. \ref{fig:footprint},
+	\item $Q$ factor has to be equal $\frac{\sqrt{2}}{2}$ for $R_L = 10$ 
+	$\Omega$.  
+\end{itemize}
+$Q$ factor has to be as close to $\frac{\sqrt{2}}{2}$ as possible. 
+
+Your choice is graded in the similar fashion as before:
+\begin{itemize}
+	\item price,
+	\item correct inductance and capacitance,
+	\item correct footprints, 
+	\item correct current and voltage ratings.
+\end{itemize}
+As a result, you have to provide part number for inductor and 
+part number for capacitor, respectively. 
+\newpage
+\subsection{Side task: Reliability of the system with redundant power supply} 
+\label{ele:task:3}
+To increase reliability of the power supply system two different linear 
+regulators are linked in configuration which is given with the Fig. 
+\ref{fig:psc}. This configuration is known as passive standby redundancy. 
+Probability of a failure in one regulator is modeled with exponential 
+probability density function. More precisely, probability density function for 
+the first regulator is:  
+\begin{equation}
+f_1(t) = \lambda_1 e^{-\lambda_1 t}
+\end{equation}
+and for the second regulator:
+\begin{equation}
+f_2(t) = \lambda_2 e^{-\lambda_2 t}
+\end{equation}
+
+Your task is to determine probability density function $f_S(t)$ which gives the
+probability of failure in system described with Fig. \ref{fig:psc}. As a result 
+provide probability of a failure for $t = 10000$ $h$ with:
+\begin{itemize}
+	\item[] $\lambda_1 = 1 \cdot10^{-6}$ $h^{-1}$
+	\item[] $\lambda_2 = 2 \cdot10^{-6}$ $h^{-1}$ 
+\end{itemize} 
+
+\textbf{Note}: mean time between failures is increased $T_{sf} = 
+T_{1f} + T_{2f}$. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\linewidth]{standby.png}
+	\caption{Standby system configuration}
+	\label{fig:psc}
+\end{figure}
+
+\newpage
+
+\subsection{Solution format}
+Solution for each task is a plain text document containing requested data. For
+the tasks \ref{ele:task:1} and \ref{ele:task:2} text documents need to have 
+two rows. One component part number in each row. Only one row is needed for the 
+task \ref{ele:task:3} (requested probability). Name the files 
+\texttt{task1.txt}, \texttt{task2.txt}, \texttt{task3.txt} and put them in 
+the appropriate Google Drive folder.
+
+Additionally, for the task \ref{ele:task:3} you have to provide paper 
+documentation which has to contain derivation of $f_S(t)$.
+
+\subsection{Grading scheme}
+Tasks are graded in the following manner:
+\begin{itemize}
+	\item tasks \ref{ele:task:1} and \ref{ele:task:2} - up to \textbf{5 pts} 
+	each (correct components in each task), 
+	\item task \ref{ele:task:3} - up to \textbf{5 pts} - \textbf{2.5 pts} for 
+	the correct probability and up to \textbf{2.5 pts} for correct 
+	documentation.
+\end{itemize}
+
 \end{document}
 

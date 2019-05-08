@@ -15,6 +15,6 @@ end
 
 fprintf('Score: %2.04f\n', score);
 
-if score > 15
-    score = 15;
+if score > 20
+    score = 20;
 end

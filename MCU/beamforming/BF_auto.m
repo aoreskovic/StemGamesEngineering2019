@@ -4,7 +4,8 @@ close all;
 err = linkError.instance();
 err.flushErorrs();
 
-teams = ["reference"];
+gdrive = "C:/work/gdrive/STEM Games 2019/Teams - Day 2 - References/";
+teams = ["Akvanauti"];
 
 while 1
 
@@ -12,8 +13,12 @@ while 1
         teamName = teams(teamIdx);
         teamScore = [];
 
-        delete(strcat("teams/",teamName,"/log.txt"));
-        diary(strcat("teams/",teamName,"/log.txt"));
+        if (exist(strcat(gdrive,teamName),'dir') ~= 7)
+            error('No team folder');
+        end
+
+        delete("log.txt");
+        diary("log.txt");
         diary on;
 
         time = clock;
@@ -21,27 +26,23 @@ while 1
 
         disp(sprintf("Evaluation started at %s\n\n",teamTime));
 
-        if (exist(strcat("teams/",teamName),'dir') ~= 7)
-            error('No team folder');
-        end
-
-        if (exist(strcat("teams/",teamName,"/elements1.csv"),'file') ~= 2)
+        if (exist(strcat(gdrive,teamName,"/Beamforming/beamformer/elements1.csv"),'file') ~= 2)
             teamScore = zeros(1,4);
             disp("No beamformer implemented for task 1.");
         else
 
-            elements = csvread(strcat("teams/",teamName,"/elements1.csv"));
+            elements = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/elements1.csv"));
 
             % Scenario 1
             fprintf('===========================\nTASK 1, SCENARIO 1\n===========================\n');
 
             targetAz = 0;
 
-            if (exist(strcat("teams/",teamName,"/scenario1.csv"),'file') ~= 2)
+            if (exist(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario1.csv"),'file') ~= 2)
                 score = 0;
                 disp("No solution for scenario 1.");
             else
-                bfMatrix = csvread(strcat("teams/",teamName,"/scenario1.csv"));
+                bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario1.csv"));
 
                 try
                     Task1_Sc123;
@@ -61,11 +62,11 @@ while 1
 
             targetAz = 30;
 
-            if (exist(strcat("teams/",teamName,"/scenario2.csv"),'file') ~= 2)
+            if (exist(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario2.csv"),'file') ~= 2)
                 score = 0;
                 disp("No solution for scenario 2.");
             else
-                bfMatrix = csvread(strcat("teams/",teamName,"/scenario2.csv"));
+                bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario2.csv"));
 
                 try
                     Task1_Sc123;
@@ -85,11 +86,11 @@ while 1
 
             targetAz = 60;
 
-            if (exist(strcat("teams/",teamName,"/scenario3.csv"),'file') ~= 2)
+            if (exist(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario3.csv"),'file') ~= 2)
                 score = 0;
                 disp("No solution for scenario 3.");
             else
-                bfMatrix = csvread(strcat("teams/",teamName,"/scenario3.csv"));
+                bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario3.csv"));
 
                 try
                     Task1_Sc123;
@@ -109,11 +110,11 @@ while 1
 
             targetAz = 70;
 
-            if (exist(strcat("teams/",teamName,"/scenario4.csv"),'file') ~= 2)
+            if (exist(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario4.csv"),'file') ~= 2)
                 score = 0;
                 disp("No solution for scenario 4.");
             else
-                bfMatrix = csvread(strcat("teams/",teamName,"/scenario4.csv"));
+                bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario4.csv"));
 
                 try
                     Task1_Sc4;
@@ -130,12 +131,12 @@ while 1
 
         end
 
-        if (exist(strcat("teams/",teamName,"/elements2.csv"),'file') ~= 2)
-            teamScore = zeros(1,4);
+        if (exist(strcat(gdrive,teamName,"/Beamforming/beamformer/elements2.csv"),'file') ~= 2)
+            teamScore = [teamScore 0];
             disp("No beamformer implemented for task 2.");
         else
 
-            elements = csvread(strcat("teams/",teamName,"/elements2.csv"));
+            elements = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/elements2.csv"));
 
             % Scenario 5
             fprintf('===========================\nTASK 2, SCENARIO 5\n===========================\n');
@@ -143,11 +144,11 @@ while 1
             targetAz = 45;
             targetEl = 60;
 
-            if (exist(strcat("teams/",teamName,"/scenario5.csv"),'file') ~= 2)
+            if (exist(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario5.csv"),'file') ~= 2)
                 score = 0;
                 disp("No solution for scenario 5.");
             else
-                bfMatrix = csvread(strcat("teams/",teamName,"/scenario5.csv"));
+                bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario5.csv"));
 
                 try
                     Task2_Sc5;
@@ -175,6 +176,7 @@ while 1
         disp(sprintf("\n\n===========================\nTotal score: %2.04f\nEvaluation completed at %s", teamScore(end), teamTime));
 
         diary off;
+        copyfile("log.txt",strcat(gdrive,teamName,"/Beamforming/simulation/log.txt"),'f');
 
         % Format and write output file
 
@@ -185,7 +187,7 @@ while 1
         outputCsvString = outputCsvString(1:end-1);
         outputCsvString = sprintf('%s;%s',outputCsvString,teamTime);
 
-        outputCsvFile = fopen(strcat("scores/score_",teamName,".csv"),'w');
+        outputCsvFile = fopen(strcat(gdrive,"../Results/Beamforming/score_",teamName,".csv"),'w');
         fprintf(outputCsvFile,'%s',outputCsvString);
         fclose(outputCsvFile);
 

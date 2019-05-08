@@ -1,8 +1,8 @@
 #ifndef MYFN
 #define MYFN
 
-double buffer_t1[200];
-double buffer_t2[200];
+double buffer_trans1[200];
+double buffer_trans2[200];
 double buffer_rot[200];
 double buffer_base[200];
 double buffer_pulley[200];
@@ -13,7 +13,7 @@ typedef struct coords {
     double z;
 } Coords;
 
-typedef struct coords {
+typedef struct mesasurement {
     double rot;
     double trans1;
     double trans2;

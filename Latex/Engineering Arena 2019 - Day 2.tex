@@ -1,17 +1,155 @@
 \documentclass{article}
 \usepackage{standalone}
-\graphicspath{{Images/}}
-\usepackage[e]{Template/gameshf}
 \usepackage{import}
 \usepackage{xcolor}
+
+
+
+%\usepackage{standalone}
+\usepackage{fancyhdr}
+
+
+\usepackage{import}
+\usepackage{caption}
+\usepackage{amsfonts, amsmath, amsthm}
+\usepackage{makecell}
+\usepackage{lastpage}
+\usepackage{moresize}
+
+
+
+\hyphenpenalty=10000
+
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+%\usepackage[languagenames,fixlanguage,english]{babelbib}
+\usepackage[pdftex]{hyperref}
+%\usepackage{txfonts}
+\usepackage{subcaption}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3.5cm,right=3.5cm,marginparwidth=1.75cm]{geometry}
+\usepackage{algorithm2e}
+\usepackage{pdflscape}
+
+\usepackage[e, gameslogo]{Template/gameshf}
+
+
+
+
+
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{circuitikz}
+\usepackage{tabularx}
+\usepackage{rotating}
+\usepackage{caption} 
+\captionsetup[table]{skip=10pt}
+
+\usetikzlibrary{calc,positioning,shapes,decorations.pathreplacing}
+
+\tikzset{
+	short/.style={draw,rectangle,text height=3pt,text depth=13pt,
+		text width=7pt,align=center,fill=gray!30},
+	long/.style={short,text width=1.5cm},
+	verylong/.style={short,text width=4.5cm}
+}
+
+
+%% User defined
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\funcA}{\mathfrak{a}}
+\newcommand{\funcB}{\mathfrak{b}}
+\newcommand{\funcC}{\mathcal{C}}
+\newcommand{\funcU}{\mathcal{U}}
+\newcommand{\funcV}{\mathcal{V}}
+\newcommand{\funcW}{\mathcal{W}}
+\newcommand{\simgrad}{\sym\nabla}
+\newcommand{\heps}{{h,\varepsilon}}
+\newcommand{\epsh}{{\varepsilon(h)}}
+\newcommand{\eps}{{\varepsilon}}
+\newcommand{\twoscale}{{\,\overset{2}{\rightharpoonup}\,}}
+\newcommand{\drtwoscale}{{\,\overset{dr-2}{\rightharpoonup}\,}}
+\DeclareMathOperator{\sym}{sym}
+\DeclareMathOperator{\dvg}{div}
+
+%\newtheorem{exmp}{Example}[section]
+%\newtheorem{note}{Note}
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{corollary}{Corollary}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{lemma}{Lemma}[theorem]
+
+\headheight 40pt              %% put this outside
+\headsep 10pt                 %% put this outside
+
+
+\graphicspath{{./Images/Crane/}{./Images/Electronics/}{./Images/}}
+
+% Source: 
+%https://tex.stackexchange.com/questions/117990/unicode-math-breaks-declaremathoperator
+\AtBeginDocument{
+	\let\div\relax
+	\DeclareMathOperator{\div}{div}
+}
+
+\usepackage{enumitem}
+\setlist[description]{style=unboxed}
 
 %opening
 \title{STEM games 2019}
 \author{Mentori}
 
+\title{STEM Games Engineering Arena}
+\date{}
+
 \begin{document}
+	%\maketitle
 	
-	\maketitle
+	\thispagestyle{empty}
+	\newpage
+	\thispagestyle{empty}
+	\vspace*{0cm}
+	\begin{center}
+		
+		\textbf{\Huge{STEM Games 2019}}\\
+		\vspace*{2.4cm}
+		\includegraphics[width=0.4\textwidth]{logos/engineering} \\
+		\vspace*{2.4cm}
+		% TODO naslov
+		\huge{UNDERWATER HABITATS}
+		
+		\medskip
+		
+		\normalsize{a problem by}
+		
+		\medskip
+		
+		Dominik Barbarić \\
+		Karla Draženović \\
+		Nenad Ferdelji \\
+		Luka Mandić \\
+		Ante Orešković \\
+		Ivan Pavić \\
+		Vedran Slapničar \\
+		Danijel Zadravec \\
+		Marko Švec 
+		
+		\vspace{6cm}
+		
+		
+		% TODO Neki mini tekst?
+		\normalsize{}
+	\end{center}
+	
+	\newpage
 		
 	\section{Introduction}
 	
@@ -40,14 +178,14 @@
 	or: to design power generation system which can generate sufficient energy to travel 100 km at depth 50 m 20 km at depth  100 m and 20 km at depth 10 m
 	Formule za nosivost, masu, otpor, maksimalna duljina izmjenjivača, maksimalna snaga turbine i drugo ovisno o veličini podmornice
 		
-		
+	\newpage
 	\section{Power generation system description}
 	
 	Power generation system schematics are shown on figure \ref{fig:pwr_scheme}.
 	
 	\begin{figure}[h!]
 		\centering
-		\includegraphics[width=\textwidth]{Thermodynamics/pwr_system.png}
+		\includegraphics[width=\textwidth]{terma.png}
 		\caption{Power generation system.}
 		\label{fig:pwr_scheme}
 	\end{figure}

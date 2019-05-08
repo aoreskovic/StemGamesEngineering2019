@@ -237,11 +237,39 @@
 		\label{fig:pwr_scheme}
 	\end{figure}
 	
-	Submarine power generation system consists of two main circuits; flue gas circuit (red) and steam circuit (cyan). Steam circuit is used for steam production which expands in turbine "Turb" providing necessary power for the "Generator" used for charging the batteries for submarine propulsion. The flue gas circuit is used to provide necessary heat flow for evaporating and superheating the steam for the turbine. Flue gas is generated in the combustion chamber "Comb" in which energy is released by ethanol combustion in pure oxygen.
+	Submarine power generation system consists of two main circuits; \\
+	flue gas \footnote{combustion exhaust gas} circuit (red) and steam 
+	circuit (cyan). 
+	Steam circuit is used for steam production which expands in turbine "Turb" 
+	providing necessary power for the "Generator" used for charging the 
+	batteries for submarine propulsion. The flue gas circuit is used to provide 
+	necessary heat flow for evaporating and superheating the steam for the 
+	turbine. Flue gas is generated in the combustion chamber "Comb" in which 
+	energy is released by ethanol combustion in pure oxygen.
 	
-	Liquefied oxygen and ethanol fuel are stored in separate tanks "T1" and "T2", respectively. While pump P2 delivers fuel stream "h" to combustion chamber "Comb", cryogenic pump P2 delivers liquefied oxygen stream "i" to oxygen vaporizer "Vap" where it vaporizes and enters combustion chamber "Comb" in stoichiometric ratio at which fuel combustion is, by assumption, complete without any excess oxygen. Flue gas temperature at the outlet from the combustion chamber (stream "a") is controlled by return stream of cooled flue gas "d" by compressor "Comp" and should never exceed maximum allowed flue gas temperature %ϑ_(fg,max).
+	Liquefied oxygen and ethanol fuel are stored in separate tanks "T1" and 
+	"T2", respectively. While pump P2 delivers fuel stream "h" to combustion 
+	chamber "Comb", cryogenic pump P2 delivers liquefied oxygen stream "i" to 
+	oxygen vaporizer "Vap" where it vaporizes and enters combustion chamber 
+	"Comb" in stoichiometric ratio at which fuel combustion is, by assumption, 
+	complete without any excess oxygen. Flue gas temperature at the outlet from 
+	the combustion chamber (stream "a") is controlled by return stream of 
+	cooled flue gas "d" by compressor "Comp" and\\
+	 should never exceed maximum allowed flue gas temperature %ϑ_(fg,max).
 	
-	Flue gas stream "a", which exits combustion chamber "Comb" enters heat exchanger "HE" used for water evaporation and steam superheating. Therefore, heat exchanger "HE" comprises two sections; an evaporation section "Evap" and superheating section "Super". Total flue gas mass flow which enters heat exchanger "HE" is divided into two flue gas streams "b" and "c". Stream "c" flows through evaporation ("Evap") section and stream "b" flows through superheating ("Super") section in parallel configuration. On heat exchanger exit, two flue gas parallel streams "b" and "c" are adiabatically mixed in mixing chamber "Mix" forming flue gas stream "m".Part of stream "m" is returned by compressor "Comp" to combustion chamber "Comb" as stream "d" to prevent overheating (maximum allowed flue gas temperature), while the rest (stream "e") is used for oxygen evaporation in heat exchanger "Vap" and evacuated outside submarine.
+	Flue gas stream "a", which exits combustion chamber "Comb" enters heat 
+	exchanger "HE" used for water evaporation and steam superheating. 
+	Therefore, heat exchanger "HE" comprises two sections; an evaporation 
+	section "Evap" and superheating section "Super". Total 
+	flue gas mass flow which enters heat exchanger "HE" is divided into two 
+	flue gas streams "b" and "c". Stream "c" flows through evaporation ("Evap") 
+	section and stream "b" flows through superheating ("Super") section in 
+	parallel configuration. On heat exchanger exit, two flue gas parallel 
+	streams "b" and "c" are adiabatically mixed in mixing chamber "Mix" forming 
+	flue gas stream "m".Part of stream "m" is returned by compressor "Comp" to 
+	combustion chamber "Comb" as stream "d" to prevent overheating (maximum 
+	allowed flue gas temperature), while the rest (stream "e") is used for 
+	oxygen evaporation in heat exchanger "Vap" and evacuated outside submarine.
 	  
 	Heat exchanger "HE" is a pool boiling type apparatus which means that liquid water in the evaporating section is at rest and is evaporated by the flue gas that passes through a tube bundle in the evaporating section. The exact amount of steam that is evaporated in evaporation section "Evap" (which corresponds to the steam mass flow of stream "g") is then superheated in superheating section "Super" of heat exchanger "HE" producing the superheated steam "f". Superheated steam (stream "f") passes through throttling valve "TV" and enters the steam turbine "Turb" where mechanical power is produced by steam adiabatic expansion to condensation pressure p2. After the expansion, low pressure steam condenses in sea water cooled condenser "Cond" and is returned to high pressure evaporator "Evap" by condensate pump "P3". 
 	
@@ -290,7 +318,8 @@
 		\eta = \frac{h_1-h_2}{h_1 - h_{2s}}.
 	\end{equation}
 	
-	Steam turbine isentropic efficiency depends upon mean steam volume flow rate qv according to the following equation:
+	Steam turbine isentropic efficiency depends upon mean steam volume flow 
+	rate $q_v$ according to the following equation:
 	
 	\begin{equation}\label{eq:eta2}
 		\eta = aq_v^2 + bq_v + c,
@@ -305,7 +334,7 @@
 	
 	Turbine efficiency is highest at its nominal design point for which 
 	pressures ($p_1$, $p_2$) and inlet temperature T1 are given in Excel Table 
-	1, while nominal flow rate is defined by Stodola’s ellipse equation 
+	1, while nominal flow rate is defined by Stodola’s Ellipse equation 
 	\ref{eq:stodola}. Turbine can operate at other conditions (off design 
 	turbine performance with lower, i.e. higher mass flow rates than the 
 	nominal) with the cost of reduced efficiency, provided that these 
@@ -315,7 +344,15 @@
 	
 	\subsubsection*{Lower mass flow rate}
 	
-	Steam throttling is a common way for reduction of power produced by steam turbine. By reducing fuel pump “P2" and oxygen pump “P1" speed accordingly when power demand is lowered, fuel consumption and evaporated steam mass flow rate are decreased. In conjunction with steam flow rate decrease, throttling valve “TV" orifice is constricted to reduce turbine inlet pressure $p_{1,thr}$ to a value which satisfies Stodola’s Ellipse law \ref{eq:stodola} for given decreased mass flow rate $q_m$. In a throttling process, superheated steam which exits heat exchanger “HE" is throttled to lower pressure $p_{1,thr}$, while steam enthalpy is conserved.
+	Steam throttling is a common way for reduction of power produced by steam 
+	turbine. By reducing fuel pump "P2" and oxygen pump "P1" speed accordingly 
+	when power demand is lowered, fuel consumption and evaporated steam mass 
+	flow rate are decreased. In conjunction with steam flow rate decrease, 
+	throttling valve "TV" orifice is constricted to reduce turbine inlet 
+	pressure $p_{1,thr}$ to a value which satisfies Stodola’s Ellipse law 
+	\ref{eq:stodola} for given decreased mass flow rate $q_m$. In a throttling 
+	process, superheated steam which exits heat exchanger "HE" is throttled to 
+	lower pressure $p_{1,thr}$, while steam enthalpy is conserved.
 	
 	\begin{equation}\label{eq:ent_preserve1}
 		h_{1,thr} = h_1,
@@ -347,7 +384,13 @@
 	
 	\subsection{Heat exchangers}
 	
-	Heat exchanger is a device whose purpose is to transfer heat from warmer fluid stream to colder stream. There are three heat exchangers in the power generation system: heat exchanger “HE" which is divided to superheating and evaporative section, condenser "Cond" and oxygen vaporizer "Vap". Condenser "Cond" and vaporizer "Vap", whose performance will not be evaluated in this task are assumed to be regulated accordingly in each time step with the current need of the power generation system. 
+	Heat exchanger is a device whose purpose is to transfer heat from warmer 
+	fluid stream to colder stream. There are three heat exchangers in the power 
+	generation system: heat exchanger "HE" which is divided to superheating and 
+	evaporative section, condenser "Cond" and oxygen vaporizer "Vap". Condenser 
+	"Cond" and vaporizer "Vap", whose performance will not be evaluated in this 
+	task are assumed to be regulated accordingly in each time step with the 
+	current need of the power generation system. 
 	
 	\subsubsection*{Heat exchanger "HE"}
 	
@@ -453,7 +496,8 @@
 		\Phi_e = q_m(h'' -h_4),
 	\end{equation}
 	
-	where $h''$ is saturated (dry) steam specific enthalpy, and h4 is enthalpy of subcooled liquid at condensate pump outlet. 
+	where $h''$ is saturated (dry) steam specific enthalpy, and $h_4$ is 
+	enthalpy of subcooled liquid at condensate pump outlet. 
 	The same amount of heat flow is received from stream "b" flue gas whose enthalpy decreases.
 	
 	\begin{equation}\label{eq:evap_steam_mass2}
@@ -467,7 +511,9 @@
 	Flue gas mean molar heat capacities are given in appendix
 	It is assumed that mass flow $q_m$ in current time step flows through superheating section "Super" of "HE", turbine "Turb", condenser "Cond" and condensate pump "P3".
 	
-	Evaporated steam mass flow $q_m$, whose value is determined by equation (13) is then superheated at constant pressure in superheater section “Super" of heat exchanger "HE" by exchanged heat flow:
+	Evaporated steam mass flow $q_m$, whose value is determined by equation 
+	(13) is then superheated at constant pressure in superheater section 
+	"Super" of heat exchanger "HE" by exchanged heat flow:
 	
 	\begin{equation}\label{eq:evap_steam_mass3}
 		\Phi_s = q_m(h_1 - h''),
@@ -502,7 +548,9 @@
 	
 	Type and length of tubes at evaporative and superheating section are equal. Number of tubes for each section and flue gas fraction which enters each section can be selected independently.  
 	
-	While designing a heat exchanger, to prevent tube erosion, one must consider that product of flue gas density, $\rho$, and squared velocity, $w^2$, never exceed $6800 Pa$, i.e. 
+	While designing a heat exchanger, to prevent tube erosion, one must 
+	consider that product of flue gas density, $\rho$, and squared velocity, 
+	$w^2$, never exceed $6800$  Pa,  i.e. 
 	
 	\begin{equation}\label{eq:flue_gas_density}
 		\rho w^2 < 6800 Pa.
@@ -521,7 +569,13 @@
 	where $h'$ is enthalpy of saturated liquid water at condensation pressure $p_2$.
 	
 	\noindent
-	Heat flow $\Phi_{cond}$ is rejected to sea water inside condenser “Cond". It can be assumed that condenser "Cond" in the system is properly designed and sea water mass flow at pump "P4" is automatically adjusted to absorb heat flow $\Phi_{cond}$. Therefore, sizing of condenser "Cond" and sea water pump "P4" and its control is not a part of this task and is assumed as ideal. Condensed water always exits condenser “Cond" at saturated liquid state.
+	Heat flow $\Phi_{cond}$ is rejected to sea water inside condenser "Cond". 
+	It can be assumed that condenser "Cond" in the system is properly designed 
+	and sea water mass flow at pump "P4" is automatically adjusted to absorb 
+	heat flow $\Phi_{cond}$. Therefore, sizing of condenser "Cond" and sea 
+	water pump "P4" and its control is not a part of this task and is assumed 
+	as ideal. Condensed water always exits condenser "Cond" at saturated liquid 
+	state.
 	Maximum sea water temperature at which submarine has to operate is $30^{\circ}C$, and minimal temperature difference between condensing steam and sea water for given condenser is $15^{\circ}C$. 
 	
 	\subsection{Combustion chamber}
@@ -558,18 +612,31 @@
 	
 	\subsection{Fuel and oxygen pumps}
 	
-	Fuel pump “P2" is used to transport fuel to combustion chamber. Pump “P2" has a variable frequency drive which allows precise control of fuel mass flow to combustion chamber. It is assumed that combustion of delivered fuel mass flow is complete and instantaneous. It is also assumed that control of oxygen pump “P1" is linked to pump “P2" in a way that oxygen supply is in exact stoichiometric ratio needed for complete ethanol combustion. Therefore, oxygen pump “P1" dimensioning and control is not a part of this assignment. 
-	Fuel pump “P2" speed determines the fuel combustion rate and influences evaporation and superheating of steam in heat exchanger “HE" and finally power P extracted at steam turbine “Turb".
+	Fuel pump "P2" is used to transport fuel to combustion chamber. Pump "P2" 
+	has a variable frequency drive which allows precise control of fuel mass 
+	flow to combustion chamber. It is assumed that combustion of delivered fuel 
+	mass flow is complete and instantaneous. It is also assumed that control of 
+	oxygen pump "P1" is linked to pump "P2" in a way that oxygen supply is in 
+	exact stoichiometric ratio needed for complete ethanol combustion. 
+	Therefore, oxygen pump "P1" dimensioning and control is not a part of this 
+	assignment. 
+	Fuel pump "P2" speed determines the fuel combustion rate and influences 
+	evaporation and superheating of steam in heat exchanger "HE" and finally 
+	power P extracted at steam turbine "Turb".
 	
 	\subsubsection*{Fuel pump}
 	
-	Fuel pump “P2" is positive displacement pump with variable speed drive. It is used to transport fuel from fuel tank “T2" to combustion chamber “Comb". The total differential head a pump must generate is a sum of static head difference and frictional head losses: 
+	Fuel pump "P2" is positive displacement pump with variable speed drive. It 
+	is used to transport fuel from fuel tank "T2" to combustion chamber "Comb". 
+	The total differential head a pump must generate is a sum of static head 
+	difference and frictional head losses: 
 	
 	\begin{equation}\label{eq:head_total}
 		h_{tot} = h_{stat} + h_{fr}.
 	\end{equation}
 	
-	There is no height difference between fuel tank “T2" and combustion chamber “Comb". Fuel is stored at pressure of 1 atm.
+	There is no height difference between fuel tank "T2" and combustion chamber 
+	"Comb". Fuel is stored at pressure of 1 atm.
 	Frictional head loss is calculated based on fuel volume flow rate:
 	
 	\begin{equation}\label{eq:head_loss}
@@ -612,7 +679,14 @@
 	
 	\subsection{Compressor}
 	
-	Part of flue gas at heat exchanger exit after mixing at mixing chamber “Mix" is returned to combustion chamber “Comb" by compressor “Comp". This flue gas return should ensure that flue gas stream “a" always exits combustion chamber at temperature below $\theta_{fg,max}$. Compressor “Comp" can provide any flue gas mass flow rate between minimum and maximum flow rate defined for that compressor type. It can be assumed that sufficient mass of flue gases is always available for return at mixing region “Mix".
+	Part of flue gas at heat exchanger exit after mixing at mixing chamber 
+	"Mix" is returned to combustion chamber "Comb" by compressor "Comp". This 
+	flue gas return should ensure that flue gas stream "a" always exits 
+	combustion chamber at temperature below $\theta_{fg,max}$. Compressor 
+	"Comp" can provide any flue gas mass flow rate between minimum and maximum 
+	flow rate defined for that compressor type. It can be assumed that 
+	sufficient mass of flue gases is always available for return at mixing 
+	region "Mix".
 	
 	Compressor is controlled with respect to fuel pump speed.  Dependence between pump speed and return flue gas flow rate provided by the compressor is linear. 
 	
@@ -626,7 +700,8 @@
 	where
 	
 	\begin{itemize}
-		\item $q_{m,ret}$ is flue gas mass flow rate which compressor “Comp" returns to combustion chamber “Comb"
+		\item $q_{m,ret}$ is flue gas mass flow rate which compressor "Comp" 
+		returns to combustion chamber "Comb"
 		\item $q_{m,ret,min}$ is minimal compressor mass flow rate
 		\item $q_{m,ret,max}$ is maximal compressor mass flow rate	
 	\end{itemize}
@@ -646,7 +721,9 @@
 	
 	\subsection{Condensate pump}
 
-	Condensate pump “P3" is used for return of condensed steam at low condensation pressure $p_3$ condenser “Cond" outlet to heat exchanger “HE" at high evaporation pressure $p_4$.
+	Condensate pump "P3" is used for return of condensed steam at low 
+	condensation pressure $p_3$ condenser "Cond" outlet to heat exchanger "HE" 
+	at high evaporation pressure $p_4$.
 	Specific enthalpy $h_4 = 359.83 \,\textrm{kW}$ at pump outlet.
 
 	\subsection{Constants}

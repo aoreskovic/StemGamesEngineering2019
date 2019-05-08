@@ -12,9 +12,7 @@
 \begin{document}
 	
 	\maketitle
-	
-	
-	
+		
 	\section{Introduction}
 	
 	The choice of propulsion system type is one of the most important parts in submarine’s design process since it determines the ability of fulfilling its purpose. Submarines that perform underwater research activities require endurance and certain flexibility in different littoral conditions. For example, conventional motor propulsion systems, such as diesel electric, when operational, require fresh air intake for driving electrical generator. In this way, a period while a submarine can remain submerged is limited by the power and endurance of the battery system and counts in hours or few days at most. Therefore, when it comes to endurance such systems might not be an optimal choice. Technology that overcomes this drawback is a nuclear power system which offers better endurance (even few months) and speed of the submarines but there are number of disadvantages (very expensive, operational limitations in shallow littoral waters etc.) that make them unsuitable for underwater research activities. The most suitable seems to be so called Air Independent Propulsion systems (AIP systems) which are marine propulsion technologies that allows non-nuclear submarine to operate without access to atmospheric oxygen. 
@@ -44,6 +42,7 @@
 		
 		
 	\section{Power generation system description}
+	
 	Power generation system schematics are shown on figure \ref{fig:pwr_scheme}.
 	
 	\begin{figure}[h!]
@@ -73,21 +72,30 @@
 		P = q_m(h_1 - h_2),
 	\end{equation}
 	
+	\noindent
 	where 
-	$q_m$ is steam mass flow rate, 
-	$h_1$ is steam specific enthalpy at turbine inlet,
-	$h_2$ is steam specific enthalpy at turbine outlet.
+	
+	\begin{itemize}
+		\item $q_m$ is steam mass flow rate, 
+		\item $h_1$ is steam specific enthalpy at turbine inlet,
+		\item $h_2$ is steam specific enthalpy at turbine outlet.
+	\end{itemize}
+
 	Turbine steam swallowing capacity mass flow rate $q_m$ at given pressures and inlet temperature can be expressed by Stodola’s Ellipse equation:
 	
 	\begin{equation}\label{eq:stodola}
-		q_m = \frac{K}{\sqrt(T)}(p_1^2 - p_2^2)^\frac{1}{2},
+		q_m = \frac{K}{\sqrt{T}}(p_1^2 - p_2^2)^\frac{1}{2},
 	\end{equation}
 	
+	\noindent
 	where:
-	$K$ is Stodola’s coefficient, 
-	$p_1$ is turbine inlet pressure
-	$p_2$ is turbine outlet pressure
-	$T$ is turbine inlet absolute temperature.
+	
+	\begin{itemize}
+		\item $K$ is Stodola’s coefficient, 
+		\item $p_1$ is turbine inlet pressure,
+		\item $p_2$ is turbine outlet pressure,
+		\item $T$ is turbine inlet absolute temperature.
+	\end{itemize}
 	
 	\section{Steam turbine isentropic efficiency}
 	
@@ -118,10 +126,14 @@
 	
 	Steam throttling is a common way for reduction of power produced by steam turbine. By reducing fuel pump “P2" and oxygen pump “P1" speed accordingly when power demand is lowered, fuel consumption and evaporated steam mass flow rate are decreased. In conjunction with steam flow rate decrease, throttling valve “TV" orifice is constricted to reduce turbine inlet pressure $p_{1,thr}$ to a value which satisfies Stodola’s Ellipse law \ref{eq:stodola} for given decreased mass flow rate $q_m$. In a throttling process, superheated steam which exits heat exchanger “HE" is throttled to lower pressure $p_{1,thr}$, while steam enthalpy is conserved.
 	
-	\begin{equation}\label{eq:ent_preserve}
-		h_{1,thr} = h_1, 
-		p_{1,thr} = p_1,
-		T_{1,thr} = T(p_{1,thr},h_1) < T_1
+	\begin{equation}\label{eq:ent_preserve1}
+		h_{1,thr} = h_1,
+	\end{equation}
+	\begin{equation}\label{eq:ent_preserve2}
+	p_{1,thr} = p_1,
+	\end{equation}
+	\begin{equation}\label{eq:ent_preserve3}
+	T_{1,thr} = T(p_{1,thr},h_1) < T_1.
 	\end{equation}
 	
 	Side effect of throttling is a temperature reduction which corresponds to the state of conserved enthalpy $h_1$ at throttled pressure $p_{1,thr}$. Pressure and temperature are both part of a Stodola’s Ellipse law \ref{eq:stodola} which means they need to simultaneously satisfy Stodola’s Ellipse law  \ref{eq:stodola}  and enthalpy conservation of a throttling process from state "1".
@@ -320,7 +332,7 @@
 	Heat flow $\Phi_{cond}$ is rejected to sea water inside condenser “Cond". It can be assumed that condenser "Cond" in the system is properly designed and sea water mass flow at pump "P4" is automatically adjusted to absorb heat flow $\Phi_{cond}$. Therefore, sizing of condenser "Cond" and sea water pump "P4" and its control is not a part of this task and is assumed as ideal. Condensed water always exits condenser “Cond" at saturated liquid state.
 	Maximum sea water temperature at which submarine has to operate is $30^{\circ}C$, and minimal temperature difference between condensing steam and sea water for given condenser is $15^{\circ}C$. 
 	
-	\subsection{Combustion chamber}
+	\subsection*{Combustion chamber}
 	
 	Combustion chamber "Comb" is enclosed space in which ethanol burns in liquid oxygen. It is assumed to be perfectly insulated. During the combustion, lower heating value of ethanol is converted into flue gas enthalpy. Combustion pressure is at least 1 bar above static pressure evaluated at submarine centerline. Pressure loss from combustion chamber "Comb" to heat exchanger "HE" can be neglected.
 	
@@ -369,7 +381,7 @@
 	Frictional head loss is calculated based on fuel volume flow rate:
 	
 	\begin{equation}\label{eq:head_loss}
-		h_{fr} = k_{pipe} q_{v,fuel}^2,
+		h_{fr} = k_{pipe} \cdot q_{v,fuel}^2,
 	\end{equation}
 	
 	\noindent
@@ -406,7 +418,7 @@
 	\noindent
 	Pump parameters are given in table \ref{tab:pump_params}.
 	
-	\subsection{Compressor}
+	\subsection*{Compressor}
 	
 	Part of flue gas at heat exchanger exit after mixing at mixing chamber “Mix" is returned to combustion chamber “Comb" by compressor “Comp". This flue gas return should ensure that flue gas stream “a" always exits combustion chamber at temperature below $\theta_{fg,max}$. Compressor “Comp" can provide any flue gas mass flow rate between minimum and maximum flow rate defined for that compressor type. It can be assumed that sufficient mass of flue gases is always available for return at mixing region “Mix".
 	
@@ -437,7 +449,7 @@
 	\noindent
 	and is bounded between values 0 and 1.
 	
-	\subsection{Condensate pump}
+	\subsection*{Condensate pump}
 	
 	Condensate pump “P3" is used for return of condensed steam at low condensation pressure $p_3$ condenser “Cond" outlet to heat exchanger “HE" at high evaporation pressure $p_4$.
 	\textcolor{red}{(mislim da ovo možemo pojednostaviti na sljedeći način)}

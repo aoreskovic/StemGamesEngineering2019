@@ -5,7 +5,7 @@ err = linkError.instance();
 err.flushErorrs();
 
 gdrive = "C:/work/gdrive/STEM Games 2019/Teams - Day 2 - References/";
-teams = ["Akvanauti"];
+teams = ["Božje ovèice"];
 
 while 1
 
@@ -190,6 +190,8 @@ while 1
         outputCsvFile = fopen(strcat(gdrive,"../Results/Beamforming/score_",teamName,".csv"),'w');
         fprintf(outputCsvFile,'%s',outputCsvString);
         fclose(outputCsvFile);
+
+        pause(1)
 
     end
 

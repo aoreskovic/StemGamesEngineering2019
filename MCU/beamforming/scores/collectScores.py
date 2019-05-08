@@ -1,19 +1,20 @@
 import time
 import subprocess
+import io
 
 while 1:
 
-   outCsv = open("../htdocs/scores.csv","w")
+   outCsv = io.open("../htdocs/scores.csv", mode="w", encoding="utf-8")
 
    outCsv.write("Team;Scenario 1;Scenario 2;Scenario 3;Scenario 4;Scenario 5;Total;Last evaluated\n")
 
    gdrive = "C:/work/gdrive/STEM Games 2019/Results/Beamforming/"
-   teams = ["Akvanauti"]
+   teams = ["Akvanauti","Božje ovčice"]
 
    for team in teams:
-      teamCsv = open(gdrive+"score_"+team+".csv","r")
-      teamScore = teamCsv.read()
-      outCsv.write(teamScore+"\n")
+      teamCsv = io.open(gdrive+"score_"+team+".csv", mode="r")
+      teamScore = teamCsv.read()+"\n"
+      outCsv.write(teamScore)
       teamCsv.close()
    outCsv.close()
 

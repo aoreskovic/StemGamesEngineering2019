@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import time
 import subprocess
 import io
@@ -12,7 +14,7 @@ while 1:
    teams = ["Akvanauti","Božje ovčice","Divljač velikog momenta tromosti","FERIT","FESB","Gemischt","Kornjače","Mamlazi","Mehrob","Narodne mošnje","Njemački strikani","Papkovi papci","Pero Tips","STEM Gains","Stroicizam","Šiljo i Družina","Škrgići","Team Pokemon","Torpedo"]
 
    for team in teams:
-      teamCsv = io.open(gdrive+"score_"+team+".csv", mode="r")
+      teamCsv = io.open(gdrive+"score_"+team+".csv", mode="r", encoding="utf-8")
       teamScore = teamCsv.read()+"\n"
       outCsv.write(teamScore)
       teamCsv.close()

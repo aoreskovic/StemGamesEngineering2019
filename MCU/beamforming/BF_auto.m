@@ -187,7 +187,7 @@ while 1
         outputCsvString = outputCsvString(1:end-1);
         outputCsvString = sprintf('%s;%s',outputCsvString,teamTime);
 
-        outputCsvFile = fopen(strcat(gdrive,"../Results/Beamforming/score_",teamName,".csv"),'w');
+        outputCsvFile = fopen(strcat(gdrive,"../Results/Beamforming/score_",teamName,".csv"),'w','n','UTF-8');
         fprintf(outputCsvFile,'%s',outputCsvString);
         fclose(outputCsvFile);
 

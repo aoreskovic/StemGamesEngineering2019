@@ -1,4 +1,4 @@
-function [sub] = createSub(TurbID,PipeID, PipeLen, EvapPipeNr, SuperPipeNr, CompID, FuelPumpID)
+function [sub] = createSub(TurbID, PipeLen, EvapPipeNr, SuperPipeNr, CompID, FuelPumpID)
 %fuel tank parameters
 Sub.Fuel.Tank.initMass = 50000000000; %kg, initial fuel mass
 
@@ -6,7 +6,6 @@ Sub.Fuel.Tank.initMass = 50000000000; %kg, initial fuel mass
 Sub.Turb.id = TurbID; %selected turbine
 
 %heat exchanger parameters
-Sub.HE.Pipe.id = PipeID; %selected heat exchanger pipe
 Sub.HE.Pipe.length = PipeLen; %m, heat exchanger pipe length
 Sub.HE.Evap.nr = EvapPipeNr;  % number of tubes in evaporator
 Sub.HE.Super.nr = SuperPipeNr; % number of tubes in superheater section

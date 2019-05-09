@@ -47,7 +47,8 @@ while abs(theta_fg2_prv- theta_fg2) > 0.1 %calculate until convergence
     Cfg_out = Heat_capacity_FG(qn_H2O, qn_CO2, theta_fg2); %kJ/K, flue gas heat capacity at evaporator outlet
     Cfg = (Cfg_in * theta_fg1 - Cfg_out * theta_fg2) / (theta_fg1 - theta_fg2); %kJ/K, mean flue gas heat capacity in evaporator
     
-    [AlfaT, w_pipe] = alfaTube(qn_H2O, qn_CO2, (theta_fg2+theta_fg1)/2, HE.Evap.intArea, HE.Pipe.dInt, pFG, HE.Pipe.length, FG.Mfg);
+    [AlfaT, w_pipe, ero] = alfaTube(qn_H2O, qn_CO2, (theta_fg2+theta_fg1)/2, HE.Evap.intArea, HE.Pipe.dInt, pFG, HE.Pipe.length, FG.Mfg);
+    HE.Evap.ero = ero;
     k = overallHTC(AlfaT, Steam.HE.Evap.steamHTC, HE.Pipe.dInt, HE.Pipe.dExt, HE.Pipe.conductivity);
 
     pi2=k*A_evap/(1000*Cfg); %-, pi2 dimensionless parameter (NTU)

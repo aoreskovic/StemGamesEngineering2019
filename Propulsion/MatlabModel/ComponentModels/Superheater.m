@@ -59,9 +59,9 @@ while (abs(theta_fgOut_prv- theta_fgOut) > 0.1) || (abs(theta_1_prv- theta_1) > 
     end
     
     
-    [AlfaT, w_pipe] = alfaTube(qn_H2O, qn_CO2, (theta_fgOut+theta_fgIn)/2, HE.Super.intArea, HE.Pipe.dInt, pFG, HE.Pipe.length, FG.Mfg);
+    [AlfaT, w_pipe, ero] = alfaTube(qn_H2O, qn_CO2, (theta_fgOut+theta_fgIn)/2, HE.Super.intArea, HE.Pipe.dInt, pFG, HE.Pipe.length, FG.Mfg);
     [k] = overallHTC(AlfaT, Steam.HE.Super.steamHTC, HE.Pipe.dInt, HE.Pipe.dExt, HE.Pipe.conductivity);
-
+    HE.Super.ero =ero;
 
     pi2 = k*A_super/(1000*C1); %-, pi2 dimensionless parameter (NTU)
     pi3=C1/C2; %-, pi3 dimensionless parameter (heat capacity ratio)

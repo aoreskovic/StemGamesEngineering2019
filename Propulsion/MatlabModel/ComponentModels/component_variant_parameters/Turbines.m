@@ -1,4 +1,4 @@
-function [Power, p1, T1_ref, p2, K_stodola, a_eta, b_eta, c_eta, qmd_ref, a_turb, eta_nom] = Turbines(turbineID)
+function [Power, p1, T1_ref, p2, K_stodola, a_eta, b_eta, c_eta, qmd_ref, a_turb, eta_nom, TmaxTurb] = Turbines(turbineID)
 %Turbines Turbine parameters based on selected turbine
 %   Detailed explanation goes here
 
@@ -19,5 +19,6 @@ function [Power, p1, T1_ref, p2, K_stodola, a_eta, b_eta, c_eta, qmd_ref, a_turb
     c_eta = turbines(turbineID, 9);
     qmd_ref = turbines(turbineID, 10);
     a_turb = turbines(turbineID, 12);
-    eta_nom = turbines(turbineID, 11);     
+    eta_nom = turbines(turbineID, 11);
+    TmaxTurb = turbines(turbineID, 14);
 end

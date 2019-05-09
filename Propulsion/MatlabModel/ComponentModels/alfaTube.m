@@ -1,4 +1,4 @@
-function [alfaT, w] = alfaTube(qn_H20, qn_CO2, T_fg, A, d, p, L, Mfg)
+function [alfaT, w, ero] = alfaTube(qn_H20, qn_CO2, T_fg, A, d, p, L, Mfg)
 %alfaTube Heat transfer coefficient calculation inside tubes.
 %Flue gases in tubes!
 %   
@@ -44,7 +44,10 @@ else
 end
 
 erosion = ro*w*w;
-assert(erosion <= 6800, 'flue gas speed too high! erosion!')
+ero = false;
+if erosion > 6800
+    ero = true;
+end
 alfaT = Nu * lmbda / d;
 end
 

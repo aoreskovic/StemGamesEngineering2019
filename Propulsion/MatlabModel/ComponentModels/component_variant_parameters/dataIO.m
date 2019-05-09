@@ -1,4 +1,4 @@
- turbines = xlsread('TurbineVariants.xlsx')
+ turbines = xlsread('Table1.xlsx')
  save('TurbineVars', 'turbines')
 
  Fpumps = xlsread('FuelPumpVariants.xlsx', 'List1')
@@ -9,3 +9,6 @@ Comps = xlsread('CompressorVariants.xlsx', 'List1')
  
  Pipes = xlsread('PipeVariants.xlsx', 'List1')
   save('PipeVars', 'Pipes')
+
+  
+  load('TurbineVars')

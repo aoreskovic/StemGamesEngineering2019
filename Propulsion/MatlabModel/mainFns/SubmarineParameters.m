@@ -14,6 +14,7 @@ Sub.Env.density = 1000; %kg/m3, density of water which surrounds submarine
 Sub.Env.g = 9.81; % m/s2, standard acceleration due to gravity
 Sub.Env.pAtm = 101325; %Pa, atmospheric pressure on surface
 
+
 %combustion chamber parameters
 Sub.FG.Comb.ToxyIn = 10; %°C, temperature at which oxygen enters combustion chamber
 Sub.FG.Comb.TfuelIn = 10; %°C, temperature at which fuel enters combustion chamber
@@ -30,13 +31,13 @@ Sub.FG.Mfg = Sub.FG.H2Oratio/(Sub.FG.H2Oratio+Sub.FG.CO2ratio)*Sub.FG.M_H2O...
 
 
 %condensate pump params
-Sub.CondPump.eta = 0.75; % [-] condensate pump efficiency
+Sub.CondPump.eta = 1; % [-] condensate pump efficiency
 Sub.Steam.qmSteam = 0; %kg/s, steam flow rate, dummy variable
 
 %% Initial parameters calculation
 
 %turbine params
-[Power, p_evap, T1_ref, p_cond, K_stodola, a_eta, b_eta, c_eta, qmd_ref, a_turb, eta_nom] = Turbines(Sub.Turb.id);
+[Power, p_evap, T1_ref, p_cond, K_stodola, a_eta, b_eta, c_eta, qmd_ref, a_turb, eta_nom, TmaxTurb] = Turbines(Sub.Turb.id);
 theta_evap = XSteam('Tsat_p', p_evap); %°C,  evaporation temperature
 Sub.Turb.Pnom = Power; % kW, turbine nominal power
 Sub.Turb.pInNom = p_evap; % bar, turbine nominal inlet pressure
@@ -50,6 +51,7 @@ Sub.Turb.cEta = c_eta; %-, third turbine efficiency coefficient (not used in cal
 Sub.Turb.qmNom = qmd_ref; %kg/s, turbine nominal steam flow rate
 Sub.Turb.etaNom = eta_nom; %-, turbine efficiency at nominal working conditions
 Sub.Turb.etaCurvature = a_turb; %s^2/m^6, efficiency curve cuvature (aEta/etaNom)
+Sub.Turb.Tmax = TmaxTurb; %°C, maximal temperature of turbine
 qv_inlet_nom = qmd_ref * XSteam('v_pT', p_evap, T1_ref); %m3/s, nominal steam volume flow rate
 s1_nom = XSteam('s_pT', p_evap, T1_ref);
 qv_outlet_nom = qmd_ref*XSteam('v_ps', p_cond, s1_nom);
@@ -58,7 +60,7 @@ Sub.Turb.qvNom = sqrt(qv_inlet_nom*qv_outlet_nom); %m^3/s, mean nominal steam vo
 
 
 %heat exchanger pipe parameters
-[extDiameter,thickness, conductivity] = PipeSelect(Sub.HE.Pipe.id); %%%% nova verzija kad dobijem dimenzije cijevi
+[extDiameter,thickness, conductivity] = PipeSelect(); %%%% nova verzija kad dobijem dimenzije cijevi
 Sub.HE.Pipe.dExt = extDiameter; %m, pipe external diameter
 Sub.HE.Pipe.thickness = thickness; %m, pipe thickness
 Sub.HE.Pipe.conductivity = conductivity; %W/mK, pipe thermal conductivity
@@ -84,6 +86,10 @@ Sub.Fuel.Pump.Nmin = Nmin; %-, minimal fuel pump relative speed
 Sub.Fuel.Pump.kPipe = kPipe; %m*h^2/l^2, pipe friction coefficient for selected pump
 Sub.Fuel.Pump.dPcomb = 100000; %Pa, pressure difference between combustion chamber and environment
 
+PowerConst=2;
+PowerLin = 0.05;
+Pmin = PowerConst + PowerLin*Power;
+Sub.Env.Pmin = Pmin;
 Q_min = qvFuelMax*Nmin; % l/h, minimal fuel pump volume flow rate
 h_pumpMax = hMax-kPipe*Q_min*Q_min; %m, maximal pump static head
 pGaugeMax = h_pumpMax*Sub.Fuel.Pump.density*Sub.Env.g; %Pa,maximalni pretlak 

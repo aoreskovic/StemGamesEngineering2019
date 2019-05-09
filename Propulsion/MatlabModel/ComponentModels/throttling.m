@@ -27,10 +27,17 @@ h1 = XSteam('h_pT', p1, theta1); % enthalpy on valve inlet, kJ/kg
 if qm_d*sqrt(theta1+273.15) <= qmd_nom*sqrt(theta1_nom+273.15) %pressure after valve can't increase!
     theta1_thr = theta1-2; % initial guess of temperature after throttling
     theta1_thr_prv = theta1; %initial guess
+    iter = 1;
     while abs(theta1_thr-theta1_thr_prv) > 0.01 %iterate until convergence
+        iter = iter +1;
         p1_thr = sqrt(p2*p2+qm_d*qm_d/(K*K)*(theta1_thr+273.15)); %bar, pressure after throttling
         theta1_thr_prv = theta1_thr; %  °C, temperature after throttling in previous iteration
         theta1_thr = XSteam('T_ph', p1_thr, h1); %°C, new temperature after throttling
+        if iter > 100
+            theta1_thr = (theta1_thr+theta1_thr_prv);
+            theta1_thr_prv = theta1_thr;
+            p1_thr = sqrt(p2*p2+qm_d*qm_d/(K*K)*(theta1_thr+273.15)); %bar, pressure after throttling
+        end
     end
 else
     p1_thr = p1; %bar, no pressure drop in valve
@@ -39,6 +46,9 @@ end
 if p1_thr>p1 %making sure pressure was not increased in valve
     p1_thr=p1; %bar, no pressure drop in valve
     theta1_thr = theta1; %°C, no temperature change in valve
+end
+if p1_thr < p2 + 0.2
+    p1_thr = p2 + 0.2;
 end
 Steam.Turb.pIn = p1_thr; %bar, pressure at turbine inlet(after throttling valve)
 Steam.Turb.Tin = theta1_thr; %°C, temperature at turbine inlet (after throttling valve)

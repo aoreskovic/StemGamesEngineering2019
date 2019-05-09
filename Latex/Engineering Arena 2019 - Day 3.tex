@@ -160,7 +160,9 @@
 	\section{Software Defined Radio}
 
 	\subsection{Task 1}
-An underwater habitat controls a remotely-operated submarine by sending the coordinates that the submarine has to traverse in sequence. The 3-dimensional coordinates are organized into triplets, as \textsf{xxx.xxx,yyy.yyy,zzz.zzz;} . Each digit and separating characters ("\textsf{,}" and "\textsf{;}") are encoded as an 8-bit ASCII character. Triplets are concatenated and sent sequentially. This datastream is the input to the modulating system of the transmitter.
+An underwater habitat controls a remotely-operated submarine by sending the coordinates that the submarine has to traverse in sequence. The information is modulated on top of an ultrasonic carrier, and then sent and received by a hydrophone system.
+
+The 3-dimensional coordinates are organized into triplets, as \textsf{xxx.xxx,yyy.yyy,zzz.zzz;} . Each digit and separating characters ("\textsf{,}" and "\textsf{;}") are encoded as an 8-bit ASCII character. Triplets are concatenated and sent sequentially. This datastream is the input to the modulating system of the transmitter.
 
 The transmitter first organizes the input stream into packets. Each packet consists of a preamble, header, data, CRC-16 hash, and a postamble. The frame structure is illustrated in Figure \ref{fig:packet}.
 
@@ -192,7 +194,7 @@ The transmitter first organizes the input stream into packets. Each packet consi
 
 Preamble is a predefined 64-bit sequence \textsf{0xa5a5a5a5a5a5a5a5}. Postamble is a bitwise-inverse of the preamble. Header is an 8-bit word containing byte-length of the data section in the packet. The shortest size of the data section is 64 bits, while the largest is 248 bits. The data section is always byte-aligned; i.e. its length is always a multiple of 8 bits.
 
-All the words are stored in packets in big endian notation. The packets are forwarded further in the transmitter chain sequentially, without a guard interval.
+All the words in the packets are stored in big endian notation. The packets are sent further through the transmitter chain sequentially, without a guard interval.
 
 The binary sequence of the generated packets is brought to a QPSK modulator. Its constellation is represented by Figure \ref{fig:qpsk}.
 
@@ -239,25 +241,24 @@ You are required to implement the digital processing system of the receiver, to 
 The \textsf{single\_carrier.raw} file is given. It contains the digitized signal from the ADC, recorded in 16-bit 2's complement format.
 
 \subsubsection{Implementation}
-Your solution is a C or C++ code implementing the receiver's digital processing chain. You are required to submit at least two files:
+Your solution is a C or C++ code implementing the receiver's digital processing chain. Your solution consists of two files:
 \begin{description}
 	\item[radio.c / cpp] Implements all the routines described further in the text.
 	\item[main.c / cpp] Loads the input data, calls the routines from \textsf{radio.c / cpp}, and outputs decoded data to stdout in the original format.
 \end{description}
-Should your solution use more source files, you must provide a \textsf{Makefile} that compiles the rest of the source files.
 
-Your radio.c / cpp file must implement the following set of functions:
+Your \textsf{radio.c / cpp} file must implement the following set of functions:
 \begin{description}
 	\item[complex *frequency\_shift(double *input, double fc, double fs, int N)]
 	\,\\ Transposes the signal provided in input from centre frequency \textsf{fc} to baseband. \textsf{N} is the length of the data stream, expressed as a number of double words. \textsf{fs} is the sampling frequency.
 	\item[double qpsk\_demodulator(complex symbol, double constellation\_offset, char *decoded\_symbol)]
-	\,\\ Decodes a QPSK symbol \textsf{symbol} to a word, stored in an 8-bit format to \textsf{decoded\_symbol}. The function outputs the EVM of the symbol.
+	\,\\ Decodes a baseband QPSK symbol \textsf{symbol}, and stores its value to an 8-bit word \textsf{decoded\_symbol}. The function outputs the EVM of the symbol.
 	\item[char *bitstream\_to\_bytestream(char *bitstream, int length)]
-	\,\\ Converts \textsf{length} 8-bits words, as output by the previous function, into a bytestream. A pointer to the beginning of the bytestream is returned.
+	\,\\ Converts \textsf{length} 8-bits words, as output by the \textsf{bitstream\_to\_bytestream} function, into a bytestream. Parameter \textsf{length} is the length of the bitstream array, while the length of the output array is equal to \textsf{length}/4. A pointer to the beginning of the bytestream is returned.
 	\item[void frame\_sync(char **bytestream, int length)]
 	\,\\ Moves the pointer \textsf{*bytestream} to the beginning of the first detected frame. \textsf{length} is the length of the bytestream.
 	\item[int frame\_decoder(char *bytestream, char **data)]
-	\,\\ Decodes the data from a single frame that starts at the pointer \textsf{*bytestream}. Data is stored to \textsf{*data}. The return value is the length of processed data (frame length).
+	\,\\ Decodes the data from a single frame that starts at the pointer \textsf{*bytestream}. The decoded data should be stored to \textsf{*data}. The return value is the length of processed data (frame length).
 \end{description}
 
 You are provided with some helper files:
@@ -270,9 +271,16 @@ You are provided with some helper files:
 \end{description}
 
 
+\subsubsection{Evaluation}
+
+You have access to an evaluation server to which you can upload your source files.
+The server will execute your code and verify the functionlity of each function implemented in your \textsf{radio.c / cpp} file,
+and the functionality of the entire processing chain, by executing the program in \textsf{main.c / cpp}.
+The server functionality will further be described in a document that you will receive at the start of the competition day.
+
 \subsection{Task 2}
 
-Along the submarine's trajectory information, the habitat and the submarine exchange location data on debris scattered around the sea. This data is transmitted in a separate data stream from the trajectory coordinates, but has the same triplet format, as the data from Task 1. The data is packaged in the same manner as in Task 1. The resulting bitstream is then spread into 4 QPSK subcarriers, as depicted in Figure \ref{fig:spread}.
+Along the submarine's trajectory information, the habitat and the submarine exchange location data on debris scattered around the sea. This data is transmitted in a separate data stream from the trajectory coordinates, and it has the same triplet format as the data from Task 1. Also, the data is packaged in the same manner as in Task 1. The resulting bitstream is then spread into 4 QPSK subcarriers, as depicted in Figure \ref{fig:spread}.
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=0.7\textwidth]{Images/spread.png}
@@ -280,7 +288,7 @@ Along the submarine's trajectory information, the habitat and the submarine exch
 	\label{fig:spread}
 \end{figure}
 
-The obtained QPSK carriers are multiplexed into OFDM that consists of a total of 10 subcarriers. These are organized as depicted by DFT spectrum in Figure \ref{fig:dft}.
+The obtained QPSK carriers are multiplexed into OFDM that consists of a total of 9 subcarriers. These are organized as depicted by DFT spectrum in Figure \ref{fig:dft}.
 \begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}
@@ -313,7 +321,7 @@ The obtained QPSK carriers are multiplexed into OFDM that consists of a total of
 	\label{fig:dft}
 \end{figure}
 
-Subcarrier spacing is $\varDelta f = 1500 \,\textrm{Hz}$. The graph is centred to frequency $f_c = 36 \,\textrm{kHz}$, corresponding to the central frequency of the OFDM carrier. The subcarrier at bin 0, depicted by a dashed line, containes trajectory coordinate stream from Task 1. Subcarriers depicted by dotted lines contain the added data stream. Subcarriers depicted by a solid line are pilots. OFDM symbols have no cyclic prefix.
+Subcarrier spacing is $\varDelta f = 1500 \,\textrm{Hz}$. The graph in Figure \ref{fig:dft} is centred to frequency $f_c = 36 \,\textrm{kHz}$, corresponding to the central frequency of the OFDM carrier. The subcarrier at bin 0, depicted by a dashed line, contains trajectory coordinate stream from Task 1. Subcarriers depicted by dotted lines contain the data stream added for this task. Subcarriers depicted by a solid line are pilots. OFDM symbols have no cyclic prefix.
 
 The receiver code from Task 1 has to be modified to work with an OFDM carrier, and decode the additional data stream. Block diagram of the receiver is presented in Figure \ref{fig:task2}.
 
@@ -330,9 +338,13 @@ The \textsf{ofdm\_carrier.raw} file is given. It contains the digitized signal f
 \subsubsection{Implementation}
 You should update your \textsf{radio.c / cpp} and \textsf{main.c / cpp} to implement the new features required for Task 2. Your \textsf{radio.c / cpp} file should implement the following additional functions:
 \begin{description}
-	\item[double *ofdm\_demodulator(complex *input, int *carrier\_idx, int carrier\_no, char **data)]
-	\,\\ Demultiplexes the \underline{additional data stream} from the OFDM carrier given in \textsf{input}, and stores it into \textsf{*data}. The input signal is in baseband in the original sample rate. \textsf{carrier\_idx} is a list of DFT bins that contain the additional data stream. \textsf{carrier\_no} is the length of \textsf{carrier\_idx} array.
+	\item[double *ofdm\_demodulator(complex *spectrum, int *carrier\_idx, int carrier\_no, char **data)]
+	\,\\ Takes the spectrum of a \underline{single OFDM symbol} from \textsf{*spectrum}, and demultiplexes the subcarriers containing the \underline{additional data stream}. The demodulated QPSK symbols from these subcarriers are stored in a bitstream array that starts at \textsf{*data}. Demodulated QPSK symbols from each subcarrier are stored in their own \textsf{char}s, to be used as input to the \textsf{bitstream\_to\_bytestream} function. The input signal is in baseband in the original sample rate. \textsf{carrier\_idx} is a list of DFT bins that contain the additional data stream. \textsf{carrier\_no} is the length of \textsf{carrier\_idx} array.
 \end{description}
+
+\subsubsection{Evaluation}
+
+The same evaluation server as that used in task 1 will serve to verify the functionality of your OFDM-capable receiver.
 
 \subsection{Task 3}
 An algorithm for calculating the CRC-16 hash of an input stream should be added to solutions for both tasks. CRC-16 verification should first be implemented as a separate function, and then integrated into the receiver chain. The modification is presented in Figure \ref{fig:task3}.
@@ -347,13 +359,17 @@ An algorithm for calculating the CRC-16 hash of an input stream should be added 
 The CRC-16 hash in data frames is calculated using the CRC-CCITT algorithm, with an initial register state \textsf{0xffff}.
 
 \subsubsection{Implementation}
-Your \textsf{radio.c / cpp} code must implement the following \underline{additional} functions:
+Your \textsf{radio.c / cpp} code must implement the following additional functions:
 \begin{description}
 	\item[char crc16\_check(char* bitstream, int length)]
 	\,\\ Returns CRC-16 hash of the given \textsf{bitstream}, of length \textsf{length}.
-	%\item[int frame\_decoder\_valid(char* bytestream, char** data, bool *valid)]
-	%\,\\ Decodes the data from a single frame that starts at the pointer \textsf{*bytestream}. Data is stored to \textsf{*data}. The return value is the length of processed data (frame length).
+	\item[int frame\_decoder\_valid(char* bytestream, char** data, bool *valid)]
+	\,\\ Decodes the data from a single frame that starts at the pointer \textsf{*bytestream}. The decoded data should be stored to \textsf{*data}. The output flag \textsf{*valid} denotes if the decoded frame has a valid CRC-16 checksum. The return value is the length of processed data (frame length).
 \end{description}
+
+\subsubsection{Evaluation}
+
+The same evaluation server as that used in tasks 1 and 2 will serve to verify the functionality of your error-detection algorithm.
 
 \subsection{Documentation}
 

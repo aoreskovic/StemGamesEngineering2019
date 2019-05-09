@@ -1,7 +1,7 @@
 function [qmG_kg_s, Turbine_power_kW, theta_fg1_degC, theta_fg2Evap_degC,...
     theta_fg2Super_degC, theta_ret_degC, theta_1_degc, x__, eta_turb__,...
     system_efficiency, CombTempFlag, TurbTempFlag, SaturatedFlag, deadFlag, evapErosionFlag, evapSuperFlag, pumpSpeedExceedFlag] = ...
-    evalSystem(turbID,pipeID, pipeLen, evNr, supNr, compID, pumID, N1, L1, N2, L2, fgFrac, pSpeed, depth, mFuel)
+    evalSystem(turbID, pipeLen, evNr, supNr, compID, pumID, N1, L1, N2, L2, fgFrac, pSpeed, depth, mFuel)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -12,7 +12,6 @@ Sub.Fuel.Tank.initMass = mFuel; %kg, initial fuel mass
 Sub.Turb.id = turbID; %selected turbine
 
 %heat exchanger parameters
-Sub.HE.Pipe.id = pipeID; %selected heat exchanger pipe
 Sub.HE.Pipe.length = pipeLen; %m, heat exchanger pipe length
 Sub.HE.Evap.nr = evNr;  % number of tubes in evaporator
 Sub.HE.Super.nr = supNr; % number of tubes in superheater section

@@ -203,8 +203,13 @@
 	The following dimensions are given:
 	\begin{itemize}
 		\item $L = 18 \,\textrm{m}$
+		\item $D_{OUT} = 1.7 \,\textrm{m}$
+		\item $D_{IN} = 1.5 \,\textrm{m}$
 		\item $L_1 = 2 \,\textrm{m}$
 	\end{itemize}
+	
+	$D_{IN}$  is used for the tank volume calculation.
+
 	Also, dimension $L_5$ is found as
 	\begin{equation}
 		L_5 = (18 \cdot P_\textrm{turb} + 2500)/1000 \,\left[\textrm{m}\right]
@@ -249,7 +254,7 @@
 	
 	Liquefied oxygen and ethanol fuel are stored in separate tanks "T1" and 
 	"T2", respectively. While pump P2 delivers fuel stream "h" to combustion 
-	chamber "Comb", cryogenic pump P2 delivers liquefied oxygen stream "i" to 
+	chamber "Comb", cryogenic pump P1 delivers liquefied oxygen stream "i" to 
 	oxygen vaporizer "Vap" where it vaporizes and enters combustion chamber 
 	"Comb" in stoichiometric ratio at which fuel combustion is, by assumption, 
 	complete without any excess oxygen. Flue gas temperature at the outlet from 
@@ -273,9 +278,27 @@
 	  
 	Heat exchanger "HE" is a pool boiling type apparatus which means that liquid water in the evaporating section is at rest and is evaporated by the flue gas that passes through a tube bundle in the evaporating section. The exact amount of steam that is evaporated in evaporation section "Evap" (which corresponds to the steam mass flow of stream "g") is then superheated in superheating section "Super" of heat exchanger "HE" producing the superheated steam "f". Superheated steam (stream "f") passes through throttling valve "TV" and enters the steam turbine "Turb" where mechanical power is produced by steam adiabatic expansion to condensation pressure p2. After the expansion, low pressure steam condenses in sea water cooled condenser "Cond" and is returned to high pressure evaporator "Evap" by condensate pump "P3". 
 	
-	The turbine drives an alternator-rectifier which supplies submarine propulsion system with direct current. (?) Required mechanical power for submarine propulsion and auxiliary systems should in every timestep be provided by turbine (no buffer). (dogovor s mentorskim teamom)
 	
-	Following sections provide a detailed description of every part of power generation system that should be modeled.
+	Following sections provide a detailed description of every part of power 
+	generation system that should be modeled.
+	
+	
+	It is very important that system states are in allowed limits. 
+	
+	\begin{itemize}
+		\item Maximum temperature at combustion chamber “Comb“ exit 
+		(850$^\circ$)
+		\item Maximum steam temperature at turbine “Turb” inlet (Excell table 1)
+		\item Minimum vapor fraction on turbine “Turb” outlet (0.9)
+		\item Evaporator “Evap” erosion (given by the equation 
+		\ref{eq:flue_gas_density})
+		\item Superheater “Super” erosion (given by the equation 
+		\ref{eq:flue_gas_density})
+		\item System malfunction due to insufficient generated power (given by 
+		the equation \ref{eq:minpower})
+	\end{itemize}
+
+	Each failed test will cause 40\% point reduction in the given test category.
 	
 	\subsection{Turbine}
 	
@@ -385,10 +408,10 @@
 	\textcolor{red}{Turbine design parameters are given in Excel Table 1.}
 
 	\subsubsection*{Minimum required turbine power}
-
+	
 	The minimum power which the turbine has to provide for the submarine for it 
 	to remain operational is defined by
-	\begin{equation}
+	\begin{equation}\label{eq:minpower}
 	P_\textrm{min} = 2 + 0.05 \cdot P_\textrm{nom} \ \left[\textrm{kW}\right]
 	\end{equation}
 	where $P_\textrm{nom}$ is the nominal turbine power, given in Excel Table 1 
@@ -755,7 +778,7 @@
 	\subsection{Constants}
 	
 	\begin{itemize}
-		\item $\theta_\textrm{fg,max} = 800 ^\circ C$
+		\item $\theta_\textrm{fg,max} = 850 ^\circ C$
 		\item $d_\textrm{pipe} = 20 \,\textrm{mm}$
 		\item $\delta_\textrm{pipe} = 2 \,\textrm{mm}$
 		\item $\lambda_\textrm{pipe}  = 58 \,\textrm{W/mK}$

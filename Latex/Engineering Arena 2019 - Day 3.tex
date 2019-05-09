@@ -154,12 +154,13 @@
 	
 	\newpage
 	
-	\section{Introduction}
-	
-	
-	\section{Software Defined Radio}
+\section{Introduction}
 
-	\subsection{Task 1}
+	
+	
+\section{Software Defined Radio}
+
+\subsection{Task 1}
 An underwater habitat controls a remotely-operated submarine by sending the coordinates that the submarine has to traverse in sequence. The 3-dimensional coordinates are organized into triplets, as \textsf{xxx.xxx,yyy.yyy,zzz.zzz;} . Each digit and separating characters ("\textsf{,}" and "\textsf{;}") are encoded as an 8-bit ASCII character. Triplets are concatenated and sent sequentially. This datastream is the input to the modulating system of the transmitter.
 
 The transmitter first organizes the input stream into packets. Each packet consists of a preamble, header, data, CRC-16 hash, and a postamble. The frame structure is illustrated in Figure \ref{fig:packet}.
@@ -280,7 +281,7 @@ Along the submarine's trajectory information, the habitat and the submarine exch
 	\label{fig:spread}
 \end{figure}
 
-The obtained QPSK carriers are multiplexed into OFDM that consists of a total of 10 subcarriers. These are organized as depicted by DFT spectrum in Figure \ref{fig:dft}.
+The obtained QPSK carriers are multiplexed into OFDM that consists of a total of 9 subcarriers. These are organized as depicted by DFT spectrum in Figure \ref{fig:dft}.
 \begin{figure}[h!]
 	\centering
 	\begin{tikzpicture}
@@ -431,4 +432,15 @@ Your solution must be submitted as a .csv format document with only 2 rows. File
 \end{itemize}
 This task is graded up to 20 points. 3 points are given for  each correctly calculated parameter and 2 points are given for the documentation. The documentation is submitted at the end of the day. The documentation must include your calculations along with some short comments explaining the equations. You can choose the format in which the documentation will be submitted (.c script, .m script, hand written equations).
 	
+\section{Submarine driving}
+	
+Finally, the last task of this year's STEM games' Engineering arena is here! Every task lead you up to this! Submarine is loaded with food and goods and has to transport it to our underwater habitats.
+
+\subsection{Stability}
+
+Drawing of a submarine is shown in figure \ref{}. %dodaj sliku.
+Given the masses and centers of masses of compartments (sections) of submarine, your task is to find stable state of the submarine's ballasts\footnote{Ballast is the space in the submarine that can be filled with water so that submarine can have higher mass and be able to sink.}. Stable state of the submarine is the state where all forces and all moments that act on submarine are equal to zero (submarine doesn't move).
+
+
+
 \end{document}

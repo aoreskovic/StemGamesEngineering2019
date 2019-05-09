@@ -15,7 +15,7 @@ for i=1:length(files)
         alreadyEvaluated = 1;
     end
     
-    if (name == "machine_parameters" && ~alreadyEvaluated)
+    if (name == "machineParameters" && ~alreadyEvaluated)
         fileExists = 1;
         try  % check for csv format (if all fields exist)
             solutionTable = readtable(solutionFolder + fileName);
@@ -32,7 +32,7 @@ for i=1:length(files)
                fprintf(outputFileId, "MACHINE PARAMETERS EVALUATION\n\n");
                
                fprintf(outputFileId, "Ds: ");
-               if(solutionTable.Ds - 0.3056 > 0.05)
+               if(abs(solutionTable.Ds - 0.3056) > 0.05)
                    fprintf(outputFileId, "Incorrect\n");
                    points = points - pointStep;
                else
@@ -40,7 +40,7 @@ for i=1:length(files)
                end
                
                fprintf(outputFileId, "Dr: ");
-               if(solutionTable.Dr - 0.2966 > 0.05)
+               if(abs(solutionTable.Dr - 0.2966) > 0.05)
                    fprintf(outputFileId, "Incorrect\n");
                    points = points - pointStep;
                else
@@ -48,7 +48,7 @@ for i=1:length(files)
                end
                
                fprintf(outputFileId, "delta: ");
-               if(solutionTable.delta - 0.003 > 0.05)
+               if(abs(solutionTable.delta - 0.003) > 0.05)
                    fprintf(outputFileId, "Incorrect\n");
                    points = points - pointStep;
                else
@@ -72,7 +72,7 @@ for i=1:length(files)
                end
                
                fprintf(outputFileId, "Xd: ");
-               if(solutionTable.Xd - 1.5618 > 0.05)
+               if(abs(solutionTable.Xd - 1.5618) > 0.05)
                    fprintf(outputFileId, "Incorrect\n");
                    points = points - pointStep;
                else
@@ -95,9 +95,7 @@ end
 
 if(~fileExists && ~alreadyEvaluated)
     outputFileId = fopen(solutionFolder + "evaluation.txt", 'w');
-    fprintf(outputFileId, "File name is not correct. Please name it machine_parameters.csv.");
+    fprintf(outputFileId, "File name is not correct. Please name it machineParameters.csv.");
     fclose(outputFileId);
 end
-
 end
-

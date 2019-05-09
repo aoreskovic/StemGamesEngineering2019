@@ -96,7 +96,7 @@ The ADC of the receiving hydrophone operates at a sampling frequency of 192 kSps
 You are required to implement the digital processing system of the receiver, to demodulate and decode information from the received ultrasonic signal.
 
 \subsection*{Input data}
-The \textsf{single\_carrier.raw} file is given. It contains the digitized signal from the ADC, recorded in 32-bit float format.
+The \textsf{single\_carrier.raw} file is given. It contains the digitized signal from the ADC, recorded in 16-bit 2's complement format.
 
 \subsection*{Implementation}
 Your solution is a C or C++ code implementing the receiver's digital processing chain. You are required to submit at least two files:
@@ -116,8 +116,8 @@ Your radio.c / cpp file must implement the following set of functions:
 	\,\\ Converts \textsf{length} 8-bits words, as output by the previous function, into a bytestream. A pointer to the beginning of the bytestream is returned.
 	\item[void frame\_sync(char **bytestream, int length)]
 	\,\\ Moves the pointer \textsf{*bytestream} to the beginning of the first detected frame. \textsf{length} is the length of the bytestream.
-	\item[void frame\_decoder(char *bytestream, char **data)]
-	\,\\ Decodes the data from a single frame that starts at the pointer \textsf{*bytestream}. Data is stored to \textsf{*data}.
+	\item[int frame\_decoder(char *bytestream, char **data)]
+	\,\\ Decodes the data from a single frame that starts at the pointer \textsf{*bytestream}. Data is stored to \textsf{*data}. The return value is the length of processed data (frame length).
 \end{description}
 
 You are provided with some helper files:
@@ -125,7 +125,7 @@ You are provided with some helper files:
 	\item[radio.h]
 	\item[api.h]
 	\,\\ An API containing some types, functions and constants you may find useful.
-	\item[api.o]
+	\item[api.c]
 	\,\\ The compiled API described in \textsf{api.h}.
 \end{description}
 
@@ -185,7 +185,7 @@ The receiver code from Task 1 has to be modified to work with an OFDM carrier, a
 \end{figure}
 
 \subsection*{Input data}
-The \textsf{ofdm\_carrier.raw} file is given. It contains the digitized signal from the ADC, recorded in 32-bit float format.
+The \textsf{ofdm\_carrier.raw} file is given. It contains the digitized signal from the ADC, recorded in 16-bit 2's complement format.
 
 \subsection*{Implementation}
 You should update your \textsf{radio.c / cpp} and \textsf{main.c / cpp} to implement the new features required for Task 2. Your \textsf{radio.c / cpp} file should implement the following additional functions:
@@ -211,8 +211,8 @@ Your \textsf{radio.c / cpp} code must implement the following \underline{additio
 \begin{description}
 	\item[char crc16\_check(char* bitstream, int length)]
 	\,\\ Returns CRC-16 hash of the given \textsf{bitstream}, of length \textsf{length}.
-	\item[bool frame\_decoder(char* bytestream, char** data)]
-	\,\\ Decodes the data from a single frame that starts at the pointer \textsf{*bytestream}. Data is stored to \textsf{*data}. The return value specifies if the integrity of the decoded frame is preserved.
+	%\item[int frame\_decoder\_valid(char* bytestream, char** data, bool *valid)]
+	%\,\\ Decodes the data from a single frame that starts at the pointer \textsf{*bytestream}. Data is stored to \textsf{*data}. The return value is the length of processed data (frame length).
 \end{description}
 
 \section*{Documentation}

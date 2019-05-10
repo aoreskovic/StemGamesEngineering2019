@@ -1,4 +1,4 @@
-function [speed_x, speed_y, distance_xr, distance_yr] = sub_model(power_in, angle_in, motor_stop, direction, balast_p)
+function [speed_x, speed_y, distance_xr, distance_yr, balast_fill_p] = sub_model(power_in, angle_in, motor_stop, direction, balast_p)
 %sub_model Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -17,12 +17,12 @@ end
 
 %% Constant
 
-angle_limit = 5;
+angle_limit = 7;
 extra_mass = 21;
 g = 9.81;
 max_balast = 30;
 
-fill_speed = 25/1000;
+fill_speed = 100/1000;
 
 %% Persistent
 
@@ -70,6 +70,8 @@ else
     balast_fill = balast_fill + fill_speed;
 end
 
+balast_fill_p = (balast_fill/max_balast);
+
 % Power split
 
 angle_deg = max(min(angle_in, angle_limit),- angle_limit);
@@ -83,6 +85,7 @@ power_in_y = power_in * sin(angle);
 
 lift = -(max_balast/2-balast_fill) /1000 * g;
 
+gravity_force= 0
 
 
 %% Speed
@@ -103,12 +106,15 @@ drag_x = sub_power_x(speed_x*1.94384, sub.length, sub.radius_wet);
 drag_y = sub_power_y(speed_y*1.94384, sub.length, sub.radius_wet);
 lift_p = lift * g * speed_y;
 
+if y > -1.5
+    gravity_force =  - sub.mass * abs(1 - y/1.5) * g /1000;
+end
 
 %% Energy
 
 
 energy_x = energy_x + power_in_x - drag_x;
-energy_y = energy_y + power_in_y - drag_y + lift_p;
+energy_y = energy_y + power_in_y - drag_y + lift_p + gravity_force;
 
 
 

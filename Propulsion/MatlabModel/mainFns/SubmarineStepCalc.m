@@ -1,4 +1,4 @@
-function [sub] = SubmarineStepCalc(sub, Npump, depth)
+function [sub] = SubmarineStepCalc(sub, Npump, depth, angle, direction, balastPump, motorStop)
 %% fuel pump
 pFG=depth*sub.Env.g*sub.Env.density + sub.Env.pAtm+sub.Fuel.Pump.dPcomb;
 [sub.Fuel.Pump] = fuel_pump_pos(Npump, pFG, sub.Fuel.Pump, sub.Env);
@@ -30,7 +30,7 @@ sub.Compr = compressor(sub.Fuel.Pump.Nallowed, sub.Compr);
 [sub.CondPump, sub.Steam] = Condensate_pump(sub.CondPump, sub.Steam);
 
 %% test functions
-[sub.x, sub.y, sub.vx, sub.vy, sub.t] = RandomPosition(); %This has to be replaced by mechanics function
+[sub.vx, sub.vy, sub.x, sub.y, sub.balastP] = sub_model(sub.Turb.Power, angle, motorStop, direction, balastPump);
 
 end
 

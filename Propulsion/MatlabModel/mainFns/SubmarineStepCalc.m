@@ -29,6 +29,9 @@ sub.Compr = compressor(sub.Fuel.Pump.Nallowed, sub.Compr);
 %% pump
 [sub.CondPump, sub.Steam] = Condensate_pump(sub.CondPump, sub.Steam);
 
+%% test functions
+[sub.x, sub.y, sub.vx, sub.vy, sub.t] = RandomPosition(); %This has to be replaced by mechanics function
+
 end
 
 

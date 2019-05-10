@@ -1,4 +1,4 @@
-function [mass_total] = sub_mass(length_c, radius_r, radius_rb, max_depth, h, n_bulk)
+function [mass_total, displacement, balast_displacement] = sub_mass(length_c, radius_r, radius_rb, max_depth, h, n_bulk)
 %sub_mass calculates the mass of a given submarine
 %   Detailed explanation goes here
 
@@ -19,7 +19,7 @@ g = 9.81; % m/s^2
 
 sigma = 125;
 
-k_struct = 1.5;
+k_struct = 1.75;
 k_weld = 1.3;
 
 %% Calculations
@@ -93,11 +93,12 @@ mass_wet = steel_volume_wet * roc / 1000 * k_weld * k_struct;
 %% Final
 
 
-volume_ballast = volume_wet - volume_dry
-mass_total = mass_dry + mass_wet
+volume_ballast = volume_wet - volume_dry;
+mass_total = mass_dry + mass_wet;
 
-mass_displacement = volume_dry * row /1000
-
+mass_displacement = volume_dry * row /1000;
+displacement = mass_displacement;
+balast_displacement = volume_ballast*row/1000;
 
 end
 

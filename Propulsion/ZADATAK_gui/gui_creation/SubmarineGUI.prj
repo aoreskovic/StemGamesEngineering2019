@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\ZADATAK_gui\gui_creation\SubmarineGUI.prj" location="C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\ZADATAK_gui\gui_creation" name="SubmarineGUI" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration file="/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/ZADATAK_gui/gui_creation/SubmarineGUI.prj" location="/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/ZADATAK_gui/gui_creation" name="SubmarineGUI" preferred-package-location="/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/ZADATAK_gui/gui_creation/SubmarineGUI/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>Submarine_stem</param.appname>
     <param.icon />
     <param.icons />
@@ -11,15 +11,28 @@
     <param.description />
     <param.screenshot />
     <param.guid />
-    <param.installpath.string>\Submarine_stem\</param.installpath.string>
-    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
+    <param.installpath.string>/Submarine_stem/</param.installpath.string>
+    <param.installpath.combo>option.installpath.user</param.installpath.combo>
     <param.logo />
     <param.install.notes />
-    <param.target.install.notes />
-    <param.intermediate>${PROJECT_ROOT}\SubmarineGUI\for_testing</param.intermediate>
-    <param.files.only>${PROJECT_ROOT}\SubmarineGUI\for_redistribution_files_only</param.files.only>
-    <param.output>${PROJECT_ROOT}\SubmarineGUI\for_redistribution</param.output>
-    <param.logdir>${PROJECT_ROOT}\SubmarineGUI</param.logdir>
+    <param.target.install.notes>In the following directions, replace MR/v95 by the directory on the target machine where MATLAB is installed, or MR by the directory where the MATLAB Runtime is installed.
+
+(1) Set the environment variable XAPPLRESDIR to this value:
+
+MR/v95/X11/app-defaults
+
+
+(2) If the environment variable LD_LIBRARY_PATH is undefined, set it to the following:
+
+MR/v95/runtime/glnxa64:MR/v95/bin/glnxa64:MR/v95/sys/os/glnxa64:MR/v95/sys/opengl/lib/glnxa64
+
+If it is defined, set it to the following:
+
+${LD_LIBRARY_PATH}:MR/v95/runtime/glnxa64:MR/v95/bin/glnxa64:MR/v95/sys/os/glnxa64:MR/v95/sys/opengl/lib/glnxa64</param.target.install.notes>
+    <param.intermediate>${PROJECT_ROOT}/SubmarineGUI/for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}/SubmarineGUI/for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}/SubmarineGUI/for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}/SubmarineGUI</param.logdir>
     <param.enable.clean.build>false</param.enable.clean.build>
     <param.user.defined.mcr.options />
     <param.target.type>subtarget.standalone</param.target.type>
@@ -30,7 +43,7 @@
     <param.web.mcr.name>stem</param.web.mcr.name>
     <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
     <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
-    <param.windows.command.prompt>true</param.windows.command.prompt>
+    <param.windows.command.prompt>false</param.windows.command.prompt>
     <param.create.log>false</param.create.log>
     <param.log.file />
     <param.native.matlab>false</param.native.matlab>
@@ -52,7 +65,6 @@
       <param.installpath.combo />
       <param.logo />
       <param.install.notes />
-      <param.target.install.notes />
       <param.intermediate />
       <param.files.only />
       <param.output />
@@ -75,73 +87,111 @@
       <param.help.text />
     </unset>
     <fileset.main>
-      <file>${PROJECT_ROOT}\SubmarineGUI.mlapp</file>
+      <file>${PROJECT_ROOT}/SubmarineGUI.mlapp</file>
     </fileset.main>
     <fileset.resources />
     <fileset.package />
     <fileset.depfun>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\Gui\createSub.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\alfaTube.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\cmp.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\Combustion_chamber.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\component_variant_parameters\Compressors.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\component_variant_parameters\CompVars.mat</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\component_variant_parameters\FpumpsVars.mat</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\component_variant_parameters\FuelPumps.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\component_variant_parameters\PipeSelect.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\component_variant_parameters\Turbines.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\component_variant_parameters\TurbineVars.mat</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\compressor.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\Condensate_pump.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\Condenser.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\cpFG.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\Evaporator.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\exchanger_params.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\flueGasMix.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\fuel_pump_pos.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\fuel_tank.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\Heat_capacity_FG.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\lambdaFG.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\miFG.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\overallHTC.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\Superheater.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\throttling.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\ComponentModels\Turbine.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\mainFns\SubmarineParameters.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\mainFns\SubmarineStepCalc.m</file>
-      <file>C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\MatlabModel\XSteam\XSteam.m</file>
-      <file>${PROJECT_ROOT}\GUIpar.mat</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/Gui/createSub.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/Combustion_chamber.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/Condensate_pump.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/Condenser.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/Evaporator.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/Heat_capacity_FG.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/Superheater.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/Turbine.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/alfaTube.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/cmp.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/component_variant_parameters/Compressors.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/component_variant_parameters/FuelPumps.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/component_variant_parameters/PipeSelect.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/component_variant_parameters/Turbines.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/compressor.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/cpFG.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/exchanger_params.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/flueGasMix.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/fuel_pump_pos.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/fuel_tank.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/lambdaFG.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/miFG.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/overallHTC.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/ComponentModels/throttling.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/XSteam/XSteam.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/mainFns/RandomPosition.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/mainFns/SubmarineParameters.m</file>
+      <file>/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/MatlabModel/mainFns/SubmarineStepCalc.m</file>
+      <file>${PROJECT_ROOT}/CompVars.mat</file>
+      <file>${PROJECT_ROOT}/FpumpsVars.mat</file>
+      <file>${PROJECT_ROOT}/GUIpar.mat</file>
+      <file>${PROJECT_ROOT}/TurbineVars.mat</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\SubmarineGUI\for_testing" name="splash.png" optional="false">C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\ZADATAK_gui\gui_creation\SubmarineGUI\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\SubmarineGUI\for_testing" name="Submarine_stem.exe" optional="false">C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\ZADATAK_gui\gui_creation\SubmarineGUI\for_testing\Submarine_stem.exe</file>
-      <file location="${PROJECT_ROOT}\SubmarineGUI\for_testing" name="readme.txt" optional="true">C:\Users\Danijel\Desktop\POSAO\podmornica\stemgamesGIT\StemGamesEngineering2019\Propulsion\ZADATAK_gui\gui_creation\SubmarineGUI\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}/SubmarineGUI/for_testing" name="readme.txt" optional="true">/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/ZADATAK_gui/gui_creation/SubmarineGUI/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/SubmarineGUI/for_testing" name="Submarine_stem" optional="false">/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/ZADATAK_gui/gui_creation/SubmarineGUI/for_testing/Submarine_stem</file>
+      <file location="${PROJECT_ROOT}/SubmarineGUI/for_testing" name="run_Submarine_stem.sh" optional="false">/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/ZADATAK_gui/gui_creation/SubmarineGUI/for_testing/run_Submarine_stem.sh</file>
+      <file location="${PROJECT_ROOT}/SubmarineGUI/for_testing" name="splash.png" optional="false">/home/mandicluka/FER/StemGamesEngineering2019/Propulsion/ZADATAK_gui/gui_creation/SubmarineGUI/for_testing/splash.png</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>C:\Program Files\MATLAB\R2018b</root>
+      <root>/usr/local/MATLAB/R2018b</root>
       <toolboxes>
         <toolbox name="matlabcoder" />
+        <toolbox name="embeddedcoder" />
+        <toolbox name="gpucoder" />
+        <toolbox name="fixedpoint" />
+        <toolbox name="matlabhdlcoder" />
+        <toolbox name="polyspacebugfinder" />
+        <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
         <matlabcoder>
           <enabled>true</enabled>
         </matlabcoder>
       </toolbox>
+      <toolbox>
+        <embeddedcoder>
+          <enabled>true</enabled>
+        </embeddedcoder>
+      </toolbox>
+      <toolbox>
+        <gpucoder>
+          <enabled>true</enabled>
+        </gpucoder>
+      </toolbox>
+      <toolbox>
+        <fixedpoint>
+          <enabled>true</enabled>
+        </fixedpoint>
+      </toolbox>
+      <toolbox>
+        <matlabhdlcoder>
+          <enabled>true</enabled>
+        </matlabhdlcoder>
+      </toolbox>
+      <toolbox>
+        <polyspacebugfinder>
+          <enabled>true</enabled>
+        </polyspacebugfinder>
+      </toolbox>
+      <toolbox>
+        <neuralnetwork>
+          <enabled>true</enabled>
+        </neuralnetwork>
+      </toolbox>
     </matlab>
     <platform>
-      <unix>false</unix>
+      <unix>true</unix>
       <mac>false</mac>
-      <windows>true</windows>
+      <windows>false</windows>
       <win2k>false</win2k>
       <winxp>false</winxp>
       <vista>false</vista>
-      <linux>false</linux>
+      <linux>true</linux>
       <solaris>false</solaris>
-      <osver>10.0</osver>
+      <osver>4.15.0-47-generic</osver>
       <os32>false</os32>
       <os64>true</os64>
-      <arch>win64</arch>
+      <arch>glnxa64</arch>
       <matlab>true</matlab>
     </platform>
   </configuration>

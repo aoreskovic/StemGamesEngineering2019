@@ -299,7 +299,6 @@ Your \textsf{radio.c / cpp} file must implement the following set of functions:
 
 You are provided with some helper files:
 \begin{description}
-	\item[radio.h]
 	\item[api.h]
 	\,\\ An API containing some types, functions and constants you may find useful.
 	\item[api.c]
@@ -310,8 +309,7 @@ You are provided with some helper files:
 \subsubsection{Evaluation}
 
 You have access to an evaluation server to which you can upload your source files.
-The server will execute your code and verify the functionlity of each function implemented in your \textsf{radio.c / cpp} file,
-and the functionality of the entire processing chain, by executing the program in \textsf{main.c / cpp}.
+The server will execute your code and verify the functionlity of each function implemented in your \textsf{radio.c / cpp} file.
 The server functionality will further be described in a document that you will receive at the start of the competition day.
 
 \subsection{Task 2}
@@ -380,7 +378,7 @@ You should update your \textsf{radio.c / cpp} and \textsf{main.c / cpp} to imple
 
 \subsubsection{Evaluation}
 
-The same evaluation server as that used in task 1 will serve to verify the functionality of your OFDM-capable receiver.
+OFDM-capable \textsf{radio.c / cpp} file is submitted at the end of the competition day.
 
 \subsection{Task 3}
 An algorithm for calculating the CRC-16 hash of an input stream should be added to solutions for both tasks. CRC-16 verification should first be implemented as a separate function, and then integrated into the receiver chain. The modification is presented in Figure \ref{fig:task3}.
@@ -405,7 +403,7 @@ Your \textsf{radio.c / cpp} code must implement the following additional functio
 
 \subsubsection{Evaluation}
 
-The same evaluation server as that used in tasks 1 and 2 will serve to verify the functionality of your error-detection algorithm.
+A \textsf{radio.c / cpp} capable of performing error detection is submitted at the end of the competition day.
 
 \subsection{Documentation}
 

@@ -52,6 +52,9 @@ sub.radius_wet = 1.7;
 sub.length = 15;
 sub.max_depth = 200;
 sub.h = 1.2;
+sub.mass = 0;
+sub.lift = 0;
+sub.balast_lift = 0;
 
 [sub.mass,  sub.lift, sub.balast_lift]= sub_mass(sub.length, sub.radius_dry, sub.radius_wet, sub.max_depth, sub.h, 4);
 sub.mass = sub.mass +extra_mass;
@@ -78,14 +81,14 @@ power_in_y = power_in * sin(angle);
 
 % Balast
 
-lift = (max_balast/2-balast_fill) /1000 * g;
+lift = -(max_balast/2-balast_fill) /1000 * g;
 
 
 
 %% Speed
 
-speed_x = sqrt(energy_x * 2 / sub.mass);
-speed_y = sqrt(energy_y * 2 / sub.mass);
+speed_x = sqrt(abs(energy_x) * 2 / sub.mass)*sign(energy_x);
+speed_y = sqrt(abs(energy_y) * 2 / sub.mass)*sign(energy_y);
 
 %% Distance
 
@@ -98,13 +101,14 @@ distance_yr = distance_y;
 
 drag_x = sub_power_x(speed_x*1.94384, sub.length, sub.radius_wet);
 drag_y = sub_power_y(speed_y*1.94384, sub.length, sub.radius_wet);
+lift_p = lift * g * speed_y;
 
 
 %% Energy
 
 
 energy_x = energy_x + power_in_x - drag_x;
-energy_y = energy_y + power_in_y - drag_y + lift * g * speed_y;
+energy_y = energy_y + power_in_y - drag_y + lift_p;
 
 
 

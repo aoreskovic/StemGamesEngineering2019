@@ -1,4 +1,4 @@
-function [speed_x, speed_y, distance] = sub_model(power_in, angle_in, motor_stop, direction)
+function [speed_x, speed_y, distance] = sub_model(power_in, angle_in, motor_stop, direction, balast_p)
 %sub_model Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -6,7 +6,7 @@ function [speed_x, speed_y, distance] = sub_model(power_in, angle_in, motor_stop
 %% Constant
 
 angle_limit = 5;
-
+extra_mass = 21;
 
 %% Persistent
 
@@ -25,10 +25,11 @@ end
 sub.radius_dry = 1.5;
 sub.radius_wet = 1.7;
 sub.length = 15;
-sub.max_depth = 100;
+sub.max_depth = 200;
+sub.h = 1.2;
 
-sub.mass = sub_mass(sub.length, sub.radius_dry, sub.radius_wet, sub.max_depth, 0, 4);
-
+[sub.mass,  sub.lift, sub.balast_lift]= sub_mass(sub.length, sub.radius_dry, sub.radius_wet, sub.max_depth, sub.h, 4);
+sub.mass = sub.mass +extra_mass;
 
 
 % Power split
@@ -40,6 +41,9 @@ angle = angle_deg/180*pi;
 power_in_x = power_in * cos(angle);
 power_in_y = power_in * sin(angle);
 
+% Balast
+
+%lift = 
 
 
 

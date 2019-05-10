@@ -18,7 +18,7 @@ end
 %% Constant
 
 angle_limit = 5;
-extra_mass = 0;
+extra_mass = 21;
 g = 9.81;
 max_balast = 30;
 

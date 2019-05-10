@@ -1,0 +1,30 @@
+\section{Submarine driving}
+	
+Finally, the last task of this year's STEM games' Engineering arena is here! 
+Submarine is loaded with food and goods and has to transport it to our 
+underwater habitats.
+
+\subsection{Submarine specification}
+
+	\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{submarine_side_view.png}
+	\caption{Submarine dimensions}
+	\label{fig:side_view}
+\end{figure}
+
+The following dimensions are given:
+\begin{itemize}
+	\item $L = 15 \,\textrm{m}$
+	\item $D_{OUT} = 3.4 \,\textrm{m}$
+	\item $D_{IN} = 3 \,\textrm{m}$
+	\item $m = 104.419$ t
+	\item $balast volume = 30 \ m^3$
+	\item $balast equilibrium = 50\%$
+\end{itemize}
+	
+
+
+\subsection{M function}
+
+

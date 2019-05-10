@@ -156,6 +156,27 @@
 	
 \section{Introduction}
 
+Hello contestants!
+
+Today you will continue the work on the communication system and on the next 
+stage of the power system - the power generator connected to the steam turbine.
+
+
+No modern system can work without the reliable communication with the outside 
+world. Today trough the solving of the SDR (Software Defined Radio) task you 
+will get the feeling of what is needed to create a reliable communication system
+Once the signal has been directed using the beamforming, you need to receive 
+the data being transmitted, demodulate the data and check for any errors.
+
+In most submarines, the main turbine isn't connected directly to the shaft, but 
+rather to the electric generator, which charges the batteries.
+Batteries power the life support, air condition, lights, the propeller motor 
+and 
+all te other submarine subsystems. 
+In continuation of the yesterdays design of the steam turbine, you will have to 
+design an appropriate synchronous generator. 
+
+
 	
 
 	
@@ -164,7 +185,12 @@
 \subsection{Task 1}
 An underwater habitat controls a remotely-operated submarine by sending the coordinates that the submarine has to traverse in sequence. The 3-dimensional coordinates are organized into triplets, as \textsf{xxx.xxx,yyy.yyy,zzz.zzz;} . Each digit and separating characters ("\textsf{,}" and "\textsf{;}") are encoded as an 8-bit ASCII character. Triplets are concatenated and sent sequentially. This datastream is the input to the modulating system of the transmitter.
 
-Your main task for today is to control the submarine. In order for your submarine to successfully sail, it is necessary to have properly calculated the stability of the submarine. Stability of the submarine must be independent of the cargo or the people in the submarine. In other words, the submarine must be able to sail independently of its mass. The main task of your submarine is to supply and maintain underwater habitats which means that the communication system between submarine and each habitat must be set. The submarine is able to navigate to the corresponding habitats using the continuous communication between the submarine and each habitat. The last task is to define the governing system which will control the submarine position.
+Your main task for today is to control the submarine.  The main task of your 
+submarine is to supply and maintain underwater habitats which means that the 
+communication system between submarine and each habitat must be set. The 
+submarine is able to navigate to the corresponding habitats using the 
+continuous communication between the submarine and each habitat. The last task 
+is to define the governing system which will control the submarine position.
 
 \section{Software Defined Radio}
 
@@ -457,14 +483,6 @@ Your solution must be submitted as a .csv format document with only 2 rows. File
 \end{itemize}
 This task is graded up to 20 points. 3 points are given for  each correctly calculated parameter and 2 points are given for the documentation. The documentation is submitted at the end of the day. The documentation must include your calculations along with some short comments explaining the equations. You can choose the format in which the documentation will be submitted (.c script, .m script, hand written equations).
 	
-\section{Submarine driving}
-	
-Finally, the last task of this year's STEM games' Engineering arena is here! Every task lead you up to this! Submarine is loaded with food and goods and has to transport it to our underwater habitats.
-
-\subsection{Stability}
-
-Drawing of a submarine is shown in figure \ref{}. %dodaj sliku.
-Given the masses and centers of masses of compartments (sections) of submarine, your task is to find stable state of the submarine's ballasts\footnote{Ballast is the space in the submarine that can be filled with water so that submarine can have higher mass and be able to sink.}. Stable state of the submarine is the state where all forces and all moments that act on submarine are equal to zero (submarine doesn't move).
 
 
 

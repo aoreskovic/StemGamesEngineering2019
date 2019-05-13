@@ -1,6 +1,6 @@
 <html>
 <head>
-   <title>STEM Games Beamforming Scores</title>
+   <title>STEM Games Engineering Arena</title>
    <style>
          @font-face {
         font-family: montserrat;

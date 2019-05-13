@@ -155,12 +155,12 @@ while 1
             teamScore = [teamScore 0];
             disp("No beamformer implemented for task 2.");
         else
-try
-            elements = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/elements2.csv"));
-catch e
-                disp(e.message)
-end
-            
+            try
+               elements = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/elements2.csv"));
+            catch e
+               disp(e.message)
+            end
+
             % Scenario 5
             fprintf('===========================\nTASK 2, SCENARIO 5\n===========================\n');
 

@@ -31,7 +31,11 @@ while 1
             disp("No beamformer implemented for task 1.");
         else
 
-            elements = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/elements1.csv"));
+            try
+                elements = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/elements1.csv"));
+            catch e
+                disp(e.message)
+            end
 
             % Scenario 1
             fprintf('===========================\nTASK 1, SCENARIO 1\n===========================\n');
@@ -42,8 +46,12 @@ while 1
                 score = 0;
                 disp("No solution for scenario 1.");
             else
-                bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario1.csv"));
-
+                try
+                    bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario1.csv"));
+                catch e
+                    disp(e.message)
+                end
+                
                 try
                     Task1_Sc123;
                 catch e
@@ -66,8 +74,12 @@ while 1
                 score = 0;
                 disp("No solution for scenario 2.");
             else
-                bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario2.csv"));
-
+                try
+                    bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario2.csv"));
+                catch e
+                 disp(e.message)
+                end
+                
                 try
                     Task1_Sc123;
                 catch e
@@ -90,8 +102,12 @@ while 1
                 score = 0;
                 disp("No solution for scenario 3.");
             else
-                bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario3.csv"));
-
+                try
+                    bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario3.csv"));
+                catch e
+                disp(e.message)
+                end
+            
                 try
                     Task1_Sc123;
                 catch e
@@ -114,7 +130,11 @@ while 1
                 score = 0;
                 disp("No solution for scenario 4.");
             else
+                try
                 bfMatrix = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/scenario4.csv"));
+                catch e
+                disp(e.message)
+            end
 
                 try
                     Task1_Sc4;
@@ -135,9 +155,12 @@ while 1
             teamScore = [teamScore 0];
             disp("No beamformer implemented for task 2.");
         else
-
+try
             elements = csvread(strcat(gdrive,teamName,"/Beamforming/beamformer/elements2.csv"));
-
+catch e
+                disp(e.message)
+end
+            
             % Scenario 5
             fprintf('===========================\nTASK 2, SCENARIO 5\n===========================\n');
 
@@ -191,6 +214,7 @@ while 1
         fprintf(outputCsvFile,'%s',outputCsvString);
         fclose(outputCsvFile);
 
+        disp(teamName)
         pause(1)
 
     end

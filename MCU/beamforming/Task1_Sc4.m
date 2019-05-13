@@ -13,8 +13,13 @@ if targetD < 0
     err.invokeError('negativeDirectivity');
 end
 
-fprintf('Score: %2.04f\n', score);
-
-if score > 20
-    score = 20;
+score = score * 2;
+if score > 25
+    score = 25;
 end
+
+if score < 0 
+    score = 0;
+end
+
+fprintf('Score: %2.04f\n', score);

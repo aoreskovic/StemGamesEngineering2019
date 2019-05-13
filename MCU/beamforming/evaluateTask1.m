@@ -18,28 +18,29 @@ end
 
 % Area limits
 elements = elements + 0.225;
-xmax = 0.45;
-ymax = 0.45;
+xmax = 0.45001;
+ymax = 0.45001;
 if ((~isempty(find(elements < 0)) | ...
         (~isempty(find(elements(1,:) > xmax)))))
     err.invokeError('arrayParameter');
 end
 elements = elements - 0.225;
 
-elements = transpose([zeros(N,1) elements' zeros(N,1)]);
-if size(bfMatrix) ~= N
-    err.invokeError('arrayParameter');
-end
-if sum(abs(bfMatrix) > 1.0001) > 0
-    err.invokeError('arrayParameter');
-end
 
 % Element 1D distances
-distMin = 0.05;
-if sum(diff(sort(elements)) > distMin) > 0
+distMin = 0.0499;
+if sum(diff(sort(elements)) < distMin) > 0
     err.invokeError('arrayParameter');
 end
 
+
+elements = transpose([zeros(N,1) elements' zeros(N,1)]);
+if size(bfMatrix) ~= N
+    err.invokeError('bfFormat');
+end
+if sum(abs(bfMatrix) > 1.0001) > 0
+    err.invokeError('bfFormat');
+end
 
 
 %% Defining antennas and array

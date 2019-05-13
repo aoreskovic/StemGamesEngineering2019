@@ -9,7 +9,7 @@ classdef linkError < handle
         %ERRORMAP Defined error codes and their description, and
         %criticality flag
         errorMap = containers.Map( ...
-            {'trxMethod', 'arrayLength', 'freqRange', 'freqLicense', 'arrayParameter', 'negativeDirectivity', 'notAnArray', 'lobes', 'lobeTooFar'}, ...
+            {'trxMethod', 'arrayLength', 'freqRange', 'freqLicense', 'arrayParameter', 'negativeDirectivity', 'notAnArray', 'lobes', 'lobeTooFar', 'bfFormat'}, ...
             {
                 {'Unsupported TRX method', true}
                 {'Antenna array is larger than the submarine', true}
@@ -20,6 +20,7 @@ classdef linkError < handle
                 {'Not a beamformer', true}
                 {'Target not in two tallest lobes', true}
                 {'Target not in 6dB of the lobe maximum', true}
+                {'Error in beamformer weights file format', true}
             } ...
         );
     end

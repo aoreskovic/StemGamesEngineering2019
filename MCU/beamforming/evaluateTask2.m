@@ -16,7 +16,7 @@ if (size(elements) == [N 2]) ~= ones(1,2)
 end
 
 % Element 2D distances
-distMin = 0.05;
+distMin = 0.04999;
 elemsAsComplex = abs(elements(:,1)+1i*elements(:,2));
 if sum(diff(sort(elemsAsComplex)) > distMin) > 0
     err.invokeError('arrayParameter');
@@ -25,8 +25,8 @@ end
 % Area limits
 elements = elements + 0.225;
 % Area limits
-xmax = 0.45;
-ymax = 0.45;
+xmax = 0.45001;
+ymax = 0.45001;
 if ((~isempty(find(elements < 0)) | ...
         (~isempty(find(elements(1,:) > xmax))) | ...
         (~isempty(find(elements(2,:) > ymax)))))
@@ -36,10 +36,10 @@ elements = elements - 0.225;
 
 elements = transpose([zeros(N,1) elements]);
 if size(bfMatrix) ~= N
-    err.invokeError('arrayParameter');
+    err.invokeError('bfFormat');
 end
 if sum(abs(bfMatrix) > 1.0001) > 0
-    err.invokeError('arrayParameter');
+    err.invokeError('bfFormat');
 end
 
 

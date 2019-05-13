@@ -106,8 +106,8 @@ drag_x = sub_power_x(speed_x*1.94384, sub.length, sub.radius_wet);
 drag_y = sub_power_y(speed_y*1.94384, sub.length, sub.radius_wet);
 lift_p = lift * g * speed_y;
 
-if y > -1.5
-    gravity_force =  - sub.mass * abs(1 - y/1.5) * g /1000;
+if distance_y > -1.5
+    gravity_force =  - sub.mass * abs(1 - distance_y/1.5) * g /1000;
 end
 
 %% Energy

@@ -1,83 +1,39 @@
-<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\Gui\SubmarineGUI.prj" location="C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\Gui" name="SubmarineGUI" target="target.ezdeploy.standalone" target-name="Application Compiler">
-    <param.appname>SubmarineGUI</param.appname>
-    <param.icon />
-    <param.icons />
-    <param.version>1.0</param.version>
-    <param.authnamewatermark>STEM Games</param.authnamewatermark>
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration file="C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\Gui\SubmarineGUI_1.prj" location="C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\Gui" name="SubmarineGUI_1" target="target.mlapps" target-name="Package App">
+    <param.appname>SubmarineGUI_1</param.appname>
+    <param.authnamewatermark />
     <param.email />
     <param.company />
+    <param.icon />
+    <param.icons />
     <param.summary />
     <param.description />
-    <param.screenshot />
-    <param.guid />
-    <param.installpath.string>\SubmarineGUI\</param.installpath.string>
-    <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
-    <param.logo />
-    <param.install.notes />
-    <param.target.install.notes />
-    <param.intermediate>${PROJECT_ROOT}\SubmarineGUI\for_testing</param.intermediate>
-    <param.files.only>${PROJECT_ROOT}\SubmarineGUI\for_redistribution_files_only</param.files.only>
-    <param.output>${PROJECT_ROOT}\SubmarineGUI\for_redistribution</param.output>
-    <param.logdir>${PROJECT_ROOT}\SubmarineGUI</param.logdir>
-    <param.enable.clean.build>false</param.enable.clean.build>
-    <param.user.defined.mcr.options />
-    <param.target.type>subtarget.standalone</param.target.type>
-    <param.support.packages />
-    <param.web.mcr>true</param.web.mcr>
-    <param.package.mcr>false</param.package.mcr>
-    <param.no.mcr>false</param.no.mcr>
-    <param.web.mcr.name>GUI Day 2 example</param.web.mcr.name>
-    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
-    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
-    <param.windows.command.prompt>true</param.windows.command.prompt>
-    <param.create.log>false</param.create.log>
-    <param.log.file />
-    <param.native.matlab>false</param.native.matlab>
-    <param.checkbox>false</param.checkbox>
-    <param.example />
-    <param.help.text />
+    <param.screenshot>C:\Users\Ante\AppData\Local\Temp\tpb878fb03_6ca2_483c_a039_c0469ed5fd11.png</param.screenshot>
+    <param.version>1.0</param.version>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms />
+    <param.output>C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\Gui</param.output>
+    <param.guid>430c053d-4029-4d88-bee3-74944362d3e7</param.guid>
     <unset>
-      <param.icon />
-      <param.icons />
-      <param.version />
+      <param.authnamewatermark />
       <param.email />
       <param.company />
+      <param.icon />
+      <param.icons />
       <param.summary />
       <param.description />
-      <param.screenshot />
-      <param.guid />
-      <param.installpath.string />
-      <param.installpath.combo />
-      <param.logo />
-      <param.install.notes />
-      <param.target.install.notes />
-      <param.intermediate />
-      <param.files.only />
+      <param.version />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.platforms />
       <param.output />
-      <param.logdir />
-      <param.enable.clean.build />
-      <param.user.defined.mcr.options />
-      <param.target.type />
-      <param.support.packages />
-      <param.web.mcr />
-      <param.package.mcr />
-      <param.no.mcr />
-      <param.package.mcr.name />
-      <param.no.mcr.name />
-      <param.windows.command.prompt />
-      <param.create.log />
-      <param.log.file />
-      <param.native.matlab />
-      <param.checkbox />
-      <param.example />
-      <param.help.text />
     </unset>
     <fileset.main>
       <file>${PROJECT_ROOT}\SubmarineGUI.mlapp</file>
     </fileset.main>
-    <fileset.resources />
-    <fileset.package />
     <fileset.depfun>
       <file>${PROJECT_ROOT}\createSub.m</file>
       <file>${PROJECT_ROOT}\GUIpar3.mat</file>
@@ -111,10 +67,10 @@
       <file>C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\MatlabModel\mainFns\SubmarineStepCalc.m</file>
       <file>C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\MatlabModel\XSteam\XSteam.m</file>
     </fileset.depfun>
+    <fileset.resources />
+    <fileset.package />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\SubmarineGUI\for_testing" name="SubmarineGUI.exe" optional="false">C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\Gui\SubmarineGUI\for_testing\SubmarineGUI.exe</file>
-      <file location="${PROJECT_ROOT}\SubmarineGUI\for_testing" name="splash.png" optional="false">C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\Gui\SubmarineGUI\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\SubmarineGUI\for_testing" name="readme.txt" optional="true">C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\Gui\SubmarineGUI\for_testing\readme.txt</file>
+      <file location="C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2" name="Gui" optional="false">C:\Users\Ante\Dropbox\STEM Games\2019\git\Task day 2\Propulsion_day2\Gui</file>
     </build-deliverables>
     <workflow />
     <matlab>

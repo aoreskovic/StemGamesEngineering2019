@@ -203,15 +203,15 @@
 	The following dimensions are given:
 	\begin{itemize}
 		\item $L = 18 \,\textrm{m}$
-		\item $D_{OUT} = 1.7 \,\textrm{m}$
-		\item $D_{IN} = 1.5 \,\textrm{m}$
+		\item $D_{OUT} = 3.4 \,\textrm{m}$
+		\item $D_{IN} = 3 \,\textrm{m}$
 		\item $L_1 = 2 \,\textrm{m}$
 	\end{itemize}
 	
 	$D_{IN}$  is used for the tank volume calculation.
 
 	Also, dimension $L_5$ is found as
-	\begin{equation}
+	\begin{equation} \label{eq:t1}
 		L_5 = (18 \cdot P_\textrm{turb} + 2500)/1000 \,\left[\textrm{m}\right]
 	\end{equation}
 	where the power $P_\textrm{turb}$ is taken in kW. Dimensions $L_2$ and 
@@ -395,7 +395,7 @@
 	
 	\subsubsection*{Higher mass flow rate}
 	
-	In case that power demand is increased, turbine can be overloaded by steam mass flow $q_m$ greater than nominal. This is achieved by fuel pump "P2" and oxygen pump "P1" speed increase which causes increased fuel consumption and evaporated steam mass flow. When turbine is overloaded, steam flow bypasses few initial turbine stages which enables increased steam consumption, although with reduced turbine efficiency described by equation (4). To accurately model this effect is out of scope of this assignment. Therefore, it is assumed in overload working mode that turbine inlet values of pressure and temperature remain nominal, i.e. there is no change at throttling valve due to increased steam mass flow rate $q_m$. The only effect of increased $q_m$ is turbine efficiency reduction as described by equation \ref{eq:eta2}.
+	In case that power demand is increased, turbine can be overloaded by steam mass flow $q_m$ greater than nominal. This is achieved by fuel pump "P2" and oxygen pump "P1" speed increase which causes increased fuel consumption and evaporated steam mass flow. When turbine is overloaded, steam flow bypasses few initial turbine stages which enables increased steam consumption, although with reduced turbine efficiency described by equation (\ref{eq:eta2}). To accurately model this effect is out of scope of this assignment. Therefore, it is assumed in overload working mode that turbine inlet values of pressure and temperature remain nominal, i.e. there is no change at throttling valve due to increased steam mass flow rate $q_m$. The only effect of increased $q_m$ is turbine efficiency reduction as described by equation \ref{eq:eta2}.
 	
 	Restrictions of steam turbine operational parameters are following:
 	
@@ -886,7 +886,7 @@ scenario.
 \subsubsection*{Output data}
 
 \begin{description}
-	\item[elements1.csv] \,\\ The file contains a one-dimensional array 
+	\item[elements1.csv] \leavevmode \,\\ The file contains a one-dimensional array 
 	representing the position of each hydrophone element along the y axis in 
 	metres.
 	
@@ -943,11 +943,11 @@ the reference coordinate system.
 \subsubsection*{Output data}
 
 \begin{description}
-	\item[elements2.csv] \,\\ The file contains 2D coordinates of beamforming 
+	\item[elements2.csv] \leavevmode \,\\ The file contains 2D coordinates of beamforming 
 	elements. One row of the file represents one beamforming element. The first 
 	column is the y-coordinate, and the second column is the z-coordinate.
 	
-	\item[scenario5.csv] \,\\ The file contains a one-dimensional array of 
+	\item[scenario5.csv] \leavevmode \,\\ The file contains a one-dimensional array of 
 	complex numbers representing the weights applied to each hydrophone 
 	element. Weights are given for elements in the same order as they are 
 	listed in \textsf{elements2.csv}. Array length is equal to the number of 

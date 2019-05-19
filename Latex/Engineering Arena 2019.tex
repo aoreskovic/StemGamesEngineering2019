@@ -242,6 +242,11 @@
 	
 	We want wish you the best luck during the next 3 days!
 	
+	\vspace{2cm}
+	
+	All the source codes are provided here:\\
+	\url{https://github.com/aoreskovic/StemGamesEngineering2019}
+	
 	
 	\chapter{Day 1}
 	\section{Hydraulic crane - Introduction}
@@ -864,8 +869,8 @@
 	The following dimensions are given:
 	\begin{itemize}
 		\item $L = 18 \,\textrm{m}$
-		\item $D_{OUT} = 1.7 \,\textrm{m}$
-		\item $D_{IN} = 1.5 \,\textrm{m}$
+		\item $D_{OUT} = 3.4 \,\textrm{m}$
+		\item $D_{IN} = 3 \,\textrm{m}$
 		\item $L_1 = 2 \,\textrm{m}$
 	\end{itemize}
 	
@@ -961,7 +966,7 @@
 		\item Maximum temperature at combustion chamber “Comb“ exit 
 		(850$^\circ$)
 		\item Maximum steam temperature at turbine “Turb” inlet (Excell table 1)
-		\item Minimum vapor fraction on turbine “Turb” outlet (0.9)
+		\item Minimum vapor fraction on turbine “Turb” outlet should not exceed (0.9)
 		\item Evaporator “Evap” erosion (given by the equation 
 		\ref{eq:flue_gas_density})
 		\item Superheater “Super” erosion (given by the equation 
@@ -1088,7 +1093,7 @@
 	and evaporated steam mass flow. When turbine is overloaded, steam flow 
 	bypasses few initial turbine stages which enables increased steam 
 	consumption, although with reduced turbine efficiency described by equation 
-	(4). To accurately model this effect is out of scope of this assignment. 
+	(\ref{eq:eta2}). To accurately model this effect is out of scope of this assignment. 
 	Therefore, it is assumed in overload working mode that turbine inlet values 
 	of pressure and temperature remain nominal, i.e. there is no change at 
 	throttling valve due to increased steam mass flow rate $q_m$. The only 
@@ -1205,7 +1210,7 @@
 	\noindent
 	Where:
 	$evap_{fr}$ is flue gas fraction of stream "c" to total flue gas stream 
-	"a"  total flue gas mas flow and is assumed constant throughout system 
+	"a" mass flow and is assumed constant throughout system 
 	operation. Its value can be selected between 0 and 1.
 	$q_{m,fg}$ is total flue gas mass flow rate (stream "a") .
 	$q_{m,fg,evap}$ is evaporation section mass flow rate (stream "b")
@@ -1310,9 +1315,9 @@
 	mixing chamber is defined by equation:
 	
 	\begin{equation}\label{eq:outlet_temp}
-	\Theta_{fg,ret} = \frac{q_{m,fg,evap} \cdot h_{fg,evap,out} + 
+	\vartheta_{fg,ret} = \frac{q_{m,fg,evap} \cdot h_{fg,evap,out} + 
 	q_{m,fg,super} \cdot h_{fg,super,out}}{q_{m,fg} \cdot c_{p,fg} 
-	(\Theta_{fg,ret})},
+	(\vartheta_{fg,ret})},
 	\end{equation}
 	
 	\noindent
@@ -1400,7 +1405,7 @@
 	applied to combustion chamber "Comb":
 	
 	\begin{equation}\label{eq:flue_gas_out_temp}
-	\Theta_{fg,comb} = \frac{\dot{H}_{O2,in} + \dot{H}_{ethanol,in} 
+	\vartheta_{fg,comb} = \frac{\dot{H}_{O2,in} + \dot{H}_{ethanol,in} 
 	+\dot{H}_{fg,ret} + q_{n,ethanol} \Delta H_{md}}{C_{fg}},
 	\end{equation}
 	
@@ -1549,6 +1554,21 @@
 	condensation pressure $p_3$ condenser "Cond" outlet to heat exchanger "HE" 
 	at high evaporation pressure $p_4$.
 	Specific enthalpy $h_4 = 359.83 \,\textrm{kJ/kg}$ at pump outlet.
+	
+	
+	
+	\subsection{GUI}
+	
+	To help you chose the system parameters, once you choose the components the GUI (show on the figure \ref{fig:gui2}) will be provided, so you can test the behavior of system you designed.
+	
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=\textwidth]{gui2}
+		\caption{Day 2 gui}
+		\label{fig:gui2}
+	\end{figure}
+	
 	
 	\subsection{Constants} \label{sec:const}
 	
@@ -2343,7 +2363,16 @@ The following dimensions are given:
 \textbf{Driving references are in this order} : $Red, Yellow, Purple$.
 
 
-To help you in designing your driving function, GUI will be provided. GUI will allow you to change the submarine inputs and see how the submarine behaves.
+To help you in designing your driving function, GUI will be provided. GUI will allow you to change the submarine inputs and see how the submarine behaves. Example of the info you get from the GUI is provided on the figure \ref{fig:gui3}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{gui3}
+	\caption{Day 3 GUI}
+	\label{fig:gui3}
+\end{figure}
+
+
 
 Based on that, you have to design a regulator as a matlab function with prototype given in your task's folder.
 

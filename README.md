@@ -14,7 +14,7 @@ You can download the  [Task PDF here](https://github.com/aoreskovic/StemGamesEng
 
 ### Day 1
 
-#### 
+#### Hydraulic crane
 
 ![](https://github.com/aoreskovic/StemGamesEngineering2019/blob/master/Latex/Images/Crane/kran_izometrija.jpg "Hydraulic crane")
 

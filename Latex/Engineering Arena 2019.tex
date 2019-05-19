@@ -1677,7 +1677,7 @@
 	\subsubsection*{Output data}
 	
 	\begin{description}
-		\item[elements1.csv] \,\\ The file contains a one-dimensional array 
+		\item[elements1.csv] \leavevmode \,\\ The file contains a one-dimensional array 
 		representing the position of each hydrophone element along the y axis 
 		in 
 		metres.
@@ -1750,13 +1750,13 @@
 	\subsubsection*{Output data}
 	
 	\begin{description}
-		\item[elements2.csv] \,\\ The file contains 2D coordinates of 
+		\item[elements2.csv] \leavevmode \,\\ The file contains 2D coordinates of 
 		beamforming 
 		elements. One row of the file represents one beamforming element. The 
 		first 
 		column is the y-coordinate, and the second column is the z-coordinate.
 		
-		\item[scenario5.csv] \,\\ The file contains a one-dimensional array of 
+		\item[scenario5.csv] \leavevmode \,\\ The file contains a one-dimensional array of 
 		complex numbers representing the weights applied to each hydrophone 
 		element. Weights are given for elements in the same order as they are 
 		listed in \textsf{elements2.csv}. Array length is equal to the number 
@@ -1967,26 +1967,26 @@
 	functions:
 	\begin{description}
 		\item[complex *frequency\_shift(double *input, double fc, double fs, 
-		int N)]
+		int N)] \leavevmode
 		\,\\ Transposes the signal provided in input from centre frequency 
 		\textsf{fc} to baseband. \textsf{N} is the length of the data stream, 
 		expressed as a number of double words. \textsf{fs} is the sampling 
 		frequency.
 		\item[double qpsk\_demodulator(complex symbol, double 
-		constellation\_offset, char *decoded\_symbol)]
+		constellation\_offset, char *decoded\_symbol)] \leavevmode
 		\,\\ Decodes a baseband QPSK symbol \textsf{symbol}, and stores its 
 		value to an 8-bit word \textsf{decoded\_symbol}. The function outputs 
 		the EVM of the symbol.
-		\item[char *bitstream\_to\_bytestream(char *bitstream, int length)]
+		\item[char *bitstream\_to\_bytestream(char *bitstream, int length)] \leavevmode
 		\,\\ Converts \textsf{length} 8-bits words, as output by the 
 		\textsf{bitstream\_to\_bytestream} function, into a bytestream. 
 		Parameter \textsf{length} is the length of the bitstream array, while 
 		the length of the output array is equal to \textsf{length}/4. A pointer 
 		to the beginning of the bytestream is returned.
-		\item[void frame\_sync(char **bytestream, int length)]
+		\item[void frame\_sync(char **bytestream, int length)] \leavevmode
 		\,\\ Moves the pointer \textsf{*bytestream} to the beginning of the 
 		first detected frame. \textsf{length} is the length of the bytestream.
-		\item[int frame\_decoder(char *bytestream, char **data)]
+		\item[int frame\_decoder(char *bytestream, char **data)] \leavevmode
 		\,\\ Decodes the data from a single frame that starts at the pointer 
 		\textsf{*bytestream}. The decoded data should be stored to 
 		\textsf{*data}. The return value is the length of processed data (frame 
@@ -1995,10 +1995,10 @@
 	
 	You are provided with some helper files:
 	\begin{description}
-		\item[api.h]
+		\item[api.h] \leavevmode
 		\,\\ An API containing some types, functions and constants you may find 
 		useful.
-		\item[api.c]
+		\item[api.c] \leavevmode
 		\,\\ The compiled API described in \textsf{api.h}.
 	\end{description}
 	
@@ -2091,7 +2091,7 @@
 	file should implement the following additional functions:
 	\begin{description}
 		\item[double *ofdm\_demodulator(complex *spectrum, int *carrier\_idx, 
-		int carrier\_no, char **data)]
+		int carrier\_no, char **data)] \leavevmode
 		\,\\ Takes the spectrum of a \underline{single OFDM symbol} from 
 		\textsf{*spectrum}, and demultiplexes the subcarriers containing the 
 		\underline{additional data stream}. The demodulated QPSK symbols from 
@@ -2129,11 +2129,11 @@
 	Your \textsf{radio.c / cpp} code must implement the following additional 
 	functions:
 	\begin{description}
-		\item[char crc16\_check(char* bitstream, int length)]
+		\item[char crc16\_check(char* bitstream, int length)] \leavevmode
 		\,\\ Returns CRC-16 hash of the given \textsf{bitstream}, of length 
 		\textsf{length}.
 		\item[int frame\_decoder\_valid(char* bytestream, char** data, bool 
-		*valid)]
+		*valid)] \leavevmode
 		\,\\ Decodes the data from a single frame that starts at the pointer 
 		\textsf{*bytestream}. The decoded data should be stored to 
 		\textsf{*data}. The output flag \textsf{*valid} denotes if the decoded 
@@ -2288,6 +2288,85 @@
 	equations. You can choose the format in which the documentation will be 
 	submitted (.c script, .m script, hand written equations).
 	
+	
+\section{Submarine driving}
+
+Finally, the last task of this year's Engineering arena is here! All your calculations in the past 3 days lead you up to this! You have to drive your submarine and transport people and goods to underwater habitats.
+
+A map of the sea bottom is shown in figure \ref{fig:map}. Your task is to visit all 3 habitats and return to the strting position. To visit a habitat you need to be within 3 meters of the habitat for 60 seconds.
+Leaving that range resets the timer.
+
+\begin{figure}[!htb]
+	\centering
+	\includegraphics{Images/path.PNG}
+	\caption{Map of the sea}
+	\label{fig:map}
+\end{figure}
+
+Green dot is the start position of the submarine (0, 0). Every other colored dot on map is one habitat you have to visit. Blue line represents bottom of the sea so you have to be careful and not drive your submarine into it. We also provide you with the funtion used to generate the bottom : $0.01*(500*sin(0.005*X)-X) - 50$. Y level zero is the surface of the sea. 
+
+Coliding with the sea bottom is instant fail.
+
+\begin{table}[h!]
+	\hyphenpenalty 10000
+	\caption{Habitats and coordinates}
+	\label{tab:nominalValues}
+	\begin{tabularx}{\textwidth}{|Y|Y|Y|} \hline
+		\textbf{Habitat} & X[m] & Y[m] \\ \hline 
+		\textbf{Red} & 1039   & -64.82\\ \hline 
+		\textbf{Yellow} & 2708  & -72.95\\ \hline
+		\textbf{Purple} & 3535  &  -89.96\\ \hline
+	\end{tabularx}
+\end{table}
+
+
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{submarine_side_view.png}
+	\caption{Submarine dimensions}
+	\label{fig:side_view}
+\end{figure}
+
+The following dimensions are given:
+\begin{itemize}
+	\item $L = 15 \,\textrm{m}$
+	\item $D_{OUT} = 3.4 \,\textrm{m}$
+	\item $D_{IN} = 3 \,\textrm{m}$
+	\item $m = 104.419$ t
+	\item $balast\ volume = 30 \ m^3$
+	\item $balast\ equilibrium = 50\%$
+	\item $ballast\ fill\ speed = 100$ l/s
+\end{itemize}
+
+
+\textbf{Driving references are in this order} : $Red, Yellow, Purple$.
+
+
+To help you in designing your driving function, GUI will be provided. GUI will allow you to change the submarine inputs and see how the submarine behaves.
+
+Based on that, you have to design a regulator as a matlab function with prototype given in your task's folder.
+
+Function output:
+
+\begin{itemize}
+	\item[Fuel percentage] - ${0.35,1}$ - Desired \% of fuel pump speed
+	\item[Angle] - ${-7,7}$ - In degrees, vector of the output thrust
+	\item[Target balast fill] - ${0,1}$ - Desired balast fill \%, the tank fills and empties with the $ballast\ fill\ speed$
+	\item[Motor stop] - If this value is 0, the propulsion motor is shut down
+	\item[Reverse] - If this value is negative, propulsion motor is reversed
+\end{itemize}
+
+Function input:
+
+\begin{itemize}
+	\item[pointIndex] - Index of habitat that is current reference point($[1, 2, 3]$ for [$Red, Yellow, Purple$], respectively)
+	\item[vx, vy] - X and Y speeds
+	\item[sx, sy] - X and Y positions
+\end{itemize}
+
+
+We will grade you \textbf{only by time} to perform whole trip.
 	
 	
 	
